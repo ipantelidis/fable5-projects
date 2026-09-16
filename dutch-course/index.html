@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Nederlands Nu — Dutch from zero to B2</title>
+  <meta name="description" content="A self-contained, gamified Dutch course with explicit grammar, voice input and voice output.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f5f8b'/%3E%3Ctext x='32' y='43' font-size='32' text-anchor='middle' fill='%23faf7f2' font-family='Georgia,serif' font-weight='700'%3ENL%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <a class="skip" href="#view">Skip to content</a>
+  <header class="app-header">
+    <a class="brand" href="#/home" aria-label="Nederlands Nu home"><span class="brand-mark">NL</span><span class="brand-name">Nederlands <em>Nu</em></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/home" data-nav="home">Home</a>
+      <a href="#/review" data-nav="review">Review <span class="nav-badge" id="nav-due" hidden>0</span></a>
+      <a href="#/grammar" data-nav="grammar">Grammar</a>
+      <a href="#/dictionary" data-nav="dictionary">Dictionary</a>
+      <a href="#/settings" data-nav="settings">Settings</a>
+    </nav>
+    <div class="header-stats" id="header-stats" aria-live="polite"></div>
+  </header>
+
+  <main id="view" class="container" tabindex="-1"></main>
+
+  <div id="word-dialog" class="dialog" hidden role="dialog" aria-modal="true" aria-labelledby="word-dialog-title">
+    <div class="dialog-card">
+      <button class="dialog-close btn-icon" aria-label="Close" data-close>&times;</button>
+      <div id="word-dialog-body"></div>
+    </div>
+  </div>
+  <div id="toasts" aria-live="polite"></div>
+
+  <noscript><p class="container">Nederlands Nu needs JavaScript. Please enable it and reload.</p></noscript>
+
+  <script src="js/engine/util.js"></script>
+  <script src="js/engine/state.js"></script>
+  <script src="js/engine/srs.js"></script>
+  <script src="js/engine/sfx.js"></script>
+  <script src="js/engine/tts.js"></script>
+  <script src="js/engine/stt.js"></script>
+  <script src="js/engine/checker.js"></script>
+  <script src="js/engine/game.js"></script>
+  <script src="js/content/index.js"></script>
+  <script src="js/engine/gen.js"></script>
+  <script src="js/engine/validator.js"></script>
+  <script src="js/engine/exercises.js"></script>
+  <script src="js/engine/lesson.js"></script>
+  <script src="js/engine/review.js"></script>
+  <script src="js/engine/views.js"></script>
+  <script src="js/content/stage0.js"></script>
+  <script src="js/content/stage0-lessons-a.js"></script>
+  <script src="js/content/stage0-lessons-b.js"></script>
+  <script src="js/content/stage1.js"></script>
+  <script src="js/content/stage1-u1-2.js"></script>
+  <script src="js/content/stage1-u3-4.js"></script>
+  <script src="js/content/stage1-u5-6.js"></script>
+  <script src="js/content/stage1-u7-8.js"></script>
+  <script src="js/content/stage2.js"></script>
+  <script src="js/content/stage2-u1-2.js"></script>
+  <script src="js/content/stage2-u3-4.js"></script>
+  <script src="js/content/stage2-u5-6.js"></script>
+  <script src="js/content/stage2-u7-8.js"></script>
+  <script src="js/content/stage3.js"></script>
+  <script src="js/content/stage4.js"></script>
+  <script src="js/content/stage5.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

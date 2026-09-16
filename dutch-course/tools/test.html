@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Nederlands Nu self-test</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+  <header class="app-header"><nav class="nav"><a data-nav="home" href="#/home">Home</a><a data-nav="review" href="#/review">Review <span id="nav-due" hidden>0</span></a><a data-nav="grammar" href="#/grammar">Grammar</a><a data-nav="dictionary" href="#/dictionary">Dictionary</a><a data-nav="settings" href="#/settings">Settings</a></nav><div id="header-stats"></div></header>
+  <main id="view" class="container"></main>
+  <div id="word-dialog" class="dialog" hidden><div class="dialog-card"><button class="dialog-close btn-icon" data-close>&times;</button><div id="word-dialog-body"></div></div></div>
+  <div id="toasts"></div>
+  <pre id="test-results">PENDING</pre>
+  <script>
+    window.__errors = [];
+    window.addEventListener('error', (e) => window.__errors.push('window.onerror: ' + e.message + ' @' + (e.filename || '').split('/').pop() + ':' + e.lineno));
+    window.addEventListener('unhandledrejection', (e) => window.__errors.push('unhandledrejection: ' + (e.reason && e.reason.message || e.reason)));
+    const _ce = console.error; console.error = function () { window.__errors.push('console.error: ' + Array.from(arguments).map(String).join(' ')); _ce.apply(console, arguments); };
+    try { localStorage.clear(); } catch (e) {}
+    location.hash = '#/home';
+  </script>
+  <script src="../js/engine/util.js"></script>
+  <script src="../js/engine/state.js"></script>
+  <script src="../js/engine/srs.js"></script>
+  <script src="../js/engine/sfx.js"></script>
+  <script src="../js/engine/tts.js"></script>
+  <script src="../js/engine/stt.js"></script>
+  <script src="../js/engine/checker.js"></script>
+  <script src="../js/engine/game.js"></script>
+  <script src="../js/content/index.js"></script>
+  <script src="../js/engine/gen.js"></script>
+  <script src="../js/engine/validator.js"></script>
+  <script src="../js/engine/exercises.js"></script>
+  <script src="../js/engine/lesson.js"></script>
+  <script src="../js/engine/review.js"></script>
+  <script src="../js/engine/views.js"></script>
+  <script src="../js/content/stage0.js"></script>
+  <script src="../js/content/stage0-lessons-a.js"></script>
+  <script src="../js/content/stage0-lessons-b.js"></script>
+  <script src="../js/content/stage1.js"></script>
+  <script src="../js/content/stage1-u1-2.js"></script>
+  <script src="../js/content/stage1-u3-4.js"></script>
+  <script src="../js/content/stage1-u5-6.js"></script>
+  <script src="../js/content/stage1-u7-8.js"></script>
+  <script src="../js/content/stage2.js"></script>
+  <script src="../js/content/stage2-u1-2.js"></script>
+  <script src="../js/content/stage2-u3-4.js"></script>
+  <script src="../js/content/stage2-u5-6.js"></script>
+  <script src="../js/content/stage2-u7-8.js"></script>
+  <script src="../js/content/stage3.js"></script>
+  <script src="../js/content/stage4.js"></script>
+  <script src="../js/content/stage5.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="selftest.js"></script>
+</body>
+</html>
