@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rock Drum Course</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<body>
+<div class="app">
+<aside>
+  <div class="brand">Rock Drum Course <small>A method for self taught players</small></div>
+  <div class="xpbox">
+    <div class="rank" id="rank">Novice</div>
+    <div class="xpnum" id="xpnum">0 XP</div>
+    <div class="bar"><i id="xpbar"></i></div>
+    <div class="streak" id="streak">No practice logged yet</div>
+  </div>
+  <nav id="nav">
+    <button data-view="home" class="active"><span class="ico">🏠</span>Home</button>
+    <button data-view="curriculum"><span class="ico">🗺️</span>Curriculum</button>
+    <div class="grp">Learn</div>
+    <button data-view="theory"><span class="ico">📐</span>Theory</button>
+    <button data-view="kit3d"><span class="ico">🥁</span>3D kit</button>
+    <button data-view="reading"><span class="ico">📖</span>Reading</button>
+    <button data-view="technique"><span class="ico">✋</span>Technique</button>
+    <button data-view="rhythms"><span class="ico">🎵</span>Rhythms</button>
+    <button data-view="songs"><span class="ico">🎸</span>Song lab</button>
+    <button data-view="mistakes"><span class="ico">🩺</span>Common mistakes</button>
+    <div class="grp">Tools</div>
+    <button data-view="play"><span class="ico">▶️</span>Groove player</button>
+    <button data-view="metro"><span class="ico">⏱️</span>Metronome</button>
+    <button data-view="practice"><span class="ico">📅</span>Practice</button>
+    <button data-view="badges"><span class="ico">🏅</span>Badges</button>
+  </nav>
+  <div class="voicebox">
+    <label class="toggle"><input type="checkbox" id="voice-on"> Voice on</label>
+    <label class="toggle" style="margin-top:8px"><input type="checkbox" id="stand-mode"> Stand mode (big controls)</label>
+    <div class="small muted" id="midi-status" style="margin-top:8px">No drum input connected</div>
+    <div class="small muted" style="margin-top:6px">Spoken counting and read aloud buttons use your browser voice.</div>
+  </div>
+</aside>
+<main>
+<section class="view active" id="view-home">
+  <h2 id="home-title">Welcome</h2>
+  <p class="lede">A structured path from stalled beginner to a confident intermediate rock drummer. Ten hours a week is plenty if the hours are pointed at the right things.</p>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Your next step</h3>
+      <div id="home-next"></div>
+    </div>
+    <div class="panel">
+      <h3>This week</h3>
+      <div id="home-week"></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" data-go="practice">Open practice tools</button>
+        <button class="btn" data-go="curriculum">Open curriculum</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Sound check</h3>
+    <p>Browsers only allow sound after you tap something. Try the pads. The kit is synthesized so it will not sound like a real Ludwig, but the timing is exact, which is what matters for practice.</p>
+    <div class="pads">
+      <button class="btn" data-pad="kk">Kick</button><button class="btn" data-pad="sn">Snare</button><button class="btn" data-pad="sng">Ghost snare</button>
+      <button class="btn" data-pad="hh">Closed hat</button><button class="btn" data-pad="ho">Open hat</button><button class="btn" data-pad="hf">Hat foot</button>
+      <button class="btn" data-pad="t1">High tom</button><button class="btn" data-pad="t2">Mid tom</button><button class="btn" data-pad="fl">Floor tom</button>
+      <button class="btn" data-pad="rd">Ride</button><button class="btn" data-pad="cr">Crash</button>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>How this course works</h3>
+    <p>Four levels. Each has a goal list, exercises you can play along with, and pass tests with a tempo and a duration. Passing a test, ticking a checklist item, logging practice and winning reading challenges all earn XP. Your progress is saved in this browser, so keep using the same one.</p>
+    <p>The content paraphrases ideas from Stone's Stick Control, Reed's Syncopation, the Berklee drum set method books and the shape of Drumeo style curricula, written in my own words. Grooves are original, written in the style of the drummers named. Where a fact is uncertain I say so in the text.</p>
+    <p class="note">Honesty rule for the pass tests: the page cannot hear you. Only claim a pass if you would be happy for a teacher to have heard it.</p>
+  </div>
+</section>
+
+<section class="view" id="view-curriculum">
+  <h2>Curriculum</h2>
+  <p class="lede">Pick a level. Work the exercises, tick the goals, then take the pass tests. Levels unlock when all pass tests of the previous level are done.</p>
+  <div class="levels" id="levels"></div>
+  <div id="level-detail"></div>
+</section>
+
+
+<section class="view" id="view-kit3d">
+  <h2>The kit in 3D</h2>
+  <p class="lede">A standard five piece rock kit as seen from the audience. Drag to rotate, scroll or pinch to zoom, tap any part to hear it and learn what it does. The layout matches the drummer sitting behind the kit: hi hat on their left, floor tom and ride on their right.</p>
+  <div class="row">
+    <button class="btn" id="k3-tour">Guided tour</button>
+    <button class="btn sm" id="k3-reset">Reset view</button>
+    <label class="toggle"><input type="checkbox" id="k3-labels" checked> Labels</label>
+    <span class="kit3d-msg" id="k3-msg"></span>
+  </div>
+  <div class="kit3d-wrap">
+    <canvas id="kit3d-canvas"></canvas>
+    <div class="panel kit3d-info" id="k3-info">
+      <h3>Tap a part of the kit</h3>
+      <p class="muted">Or pick one from the list. Each part explains its job in a rock groove, how it is played, where it sits in notation and tabs, and what your electronic pad is imitating.</p>
+      <div class="kit3d-parts" id="k3-parts"></div>
+    </div>
+  </div>
+  <p class="stage-note muted" style="margin-top:14px;font-size:14px">The 3D view loads a small graphics library from a CDN the first time you open it, so it needs an internet connection once. Everything else on this page works offline.</p>
+</section>
+
+<section class="view" id="view-theory">
+  <h2>Theory</h2>
+  <p class="lede">Only the theory a rock drummer uses every day. Each topic has something to listen to.</p>
+  <div id="theory"></div>
+</section>
+
+<section class="view" id="view-reading">
+  <h2>Reading</h2>
+  <p class="lede">Drum notation is easier than pitched notation: the line only tells you which drum, and the rhythm is the same as for any instrument.</p>
+  <div id="reading"></div>
+  <div class="panel quiz">
+    <h3>Reading challenge</h3>
+    <p>Listen to a groove, then tap the notation that matches it. Correct answers earn XP and count toward the Reader badge.</p>
+    <div class="row">
+      <button class="btn primary" id="q-play">Play the groove</button>
+      <select id="q-diff"><option value="1">Easy</option><option value="2">Medium</option><option value="3">Hard</option></select>
+      <span class="muted" id="q-score">Score 0 of 0</span>
+    </div>
+    <div class="grid3" id="q-opts" style="margin-top:12px"></div>
+    <div class="status" id="q-status"></div>
+  </div>
+  <div class="panel">
+    <h3>Tab reading test</h3>
+    <p>A pattern from the library is shown as a tab only. Read the count row, then the kick, snare and hat lines. Clap or play it slowly, then press check to hear it and see the notation. Kick placement is where most reading mistakes happen, so listen for that first.</p>
+    <div class="row">
+      <select id="tt-diff"><option value="1">Easy</option><option value="2">Medium</option><option value="3">Hard</option></select>
+      <button class="btn" id="tt-new">New tab</button>
+      <button class="btn primary" id="tt-check">Check</button>
+      <button class="btn sm" id="tt-open">Open in player</button>
+    </div>
+    <div class="tab" id="tt-tab" style="margin-top:12px"></div>
+    <div class="notation" id="tt-notation" style="display:none;margin-top:12px"></div>
+    <div class="status" id="tt-status"></div>
+  </div>
+</section>
+
+<section class="view" id="view-technique">
+  <h2>Technique</h2>
+  <p class="lede">Good technique is mostly about doing less: less grip, less tension, less lift.</p>
+  <div id="technique"></div>
+</section>
+
+<section class="view" id="view-rhythms">
+  <h2>Rhythms</h2>
+  <p class="lede">The pattern library. Tap a groove to open it in the player.</p>
+  <div class="cats" id="cats"></div>
+  <div class="glist" id="glist"></div>
+</section>
+
+<section class="view" id="view-mistakes">
+  <h2>Common mistakes of self taught drummers</h2>
+  <p class="lede">Each one has a symptom, a test you can run alone, and a fix.</p>
+  <div id="mistakes"></div>
+</section>
+
+<section class="view" id="view-play">
+  <h2>Groove player</h2>
+  <p class="lede" id="p-title"></p>
+  <div class="panel">
+    <div class="controls">
+      <button class="btn primary" id="p-play">Play</button>
+      <div class="control"><label for="p-bpm">Target tempo</label><input type="range" id="p-bpm" min="40" max="240" value="100"><div class="val" id="p-bpm-val">100</div></div>
+      <div class="control"><label for="p-speed">Speed</label><input type="range" id="p-speed" min="50" max="120" value="100" step="5"><div class="val" id="p-speed-val">100%</div></div>
+      <div class="control"><label for="p-dyn">Dynamics</label><input type="range" id="p-dyn" min="30" max="130" value="100" step="10"><div class="val" id="p-dyn-val">mf</div></div>
+      <div class="control"><label for="p-count">Spoken count</label>
+        <select id="p-count"><option value="0">Off</option><option value="1">Beats</option><option value="2">Eighths</option><option value="4">Sixteenths</option></select></div>
+    </div>
+    <div class="controls" style="margin-top:10px">
+      <label class="toggle"><input type="checkbox" id="p-loop" checked> Loop</label>
+      <label class="toggle"><input type="checkbox" id="p-click" checked> Click</label>
+      <label class="toggle"><input type="checkbox" id="p-countin" checked> Count in</label>
+      <label class="toggle"><input type="checkbox" id="p-notation" checked> Notation</label>
+      <label class="toggle"><input type="checkbox" id="p-score"> Score my playing</label>
+      <label class="toggle"><input type="checkbox" id="p-bass"> Band</label>
+      <select id="p-prog" title="Chord progression for the band"><option value="A,A,G,G">A A G G (Zeppelin style riff)</option><option value="E,E,E,E">E drone (Floyd style)</option><option value="F#m,A,E,B">F#m A E B (Oasis style)</option><option value="Am,F,C,G">Am F C G (Radiohead style)</option><option value="G,G,C,D">G G C D</option></select>
+      <button class="btn sm" id="p-reset">Reset edits</button>
+      <button class="btn sm" id="p-prev">Previous</button>
+      <button class="btn sm" id="p-next">Next</button>
+      <span class="muted small" id="p-bpm-hint"></span>
+    </div>
+    <div class="controls" style="margin-top:10px">
+      <div class="control"><label for="p-ramp">Tempo ramp</label><select id="p-ramp"><option value="0">Off</option><option value="2">+2 BPM</option><option value="4">+4 BPM</option><option value="5">+5 BPM</option><option value="10">+10 BPM</option></select></div>
+      <div class="control"><label for="p-rampbars">every</label><select id="p-rampbars"><option value="4">4 bars</option><option value="8" selected>8 bars</option><option value="16">16 bars</option></select></div>
+      <div class="control"><label for="p-rampmax">up to</label><input type="number" id="p-rampmax" value="140" min="40" max="240" style="width:80px"></div>
+      <span class="small muted">Click a row name in the grid to mute it. Muted parts are yours to play, and they still count in scoring.</span>
+    </div>
+    <div class="status" id="p-status"></div>
+    <div class="seq" id="seq"></div>
+    <div class="panel" id="p-scorebox" style="display:none;margin-top:12px;padding:12px 14px">
+      <div class="row spread"><b>Your playing</b><span class="small muted" id="p-inputsrc"></span></div>
+      <div class="score-live">
+        <div class="k"><b id="sc-acc">–</b><span>hit accuracy</span></div>
+        <div class="k"><b id="sc-bias">–</b><span>average timing (minus is early)</span></div>
+        <div class="k"><b id="sc-spread">–</b><span>consistency (lower is steadier)</span></div>
+        <div class="k"><b id="sc-miss">–</b><span>missed</span></div>
+        <div class="k"><b id="sc-extra">–</b><span>extra hits</span></div>
+      </div>
+      <canvas id="tl-canvas" width="900" height="120"></canvas>
+      <div class="small muted" id="sc-voices" style="margin-top:6px"></div>
+      <div class="pads-touch" id="touchpads">
+        <button data-hit="kk">Kick <span class="muted">F</span></button><button data-hit="sn">Snare <span class="muted">J</span></button><button data-hit="hh">Hi hat <span class="muted">K</span></button><button data-hit="fl">Floor tom <span class="muted">D</span></button>
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn sm" id="lat-cal">Calibrate latency</button><span class="small muted" id="lat-val"></span></div>
+    </div>
+    <div class="legend">
+      <span style="--c:var(--kick)">Kick</span><span style="--c:var(--snare)">Snare</span><span style="--c:var(--hat)">Hi hat</span>
+      <span style="--c:var(--tom)">Toms</span><span style="--c:var(--cym)">Cymbals</span><span>Bright ring: accent</span><span>Faded: ghost note</span>
+    </div>
+    <p class="small muted" style="margin-top:8px">Click a cell to cycle it: hit, accent, ghost, off. Use this to build your own variations.</p>
+    <div id="p-notation-box"></div>
+    <div class="tab" id="p-tab"></div>
+    <div id="p-desc" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<section class="view" id="view-songs">
+  <h2>Song lab</h2>
+  <p class="lede">Pick a real song, find its tempo, match it to grooves you already know, and gather the tabs and videos you need to learn it.</p>
+  <div class="panel">
+    <h3>Find a song</h3>
+    <div class="row"><input type="text" id="sg-q" placeholder="Title, or title and artist" style="flex:1;min-width:220px"><button class="btn primary" id="sg-search">Search</button></div>
+    <div class="status" id="sg-status"></div>
+    <div class="glist" id="sg-results"></div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Current song</h3>
+      <div id="sg-song"></div>
+    </div>
+    <div class="panel">
+      <h3>Tempo</h3>
+      <div class="row"><span class="bigtimer" id="sg-bpm">–</span><span class="muted small" id="sg-bpm-src"></span></div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" id="sg-tap">Tap tempo</button>
+        <button class="btn" id="sg-detect" disabled>Detect from preview</button>
+        <button class="btn" id="sg-file-btn">Detect from an audio file</button><input type="file" id="sg-file" accept="audio/*" style="display:none">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <input type="number" id="sg-bpm-in" min="30" max="300" placeholder="BPM" style="width:90px"><button class="btn sm" id="sg-bpm-set">Set</button>
+        <div class="control"><label for="sg-feel">Feel</label><select id="sg-feel"><option value="straight">Straight eighths or sixteenths</option><option value="shuffle">Shuffle or triplet feel</option><option value="half">Half time</option><option value="68">6/8 or 12/8</option><option value="odd">Odd meter</option></select></div>
+      </div>
+      <div class="status" id="sg-tempo-status"></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Grooves at this tempo</h3>
+    <p class="small muted">Library patterns whose natural tempo is near the song's. Each opens in the player at the song tempo; mute the rows you want to play yourself.</p>
+    <div class="glist" id="sg-matches"></div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Tabs, sheet music and covers</h3>
+      <p class="small muted">These open searches on other sites in a new tab. Tabs from the internet are sketches: trust the kick placement you hear over the one you read.</p>
+      <div class="row" id="sg-links"></div>
+    </div>
+    <div class="panel">
+      <h3>Video</h3>
+      <p class="small muted">Paste a YouTube link (a drum cover, a lesson or the original) and it plays here next to the grooves.</p>
+      <div class="row"><input type="text" id="sg-yt" placeholder="https://www.youtube.com/watch?v=..." style="flex:1;min-width:200px"><button class="btn" id="sg-yt-go">Embed</button></div>
+      <div id="sg-video"></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Notes and structure</h3>
+    <textarea id="sg-notes" placeholder="Intro: 4 bars hats only. Verse: core beat. Chorus: to the ride, crash on 1. Bridge: half time..."></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn primary" id="sg-save">Save song</button><button class="btn" id="sg-click">Click at this tempo</button><button class="btn" id="sg-log">Log a play along</button></div>
+  </div>
+  <div class="panel">
+    <h3>Your songs</h3>
+    <div class="glist" id="sg-saved"></div>
+  </div>
+</section>
+
+<section class="view" id="view-metro">
+  <h2>Metronome</h2>
+  <p class="lede">The first beat is accented. Subdivisions are quieter so the pulse stays clear. Every minute you play with it counts toward the Timekeeper badge.</p>
+  <div class="panel">
+    <div class="controls">
+      <button class="btn primary" id="m-play">Play</button>
+      <div class="control"><label for="m-bpm">Tempo</label><input type="range" id="m-bpm" min="30" max="240" value="80"><div class="val" id="m-bpm-val">80</div></div>
+      <div class="control"><label for="m-sig">Beats per bar</label><select id="m-sig"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option></select></div>
+      <div class="control"><label for="m-sub">Subdivision</label><select id="m-sub"><option value="1" selected>Quarters</option><option value="2">Eighths</option><option value="3">Triplets</option><option value="4">Sixteenths</option></select></div>
+      <div class="control"><label for="m-vol">Volume</label><input type="range" id="m-vol" min="0" max="100" value="80"></div>
+      <label class="toggle"><input type="checkbox" id="m-speak"> Speak the count</label>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn sm" data-bpm-step="-5">-5</button><button class="btn sm" data-bpm-step="-1">-1</button><button class="btn sm" data-bpm-step="1">+1</button><button class="btn sm" data-bpm-step="5">+5</button>
+      <button class="btn sm" id="m-tap">Tap tempo</button>
+      <label class="toggle small"><input type="checkbox" id="m-gap"> Gap trainer (mute bars 3 and 4)</label>
+    </div>
+    <div class="beats" id="m-beats"></div>
+    <div class="status" id="m-status"></div>
+  </div>
+  <div class="panel">
+    <h3>Tempo trainer</h3>
+    <p>Starts at one tempo and raises it every few bars. Stop when it falls apart, note the tempo, and that is your ceiling for today.</p>
+    <div class="controls">
+      <div class="control"><label>Start</label><input type="number" id="t-start" value="70" min="30" max="240"></div>
+      <div class="control"><label>Step</label><input type="number" id="t-step" value="4" min="1" max="20"></div>
+      <div class="control"><label>Every N bars</label><input type="number" id="t-bars" value="4" min="1" max="16"></div>
+      <button class="btn" id="t-go">Start trainer</button>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="view-practice">
+  <h2>Practice</h2>
+  <p class="lede">Plan the week, run the session, log what you did.</p>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Weekly plan</h3>
+      <div class="controls">
+        <div class="control"><label>Hours per week</label><input type="number" id="pl-hours" value="10" min="1" max="40" step="0.5"></div>
+        <div class="control"><label>Days per week</label><input type="number" id="pl-days" value="5" min="1" max="7"></div>
+        <div class="control"><label>Level</label><select id="pl-level"></select></div>
+        <button class="btn primary" id="pl-go">Generate</button>
+      </div>
+      <div id="pl-out" style="margin-top:12px"></div>
+    </div>
+    <div class="panel">
+      <h3>Session timer</h3>
+      <div class="bigtimer" id="st-time">00:00</div>
+      <div class="row"><button class="btn primary" id="st-toggle">Start</button><button class="btn" id="st-reset">Reset</button><button class="btn" id="st-log">Log this session</button></div>
+      <p class="small muted">Ten minute blocks work well. Warm up, one thing that is hard, one thing that is fun, then a song.</p>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Today's session</h3>
+    <p class="small muted">Built from your level, what you have not passed yet, and what you have practised least recently. Change the length and regenerate.</p>
+    <div class="controls">
+      <div class="control"><label>Minutes available</label><input type="number" id="td-min" value="60" min="15" max="240" step="5"></div>
+      <button class="btn primary" id="td-go">Build session</button>
+    </div>
+    <div id="td-out" style="margin-top:12px"></div>
+  </div>
+  <div class="panel">
+    <h3>Practice log</h3>
+    <div class="controls">
+      <div class="control"><label>Minutes</label><input type="number" id="lg-min" value="30" min="1" max="600"></div>
+      <div class="control"><label>Focus</label><select id="lg-focus"><option>Warm up and rudiments</option><option>Reading</option><option>Grooves</option><option>Fills</option><option>Song play along</option><option>Technique</option><option>Free play</option></select></div>
+      <div class="control" style="flex:1;min-width:200px"><label>Notes (what worked, what fell apart, tempos)</label><input type="text" id="lg-notes" placeholder="Paradiddle clean at 96, fell apart at 104"></div>
+      <button class="btn primary" id="lg-add">Add</button>
+    </div>
+    <div class="row spread" style="margin-top:10px"><span class="muted" id="lg-summary"></span><span><button class="btn sm" id="lg-export">Copy log as text</button> <button class="btn sm" id="pg-export">Export all progress</button> <button class="btn sm" id="pg-import">Import progress</button><input type="file" id="pg-file" accept="application/json" style="display:none"> <button class="btn sm" id="lg-clear">Clear log</button></span></div>
+    <div class="log"><ul id="lg-list"></ul></div>
+  </div>
+  <div class="panel">
+    <h3>Warm up routine (10 minutes)</h3>
+    <p>Do this before every session, at a tempo where every stroke is relaxed. The point is blood flow and attention, not speed.</p>
+    <div id="warmup"></div>
+  </div>
+</section>
+
+<section class="view" id="view-badges">
+  <h2>Badges</h2>
+  <p class="lede">Small rewards for the habits that actually make drummers better.</p>
+  <div class="badges" id="badges"></div>
+  <div class="panel"><h3>Reset</h3><p>Wipes XP, badges, checklists and the log from this browser.</p><button class="btn" id="reset-all">Reset all progress</button></div>
+</section>
+
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
