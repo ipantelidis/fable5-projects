@@ -50,6 +50,8 @@ js/content/stage*.js  course content, one stage per file (Stage 0 is split into 
 content/TODO.md       content manifest: what is authored, what still needs exercises
 tools/validate.js     node tools/validate.js     → validates all content
 tools/browser-test.js node tools/browser-test.js → drives the app in headless Chrome/Edge (83 checks)
+tools/validate-jxa.sh sh tools/validate-jxa.sh    → validator via macOS JavaScriptCore (no node needed)
+tools/smoke-jxa.sh    sh tools/smoke-jxa.sh      → engine smoke test via JavaScriptCore (no browser needed)
 PLAN.md               file structure, data schema, design tokens
 ```
 
@@ -57,6 +59,8 @@ PLAN.md               file structure, data schema, design tokens
 
 ```
 node tools/validate.js        # ids, answers, dictionary links, audio strings, placeholders
+sh tools/validate-jxa.sh      # same checks without node, using macOS's built-in JavaScript engine
+sh tools/smoke-jxa.sh         # engine smoke test without a browser: exam builder, auto exercises, checker, conjugation drills, state round trip
 node tools/browser-test.js    # loads tools/test.html headless, runs a full lesson, review, exam, modes, export/import
 node tools/browser-test.js --size=400,900   # narrow viewport
 ```

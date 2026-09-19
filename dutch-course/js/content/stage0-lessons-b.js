@@ -163,7 +163,7 @@
     mc('"Vandaag is het 3 mei." Which is right?', ['Today is the third of May.', 'Tomorrow is the third of May.', 'Today is March the third.'], 0, 'vandaag = today; mei = May.'),
     fill('___ zondag is de winkel gesloten.', ['Op'], 'On Sunday the shop is closed.', 'op + day.'),
     tr('en-nl', 'tomorrow', ['morgen'], 'morgen.'),
-    build('In August I go on holiday.', 'In augustus ga ik op vakantie.', ['op', 'gaan'], 'When the sentence starts with "In augustus", the verb "ga" comes second and "ik" after it. You will learn this word-order rule properly in A1.'),
+    build('In August I go on holiday.', 'In augustus ga ik op vakantie.', ['naar', 'gaan'], 'When the sentence starts with "In augustus", the verb "ga" comes second and "ik" after it. You will learn this word-order rule properly in A1.'),
     speak('Tot morgen!', 'See you tomorrow!'),
   ]));
 

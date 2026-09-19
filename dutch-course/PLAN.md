@@ -115,3 +115,29 @@ Known word = card with `reps ≥ 2 && interval ≥ 7 && lapses-adjusted accuracy
 ## 4. Phases
 1. This document. 2. Engine + UI + Stage 0, headless-verified. 3. Stage 1 + Stage 2 content, validator.
 4. Stage 3 + 4 grammar + ≥2 lessons per unit, reference, dictionary, review modes, export/import. 5. Polish, README.
+
+## 5. Roadmap: later phases (agreed 2026-09-20, not yet started)
+
+These three features are wanted after the content phases. They are recorded here so the design stays compatible with them. None of them may break the two hard constraints: the app must keep working from `file://` with no account, and there is still no build step.
+
+### 5a. Accounts and multi-user progress sync
+Goal: several people can use the same live site, each with their own progress, on any device.
+
+- **Approach**: keep localStorage as the source of truth on the device, and add an optional cloud sync layer. Backend-as-a-service loaded from a CDN `<script>` tag (Supabase is the first choice: email magic link and OAuth sign-in, Postgres with row-level security, a generous free tier, and a plain JS client that works without a bundler). Firebase is the fallback.
+- **Data model**: one row per user in a `progress` table: `{ user_id, state jsonb, updated_at }`. The `state` blob is exactly the export JSON that already exists, so export/import, sync and the validator all share one schema. Add `v` and `updated_at` to the state for conflict handling (last-writer-wins by `updated_at`, with a "keep local / keep cloud" prompt when both changed).
+- **Engine changes**: new `js/engine/sync.js` (sign in, sign out, push on every `state.save()` debounced to a few seconds, pull on boot and on tab focus). Settings gets a Sign in card. Without sign-in nothing changes. No user content is ever sent anywhere except the progress blob.
+- **Open decisions for that phase**: Supabase project ownership, whether to allow anonymous "guest" accounts that can be upgraded later, and whether a leaderboard between users is wanted (it would need a second table with opt-in).
+
+### 5b. Live deployment for everyone
+- **Hosting**: GitHub Pages from the `main` branch, `dutch-course/` published as the site root (either move the folder to a dedicated repository, or add a tiny GitHub Actions workflow that copies `dutch-course/` to the `gh-pages` branch; the app itself still needs no build).
+- **Needs before going public**: a favicon and `manifest.json` so the site installs as a home-screen app on phones, a service worker for offline use (all files are static, so a cache-first worker of about 40 lines is enough), an `Over deze cursus` page with a short privacy note, and a content licence line in the README.
+- **Voice**: GitHub Pages is HTTPS, which speech recognition requires; nothing else changes.
+
+### 5c. Coach: a personal guide inside the app
+Goal: a helper that knows the learner's progress and tells them what to do next, in chat form and through small nudges, so nobody has to work out the platform on their own.
+
+- **Tier 1, rule-based coach (no server, works offline, build first)**. A `js/engine/coach.js` module that reads the existing state (due SRS cards, streak, daily goal, weakest skill bar, last lesson, badges close to unlocking, time since last session) and produces prioritised suggestions with a one-line reason and a deep link, for example "12 words are due, a 5-minute review keeps them" or "You have not spoken today, try Speaking mode". Surfaces: a Coach card on the home screen, a small non-blocking toast when the learner lands on a screen with an obvious next step, a first-run tour (5 steps, dismissable, never shown again), and a chat-style panel with quick-reply buttons ("What should I do now?", "How does review work?", "Explain my progress") answered from a small intent table. Every nudge is dismissable and there is a "Coach: quiet mode" setting.
+- **Tier 2, conversational coach backed by Claude (optional, needs a key)**. Free-text questions such as "why is it ik ben gegaan and not ik heb gegaan?" or "make me a plan for the next two weeks" go to the Claude API. The API key cannot live in a static site, so calls go through a small serverless proxy (Cloudflare Worker or Supabase Edge Function) that holds the key and checks the user's sign-in token from 5a. The request carries a compact progress summary (level, streak, weak skills, recent mistakes, current lesson) plus the relevant grammar entries as context, and a system prompt that keeps answers short, in English with Dutch examples, and inside the course. Load the `claude-api` skill before implementing this; use the current default model. Without a key the app silently falls back to Tier 1.
+- **Data for the coach**: extend `dayLog` with per-exercise-type accuracy and add a small `mistakes` ring buffer (last 50 wrong answers with lesson and grammar ids) so both tiers can point at real weaknesses. Both additions go through the export/import schema.
+
+Order: content phases first (Stage 2 to 5), then 5b (a live site makes 5a and 5c testable), then 5c Tier 1, then 5a, then 5c Tier 2.

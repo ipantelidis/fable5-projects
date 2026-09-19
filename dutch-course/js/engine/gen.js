@@ -13,12 +13,20 @@
   const isVerb = (v) => v && v.pos === 'verb' && v.forms && v.forms.pres && v.forms.pres.length >= 3;
 
   /** Present-tense form for a pronoun using stem|3sg|plural; jij after inversion not handled here */
-  G.presForm = function (v, pronoun) {
+  /** Irregular second-person forms (jij / je / u) that differ from the 3sg slot: [preferred, ...also accepted] */
+  const JIJ = { zijn: ['bent'], hebben: ['hebt', 'heeft'], zullen: ['zult', 'zal'], kunnen: ['kunt', 'kan'], willen: ['wilt', 'wil'] };
+  /** All accepted present-tense forms for a pronoun; the first one is the model answer */
+  G.presForms = function (v, pronoun) {
     const p = v.forms.pres;
-    if (pronoun === 'ik') return p[0];
-    if (['jij', 'je', 'hij', 'zij', 'u', 'het', 'men'].includes(pronoun)) return p[1];
-    return p[2];
+    if (pronoun === 'ik') return [p[0]];
+    if (['jij', 'je', 'u'].includes(pronoun)) {
+      if (JIJ[v.nl]) return pronoun === 'u' && v.nl === 'hebben' ? ['hebt', 'heeft'] : JIJ[v.nl].slice();
+      return [p[1]];
+    }
+    if (['hij', 'zij', 'het', 'men'].includes(pronoun)) return [p[1]];
+    return [p[2]];
   };
+  G.presForm = function (v, pronoun) { return G.presForms(v, pronoun)[0]; };
   G.pastForm = function (v, pronoun) {
     const q = v.forms.past || [];
     if (!q[0]) return null;
@@ -73,8 +81,8 @@
       case 'conj': {
         if (!isVerb(v)) return null;
         const [pr] = U.pick(PRON);
-        const ans = G.presForm(v, pr);
-        return { type: 'conj', verb: v.nl, pronoun: pr, tense: 'pres', answer: [ans], explain: pr + ' ' + ans + ' (' + PRON_EN[pr] + ' ' + v.en.replace(/^to /, '') + '). ' + G.conjRule(v, pr), vocab: [id], gen: true };
+        const answers = G.presForms(v, pr), ans = answers[0];
+        return { type: 'conj', verb: v.nl, pronoun: pr, tense: 'pres', answer: answers, explain: pr + ' ' + ans + ' (' + PRON_EN[pr] + ' ' + v.en.replace(/^to /, '') + '). ' + G.conjRule(v, pr), vocab: [id], gen: true };
       }
       case 'match': {
         const d = others(4);
@@ -104,6 +112,7 @@
   G.conjRule = function (v, pr) {
     const p = v.forms.pres;
     if (pr === 'ik') return 'ik = the stem (' + p[0] + ').';
+    if (['jij', 'je', 'u'].includes(pr) && JIJ[v.nl]) return v.nl + ' is irregular: jij / u ' + JIJ[v.nl][0] + (JIJ[v.nl][1] ? ' (' + JIJ[v.nl][1] + ' is also heard)' : '') + ', but hij / zij ' + p[1] + '.';
     if (['jij', 'hij', 'zij', 'u'].includes(pr)) return p[1] === p[0] ? 'The stem already ends in -t, so nothing is added.' : 'jij / hij / zij / u = stem + t (' + p[1] + ').';
     return 'Plural forms (wij / jullie / zij) use the full infinitive (' + p[2] + ').';
   };
