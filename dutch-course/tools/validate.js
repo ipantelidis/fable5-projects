@@ -6,7 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const root = path.join(__dirname, '..');
-const files = ['js/engine/util.js', 'js/engine/checker.js', 'js/content/index.js', 'js/engine/gen.js', 'js/engine/validator.js', 'js/content/stage0.js', 'js/content/stage0-lessons-a.js', 'js/content/stage0-lessons-b.js', 'js/content/stage1.js', 'js/content/stage1-u1-2.js', 'js/content/stage1-u3-4.js', 'js/content/stage1-u5-6.js', 'js/content/stage1-u7-8.js', 'js/content/stage2.js', 'js/content/stage2-u1-2.js', 'js/content/stage2-u3-4.js', 'js/content/stage2-u5-6.js', 'js/content/stage2-u7-8.js', 'js/content/stage3.js', 'js/content/stage3-u1-4.js', 'js/content/stage3-u5-8.js', 'js/content/stage4.js', 'js/content/stage5.js'];
+const files = ['js/engine/util.js', 'js/engine/checker.js', 'js/content/index.js', 'js/engine/gen.js', 'js/engine/validator.js', 'js/content/stage0.js', 'js/content/stage0-lessons-a.js', 'js/content/stage0-lessons-b.js', 'js/content/stage1.js', 'js/content/stage1-u1-2.js', 'js/content/stage1-u3-4.js', 'js/content/stage1-u5-6.js', 'js/content/stage1-u7-8.js', 'js/content/stage2.js', 'js/content/stage2-u1-2.js', 'js/content/stage2-u3-4.js', 'js/content/stage2-u5-6.js', 'js/content/stage2-u7-8.js', 'js/content/stage3.js', 'js/content/stage3-u1-4.js', 'js/content/stage3-u5-8.js', 'js/content/stage4.js', 'js/content/stage4-u1-3.js', 'js/content/stage4-u4-6.js', 'js/content/stage5.js'];
 
 const sandbox = { console, setTimeout, clearTimeout, Math, Date, JSON, Map, Set, Array, Object, String, Number, RegExp, Error, Promise, Intl, matchMedia: () => ({ matches: false }) };
 sandbox.window = sandbox;
