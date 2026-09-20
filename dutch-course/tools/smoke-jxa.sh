@@ -8,6 +8,7 @@ OUT="${TMPDIR:-/tmp}/nl-smoke-$$.js"
 {
   cat <<'JS'
 var __out = [], __fails = 0;
+function U_addDays(k, n) { var d = new Date(k + 'T12:00:00'); d.setDate(d.getDate() + n); var m = d.getMonth() + 1, dd = d.getDate(); return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (dd < 10 ? '0' : '') + dd; }
 function log(s){ __out.push(s); }
 function fail(s){ __fails++; __out.push('FAIL ' + s); }
 function pass(s){ __out.push('PASS ' + s); }
@@ -23,6 +24,7 @@ function stubEl(tag) {
   return base;
 }
 var window = this; var self = this; window.window = window;
+var Node = function () {}; var Element = Node; var HTMLElement = Node;
 var document = stubEl('document');
 document.createElement = function(t){ return stubEl(t); };
 document.createTextNode = function(t){ var e = stubEl('#text'); e.textContent = String(t); return e; };
@@ -55,6 +57,7 @@ try {
   var C = NL.content, A = NL.contentApi;
   /* 1. Stage exam builder produces 30 well-formed items for every stage */
   C.stages.forEach(function (st) {
+    if (st.hub) { pass('exam ' + st.id + ': hub stage, no exam'); return; }
     var exs = NL.review.examExercises(st);
     var bad = exs.filter(function (e) { return !e || !e.type; });
     if (exs.length >= 20 && exs.length <= 30 && !bad.length) pass('exam ' + st.id + ': ' + exs.length + ' items (' + (st.exam || []).length + ' hand-written)'); else fail('exam ' + st.id + ': ' + exs.length + ' items, ' + bad.length + ' malformed');
@@ -129,6 +132,33 @@ try {
   if ((s2.xp === 123) || (s2.state && s2.state.xp === 123)) pass('state save/export round trip'); else fail('state round trip lost xp: ' + json.slice(0, 80));
   var firstVocab = Object.keys(C.vocab)[0];
   if (NL.srs && NL.srs.grade) { NL.srs.grade(firstVocab, 'vocab', 5); NL.srs.grade(firstVocab, 'vocab', 5); pass('srs grade runs; due today: ' + (NL.srs.dueCount ? NL.srs.dueCount() : 'n/a')); }
+  /* 8. Stage 5: weekly challenge maths, bank grouping, talk topics */
+  var F = NL.fluency;
+  if (F.monday('2026-09-20') === '2026-09-14' && F.monday('2026-09-14') === '2026-09-14' && F.weekDates('2026-09-16').length === 7 && F.weekDates('2026-09-16')[6] === '2026-09-20') pass('week maths: Monday to Sunday'); else fail('week maths wrong: ' + F.monday('2026-09-20') + ' ' + F.weekDates('2026-09-16').join(','));
+  var seenCh = {}; for (var wk = 0; wk < C.challenges.length; wk++) { var cc = F.current(U_addDays('2026-01-05', wk * 7)); seenCh[cc.challenge.id] = 1; }
+  if (Object.keys(seenCh).length === C.challenges.length) pass('challenge rotation visits all ' + C.challenges.length + ' challenges'); else fail('challenge rotation only visits ' + Object.keys(seenCh).length);
+  var st8 = NL.state.load(); st8.dayLog = {}; st8.challenges = {}; var xpBefore = st8.xp;
+  var cur = F.current();
+  if (cur && !cur.done && !cur.claimed) pass('fresh week: challenge "' + cur.challenge.title + '" open with ' + cur.progress.length + ' goals'); else fail('fresh week should be open');
+  F.weekDates().forEach(function (d) { st8.dayLog[d] = { xp: 200, answers: 100, correct: 95, voice: 10, lessons: 1, reviews: 30, perfect: 1, bank: 20 }; });
+  var claimed = F.check();
+  var cur2 = F.current();
+  if (claimed && cur2.claimed && NL.state.get().xp > xpBefore && NL.state.get().badges['challenge-1']) pass('challenge completes once: bonus XP and badge awarded'); else fail('challenge claim failed: claimed=' + claimed + ' xp=' + NL.state.get().xp);
+  if (F.check() === false) pass('challenge cannot be claimed twice'); else fail('challenge claimed twice');
+  var groups = F.groups(), inGroups = 0, tiny = [];
+  groups.forEach(function (g) { inGroups += g.ids.length; if (g.ids.length < 5) tiny.push(g.id + ':' + g.ids.length); });
+  if (inGroups === Object.keys(C.vocab).length && !tiny.length) pass('vocabulary bank: ' + groups.length + ' groups cover all ' + inGroups + ' words'); else fail('bank coverage ' + inGroups + '/' + Object.keys(C.vocab).length + ' tiny groups: ' + tiny.join(' '));
+  var bankBad = [];
+  groups.forEach(function (g) { var ids = F.pickWords(g, 'new'); var exs = NL.gen.expand({ n: Math.min(20, ids.length * 2), kinds: ['mc-meaning', 'tr-nl-en', 'listen', 'tr-en-nl', 'article', 'dictation'] }, ids, g.ids); if (exs.length < 5) bankBad.push(g.id + ' only ' + exs.length); });
+  if (!bankBad.length) pass('vocabulary bank: every group yields a practice round'); else fail('bank practice rounds too short: ' + bankBad.join(', '));
+  var byLevel = {}; C.talk.forEach(function (t) { byLevel[t.level] = (byLevel[t.level] || 0) + 1; });
+  if (C.talk.length >= 12 && byLevel.A1 && byLevel.A2 && byLevel.B1 && byLevel.B2) pass('speaking topics: ' + C.talk.length + ' topics ' + JSON.stringify(byLevel)); else fail('speaking topics missing a level: ' + JSON.stringify(byLevel));
+  /* 9. The new screens render without throwing (stub DOM: catches undefined helpers and bad data access, not layout) */
+  [['fluency hub', function (h0) { F.hub(h0); }], ['bank overview', function (h0) { F.bankView(h0); }], ['bank theme', function (h0) { F.bankView(h0, 'eten'); }],
+   ['challenge page', function (h0) { F.challengeView(h0); }], ['home with challenge card and hub stage', function (h0) { NL.views.home(h0); }],
+   ['stage s5 redirects to hub', function (h0) { NL.views.stage(h0, 's5'); }], ['stage s4 list', function (h0) { NL.views.stage(h0, 's4'); }],
+   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }]
+  ].forEach(function (pair) { try { pair[1](stubEl('main')); pass('renders: ' + pair[0]); } catch (e) { fail('render ' + pair[0] + ': ' + e.message + ' (line ' + e.line + ')'); } });
 } catch (e) { fail('smoke crashed: ' + e.message + ' line ' + e.line + ' ' + (e.stack || '').split('\n').slice(0,3).join(' | ')); }
 log(''); log('SUMMARY fails=' + __fails);
 __out.join('\n');

@@ -41,6 +41,9 @@
     { id: 'review-100', name: 'Herhaler', desc: '100 review cards answered', icon: '\u{1F501}' },
     { id: 'xp-1000', name: '1000 XP', desc: 'Earn 1000 XP', icon: '\u{1F4AB}' },
     { id: 'goal-first', name: 'Doel gehaald', desc: 'Reach your daily goal', icon: '\u{1F3AF}' },
+    { id: 'challenge-1', name: 'Uitdaging', desc: 'Complete a weekly challenge', icon: '\u{1F3C5}' },
+    { id: 'challenge-4', name: 'Maand volgehouden', desc: 'Complete 4 weekly challenges', icon: '\u{1F4C6}' },
+    { id: 'challenge-12', name: 'Doorzetter', desc: 'Complete 12 weekly challenges', icon: '\u{1F9D7}' },
   ];
 
   /** Record one answer. Returns { xp, combo, levelUp } */
@@ -49,7 +52,7 @@
     const day = NL.state.day();
     s.stats.answers++; day.answers++;
     if (info.correct) { s.stats.correct++; day.correct++; }
-    if (info.voice) s.stats.voice++;
+    if (info.voice) { s.stats.voice++; day.voice = (day.voice || 0) + 1; }
     let xp = 0;
     if (info.correct) {
       xp = info.xp != null ? info.xp : 10;
@@ -112,6 +115,7 @@
     if (s.stats.bestCombo >= 10) G.badge('combo-10');
     if (s.xp >= 1000) G.badge('xp-1000');
     if ((s.stats.reviews || 0) >= 100) G.badge('review-100');
+    if (NL.fluency) NL.fluency.check();
     const st1 = NL.content.stages.find((x) => x.id === 's1');
     if (st1) {
       const ids = NL.contentApi.grammarIdsOfStage(st1);
@@ -127,7 +131,9 @@
     rec.times++; rec.last = pct; rec.date = U.today(); rec.done = true;
     if (pct > rec.best) rec.best = pct;
     let bonus = 30;
-    if (pct === 100 && total > 0) { bonus += 20; G.badge('perfect'); }
+    const day = NL.state.day();
+    day.lessons = (day.lessons || 0) + 1;
+    if (pct === 100 && total > 0) { bonus += 20; day.perfect = (day.perfect || 0) + 1; G.badge('perfect'); }
     G.badge('first-lesson');
     s.stats.sessions++;
     NL.sfx.finish();

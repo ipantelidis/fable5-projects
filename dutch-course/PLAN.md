@@ -21,6 +21,7 @@ js/engine/lesson.js     lesson runner: Goal → Learn → Vocab → Practice →
 js/engine/review.js     SRS review session + practice modes (speed, sprint, listen, speak, talk)
 js/engine/validator.js  content validator (also run headless by tools/validate.js)
 js/engine/views.js      screens: home, stage map, unit, grammar ref, dictionary, settings
+js/engine/fluency.js    Stage 5: weekly challenges, themed vocabulary bank, fluency hub (added in the Stage 5 phase)
 js/app.js               router (#/…), boot, global keyboard shortcuts
 js/content/index.js     content registry helpers (V(), G(), lesson builders)
 js/content/stage0.js    Foundations
@@ -28,7 +29,8 @@ js/content/stage1.js    A1
 js/content/stage2.js    A2
 js/content/stage3.js    B1
 js/content/stage4.js    B2
-js/content/stage5.js    Fluency & maintenance (challenges, speaking topics, vocab bank)
+js/content/stage5.js    Fluency & maintenance (speaking topics, weekly challenges, bank themes) + stage5-bank.js (bank words)
+                        Stages 1 to 4 are split into a grammar file (stageN.js) and lesson files (stageN-u*.js)
 content/TODO.md         content manifest: what is authored, what still needs exercises
 tools/validate.js       node: loads content, runs validator, exits non-zero on errors
 tools/browser-test.js   node: launches Chrome headless, loads index.html, reports console errors + self-tests
@@ -94,7 +96,8 @@ Known word = card with `reps ≥ 2 && interval ≥ 7 && lapses-adjusted accuracy
 
 ### User state (localStorage key `nl.state.v1`)
 ```js
-{ v:1, created, xp, dailyGoal:50, dayLog:{ 'YYYY-MM-DD': {xp, answers, correct} },
+{ v:1, created, xp, dailyGoal:50, dayLog:{ 'YYYY-MM-DD': {xp, answers, correct, voice?, lessons?, perfect?, reviews?, bank?} },
+  challenges:{ '<Monday YYYY-MM-DD>': {id, date, xp} },   // weekly challenges claimed (Stage 5)
   streak:{ current, best, last }, badges:{ id:date }, levelSeen,
   lessons:{ lessonId:{ best, last, done:true, date } }, unitsReviewed:{}, exams:{ stageId:score },
   unlocked:{ s0:true, s1:true }, skills:{ grammar, vocab, listening, speaking, reading, writing }, // xp per skill

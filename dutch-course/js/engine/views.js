@@ -50,10 +50,20 @@
     if (hint && !s.settings.sttSeen) host.appendChild(h('div.notice', hint, ' Voice output still works here.'));
     else if (!T.hasDutchVoice() && T.supported()) host.appendChild(h('div.notice', 'No Dutch voice was found in this browser yet. Chrome and Edge include Dutch voices; on Windows you can add "Nederlands" under Settings → Time & language → Speech.'));
 
+    if (NL.fluency) host.appendChild(NL.fluency.homeCard());
+
     /* Stages */
     host.appendChild(h('h2', { style: { marginTop: '32px' } }, 'Your path'));
     const grid = h('div.grid');
     for (const st of NL.content.stages) {
+      if (st.hub) { // Stage 5: a hub (review, challenges, talk topics, vocabulary bank), open at every level
+        const total = Object.keys(NL.content.vocab).length, known = NL.srs.knownWords();
+        grid.appendChild(h('a.card.stage-card', { href: '#/fluency', 'aria-label': st.title },
+          h('div.row.row-between', h('div.stage-code', st.cefr), h('span.pill', known + '/' + total + ' words')),
+          h('h3', st.title), h('p.muted.small', st.blurb),
+          h('div.progress', h('div.bar', { style: { width: U.pct(known, total) + '%' } }))));
+        continue;
+      }
       const unlocked = NL.game.isUnlocked(st.id);
       const p = lessonPct(st);
       const card = h('a.card.stage-card' + (unlocked ? '' : '.locked'), { href: unlocked ? '#/stage/' + st.id : '#/settings', 'aria-label': st.title + (unlocked ? '' : ' (locked)') },
@@ -68,6 +78,8 @@
     host.appendChild(h('h2', { style: { marginTop: '32px' } }, 'Practice modes'));
     const modes = h('div.mode-grid');
     [['speed', '⏱️', 'Speed round', '60 s vocabulary'], ['sprint', '\u{1F3C3}', 'Conjugation sprint', '60 s verb forms'], ['listening', '\u{1F3A7}', 'Listening only', 'dictation + choose'], ['speaking', '\u{1F399}️', 'Speaking only', 'say the sentences'], ['freetalk', '\u{1F5E8}️', 'Free talk', 'topics + model answers']].forEach(([id, ico, name, sub]) => modes.appendChild(h('a.mode', { href: '#/mode/' + id }, h('span.ico', ico), h('b', name), h('span', sub))));
+    modes.appendChild(h('a.mode', { href: '#/bank' }, h('span.ico', '\u{1F5C2}️'), h('b', 'Vocabulary bank'), h('span', 'browse by theme')));
+    modes.appendChild(h('a.mode', { href: '#/challenge' }, h('span.ico', '\u{1F3C5}'), h('b', 'Weekly challenge'), h('span', 'a new goal every Monday')));
     host.appendChild(modes);
 
     /* Skills + streak calendar */
@@ -105,6 +117,7 @@
   V.stage = function (host, id) {
     const st = A.findStage(id);
     if (!st) return host.appendChild(h('p', 'Stage not found.'));
+    if (st.hub && NL.fluency) return NL.fluency.hub(host);
     if (!NL.game.isUnlocked(id)) return host.appendChild(h('div.card', h('h2', st.title + ' is locked'), h('p', 'Pass the previous stage exam, take the placement test, or switch on "Unlock everything" in Settings.'), h('a.btn', { href: '#/settings' }, 'Settings')));
     const s = NL.state.get();
     const p = lessonPct(st);

@@ -148,6 +148,39 @@
       }
       (st.exam || []).forEach((e, i) => checkEx(e, 'stage ' + st.id + ' exam#' + (i + 1)));
     }
+    /* Stage 5 data: speaking topics, weekly challenges, vocabulary-bank groups */
+    counts.talk = 0; counts.challenges = 0; counts.bankGroups = 0;
+    const LEVELS = ['A1', 'A2', 'B1', 'B2'];
+    (C.talk || []).forEach((t) => {
+      counts.talk++;
+      const w = 'talk ' + t.id;
+      uniq('talk:' + t.id, w);
+      if (!nonEmpty(t.title)) err(w, 'missing title');
+      if (!LEVELS.includes(t.level)) err(w, 'level must be A1, A2, B1 or B2');
+      if (!Array.isArray(t.prompts) || t.prompts.length < 2) err(w, 'needs at least 2 prompts');
+      else t.prompts.forEach((p, i) => { if (!nonEmpty(p.prompt) || !nonEmpty(p.model) || !nonEmpty(p.modelEn)) err(w, 'prompt ' + (i + 1) + ' needs prompt, model and modelEn'); if (/lorem ipsum|\bTODO\b|placeholder/i.test([p.prompt, p.model, p.modelEn].join(' '))) err(w, 'placeholder text in prompt ' + (i + 1)); });
+    });
+    const KINDS = (NL.fluency && NL.fluency.GOAL_KINDS) || ['xp', 'answers', 'days', 'voice', 'lessons', 'reviews', 'perfect', 'bank', 'accuracy'];
+    (C.challenges || []).forEach((c) => {
+      counts.challenges++;
+      const w = 'challenge ' + c.id;
+      uniq('challenge:' + c.id, w);
+      if (!nonEmpty(c.title) || !nonEmpty(c.desc)) err(w, 'needs title and desc');
+      if (!Array.isArray(c.goals) || !c.goals.length) err(w, 'needs goals');
+      else c.goals.forEach((g) => { if (!KINDS.includes(g.kind)) err(w, 'unknown goal kind ' + g.kind); if (!(g.n > 0)) err(w, 'goal ' + g.kind + ' needs n > 0'); if (g.kind === 'days' && g.n > 7) err(w, 'a week has 7 days'); if (g.kind === 'accuracy' && g.n > 100) err(w, 'accuracy is a percentage'); });
+    });
+    const themesInUse = new Set(Object.values(C.vocab).map((v) => v.theme));
+    const claimed = {};
+    (C.bank || []).forEach((g) => {
+      counts.bankGroups++;
+      const w = 'bank group ' + g.id;
+      uniq('bank:' + g.id, w);
+      if (!nonEmpty(g.title)) err(w, 'missing title');
+      if (!Array.isArray(g.themes) || !g.themes.length) err(w, 'needs themes');
+      else { g.themes.forEach((t) => { if (claimed[t]) err(w, 'theme ' + t + ' is already in group ' + claimed[t]); claimed[t] = g.id; }); if (!g.themes.some((t) => themesInUse.has(t))) warn(w, 'no dictionary word uses any of its themes'); }
+    });
+    if ((C.bank || []).length) { const loose = Array.from(themesInUse).filter((t) => t && !claimed[t]); if (loose.length) warn('bank', 'themes not in any group (they land in "Everything else"): ' + loose.join(', ')); }
+
     // words used in fill/build answers should be in the dictionary (warning level: function words are fine)
     return { ok: errors.length === 0, errors, warnings, counts };
   };

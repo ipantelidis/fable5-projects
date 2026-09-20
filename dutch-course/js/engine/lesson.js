@@ -94,7 +94,7 @@
         const g = NL.game.answer({ correct: result.ok, partial: result.partial, type: ex.type, voice: result.voice, combo: sess.combo });
         sess.xp += g.xp; result.xpEarned = g.xp;
         sess.results.push({ ex, result });
-        if (opts.mode === 'review') { const s = NL.state.get(); s.stats.reviews = (s.stats.reviews || 0) + 1; }
+        if (opts.mode === 'review') { const s = NL.state.get(); s.stats.reviews = (s.stats.reviews || 0) + 1; const d = NL.state.day(); d.reviews = (d.reviews || 0) + 1; }
       }
       const items = itemsFor(result);
       const q = result.quality != null ? result.quality : result.ok ? 4 : 1;
