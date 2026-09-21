@@ -47,7 +47,7 @@ Grammar reference: **done** (17 rules in js/content/stage2.js: perfect tense, he
 
 Stage exam: 46 hand-written items in js/content/stage2-u7-8.js; the engine samples 30 per attempt.
 
-## Stage 3 — B1 (grammar reference complete; 2 full lessons per unit; more lessons to write)
+## Stage 3 — B1 (complete: 12 grammar rules, 8 units x 5 lessons = 40 lessons, hand-written exam)
 
 Grammar reference: **done** (12 rules in js/content/stage3.js: relative clauses, pronominal adverbs, passive, zou and hypotheticals, indirect speech, infinitive constructions, word order in depth, complex negation, word formation, particles, register, idioms). Every grammar topic in the brief has a full explanation.
 
@@ -61,8 +61,8 @@ Lessons live in js/content/stage3-u1-4.js and js/content/stage3-u5-8.js. **full*
 | s3u4 Gezondheid en levensstijl | advice with zou · complex negation · hypotheticals in the past · stress and work-life balance · specialist and hospital (stage3-extra-b.js) | complete: 5 lessons |
 | s3u5 Milieu | passive in every tense + water and energy · word formation + waste · the energy transition debate · transport and mobility · a letter to the gemeente (stage3-extra-c.js) | complete: 5 lessons |
 | s3u6 Geld en bureaucratie | relative clauses with prepositions + money · formal register + official letters · the belastingaangifte · insurance and claims · phoning an organisation (stage3-extra-c.js) | complete: 5 lessons |
-| s3u7 Vergaderingen en e-mails | meeting language + word order for emphasis · professional email | presentations and answering questions · performance review (functioneringsgesprek) · small talk at work |
-| s3u8 Nederlandse cultuur en geschiedenis | customs + idioms · a short history | more idioms and proverbs in context · art and literature · regions, dialects and Frisian |
+| s3u7 Vergaderingen en e-mails | meeting language + word order for emphasis · professional email · presentations and questions · the functioneringsgesprek · small talk at work (stage3-extra-d.js) | complete: 5 lessons |
+| s3u8 Nederlandse cultuur en geschiedenis | customs + idioms · a short history · more idioms in context · art and literature · regions, dialects and Frisian (stage3-extra-d.js) | complete: 5 lessons |
 
 Stage exam: **done**, 52 hand-written items covering every B1 rule (js/content/stage3-u5-8.js); the engine samples 30 per attempt.
 

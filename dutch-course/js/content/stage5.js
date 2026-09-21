@@ -132,7 +132,7 @@
     { id: 'thuis', title: 'Home and daily life', nl: 'Thuis en dagelijks leven', icon: '\u{1F3E0}', themes: ['home', 'housing', 'daily', 'furniture', 'kitchen'] },
     { id: 'eten', title: 'Food and drink', nl: 'Eten en drinken', icon: '\u{1F9C0}', themes: ['food', 'cafe'] },
     { id: 'winkelen', title: 'Shopping, clothes and money', nl: 'Winkelen, kleding en geld', icon: '\u{1F6CD}️', themes: ['shopping', 'complaints', 'clothes', 'money', 'economy'] },
-    { id: 'stad', title: 'City, transport and travel', nl: 'Stad, vervoer en reizen', icon: '\u{1F6B2}', themes: ['city', 'directions', 'places', 'transport', 'travel', 'countries', 'accidents'] },
+    { id: 'stad', title: 'City, transport and travel', nl: 'Stad, vervoer en reizen', icon: '\u{1F6B2}', themes: ['city', 'directions', 'places', 'regions', 'transport', 'travel', 'countries', 'accidents'] },
     { id: 'gezondheid', title: 'Health and body', nl: 'Gezondheid en lichaam', icon: '\u{1FA7A}', themes: ['health', 'body', 'appointments'] },
     { id: 'werk', title: 'Work and communication', nl: 'Werk en communicatie', icon: '\u{1F4BC}', themes: ['work', 'career', 'meetings', 'email', 'phone', 'communication', 'letters', 'professions'] },
     { id: 'studie', title: 'Study, science and technology', nl: 'Studie, wetenschap en techniek', icon: '\u{1F52C}', themes: ['education', 'study', 'exam', 'science', 'technology'] },
