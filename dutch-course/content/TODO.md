@@ -57,8 +57,8 @@ Lessons live in js/content/stage3-u1-4.js and js/content/stage3-u5-8.js. **full*
 |---|---|---|
 | s3u1 Nieuws en samenleving | relative clauses die/dat + news · passive with worden + reports · the Dutch political system · listening to the radio news · writing a summary (stage3-extra-a.js) | complete: 5 lessons |
 | s3u2 Meningen en discussies | opinions + reported views · particles · reported speech in the past · holding your own in a discussion · writing an opinion piece (stage3-extra-a.js) | complete: 5 lessons |
-| s3u3 Onderwijs | school system + pronominal adverbs · infinitive constructions | parents’ evening and talking to a teacher · adult education and inburgering exam tasks · study skills vocabulary |
-| s3u4 Gezondheid en levensstijl | advice with zou · complex negation | hypotheticals in the past (als ik had geweten) · mental health and work-life balance · at the specialist and the hospital |
+| s3u3 Onderwijs | school system + pronominal adverbs · infinitive constructions · parents’ evening · adult education and exam tasks · study skills (stage3-extra-b.js) | complete: 5 lessons |
+| s3u4 Gezondheid en levensstijl | advice with zou · complex negation · hypotheticals in the past · stress and work-life balance · specialist and hospital (stage3-extra-b.js) | complete: 5 lessons |
 | s3u5 Milieu | passive in every tense + water and energy · word formation + waste | the energy transition debate · transport and mobility · writing a letter to the gemeente about the neighbourhood |
 | s3u6 Geld en bureaucratie | relative clauses with prepositions + money · formal register + official letters | the belastingaangifte step by step · insurance and claims · calling an organisation with a problem |
 | s3u7 Vergaderingen en e-mails | meeting language + word order for emphasis · professional email | presentations and answering questions · performance review (functioneringsgesprek) · small talk at work |
