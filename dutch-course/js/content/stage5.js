@@ -139,7 +139,7 @@
     { id: 'vrije-tijd', title: 'Free time, sport and culture', nl: 'Vrije tijd, sport en cultuur', icon: '\u{1F3AD}', themes: ['hobbies', 'leisure', 'sport', 'culture', 'media', 'story', 'arts'] },
     { id: 'natuur', title: 'Nature, weather and environment', nl: 'Natuur, weer en milieu', icon: '\u{1F333}', themes: ['nature', 'weather', 'environment', 'animals'] },
     { id: 'samenleving', title: 'Society, politics and bureaucracy', nl: 'Samenleving, politiek en bureaucratie', icon: '\u{1F3DB}️', themes: ['news', 'politics', 'society', 'history', 'bureaucracy', 'formal', 'law'] },
-    { id: 'debat', title: 'Opinions, debate and the language itself', nl: 'Meningen, debat en taal', icon: '\u{1F4AC}', themes: ['opinions', 'argument', 'abstract', 'discourse', 'fixed', 'register', 'informal', 'spoken', 'listening', 'variation', 'errors', 'false friends'] },
+    { id: 'debat', title: 'Opinions, debate and the language itself', nl: 'Meningen, debat en taal', icon: '\u{1F4AC}', themes: ['opinions', 'argument', 'debate', 'writing', 'abstract', 'discourse', 'fixed', 'register', 'informal', 'spoken', 'listening', 'variation', 'errors', 'false friends'] },
     { id: 'uitdrukkingen', title: 'Idioms and proverbs', nl: 'Uitdrukkingen en spreekwoorden', icon: '\u{1F408}', themes: ['idioms', 'proverbs'] },
   ];
 

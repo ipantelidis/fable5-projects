@@ -143,4 +143,12 @@ Goal: a helper that knows the learner's progress and tells them what to do next,
 - **Tier 2, conversational coach backed by Claude (optional, needs a key)**. Free-text questions such as "why is it ik ben gegaan and not ik heb gegaan?" or "make me a plan for the next two weeks" go to the Claude API. The API key cannot live in a static site, so calls go through a small serverless proxy (Cloudflare Worker or Supabase Edge Function) that holds the key and checks the user's sign-in token from 5a. The request carries a compact progress summary (level, streak, weak skills, recent mistakes, current lesson) plus the relevant grammar entries as context, and a system prompt that keeps answers short, in English with Dutch examples, and inside the course. Load the `claude-api` skill before implementing this; use the current default model. Without a key the app silently falls back to Tier 1.
 - **Data for the coach**: extend `dayLog` with per-exercise-type accuracy and add a small `mistakes` ring buffer (last 50 wrong answers with lesson and grammar ids) so both tiers can point at real weaknesses. Both additions go through the export/import schema.
 
+### 5d. Interface polish with a UI/UX skill (noted 2026-09-21)
+Goal: a cleaner, more structured interface without changing how the app works.
+
+- **Resource**: the user found the `ui-ux-pro-max-skill` repository (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill), a Claude Code skill with UI/UX guidance. Before using it: read what the skill contains and does (it is third-party instructions and possibly scripts), then install it as a project skill only if it looks sound.
+- **Scope for that phase**: audit every screen against one checklist (hierarchy, spacing rhythm, consistent card and button variants, empty states, focus and contrast, phone width). Likely targets: the home screen has grown (hero, challenge card, path, modes, skills, calendar) and needs grouping; the lesson runner's feedback panel; the vocabulary bank and dictionary rows; the settings page; a proper navigation entry for Stage 5 features.
+- **Constraints that stay**: vanilla CSS with the existing design tokens in css/app.css, no framework, no build step, works from `file://`, dark mode, reduced motion, 44px touch targets.
+- **How**: one screen per change, visual check in a real browser after each, since the current test tooling cannot judge layout.
+
 Order: content phases first (Stage 2 to 5), then 5b (a live site makes 5a and 5c testable), then 5c Tier 1, then 5a, then 5c Tier 2.

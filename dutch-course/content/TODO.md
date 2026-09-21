@@ -55,8 +55,8 @@ Lessons live in js/content/stage3-u1-4.js and js/content/stage3-u5-8.js. **full*
 
 | Unit | Full lessons | Still to write (todo) |
 |---|---|---|
-| s3u1 Nieuws en samenleving | relative clauses die/dat + news · passive with worden + reports | politics and the Dutch political system · listening to the radio news · writing a short summary of an article |
-| s3u2 Meningen en discussies | opinions + reported views · particles wel/toch/even/maar/eens/nou/hoor | indirect speech in the past (zei dat … was) · debating: interrupting, conceding, concluding · writing an opinion piece |
+| s3u1 Nieuws en samenleving | relative clauses die/dat + news · passive with worden + reports · the Dutch political system · listening to the radio news · writing a summary (stage3-extra-a.js) | complete: 5 lessons |
+| s3u2 Meningen en discussies | opinions + reported views · particles · reported speech in the past · holding your own in a discussion · writing an opinion piece (stage3-extra-a.js) | complete: 5 lessons |
 | s3u3 Onderwijs | school system + pronominal adverbs · infinitive constructions | parents’ evening and talking to a teacher · adult education and inburgering exam tasks · study skills vocabulary |
 | s3u4 Gezondheid en levensstijl | advice with zou · complex negation | hypotheticals in the past (als ik had geweten) · mental health and work-life balance · at the specialist and the hospital |
 | s3u5 Milieu | passive in every tense + water and energy · word formation + waste | the energy transition debate · transport and mobility · writing a letter to the gemeente about the neighbourhood |
