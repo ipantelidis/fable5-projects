@@ -15,7 +15,7 @@ Run `node tools/validate.js` (or `sh tools/validate-jxa.sh` on a Mac without nod
 
 Stage exam: generated from lesson tests (engine), no hand-written exam yet.
 
-## Stage 1 — A1 (full, 31 lessons, hand-written exam core)
+## Stage 1 — A1 (full, 33 lessons, every unit has at least 4, hand-written exam core)
 
 | Unit | Lessons | Status |
 |---|---|---|
@@ -25,8 +25,8 @@ Stage exam: generated from lesson tests (engine), no hand-written exam yet.
 | s1u4 De stad en vervoer | city + er is · separable verbs · time prepositions · bike & traffic | full |
 | s1u5 Werk en studie | professions · irregular verbs · frequency + graag · conjunctions + email | full |
 | s1u6 Dagelijks leven | daily routine · hobbies · invitations · describing people | full |
-| s1u7 Het weer | weather · clothes · small talk + forecast | full |
-| s1u8 Gezondheid | body + symptoms · huisarts · emergencies + pharmacy | full |
+| s1u7 Het weer | weather · clothes · small talk + forecast · seasons, holidays and what you do (stage1-extra.js) | full |
+| s1u8 Gezondheid | body + symptoms · huisarts · emergencies + pharmacy · healthy habits with modals (stage1-extra.js) | full |
 
 All 24 A1 grammar rules from the brief are in the grammar reference (js/content/stage1.js).
 
