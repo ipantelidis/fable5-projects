@@ -76,8 +76,8 @@ Lessons live in js/content/stage4-u1-3.js and js/content/stage4-u4-6.js.
 |---|---|---|
 | s4u1 Politiek en samenleving | parliament + long sentences · commentary + discourse markers · the EU and long sentences · the migration debate with nuance · a radio debate in exam format (stage4-extra-a.js) | complete: 5 lessons |
 | s4u2 Wetenschap en technologie | nominalisation · research reports + full passive · AI and ethics · health research in the news · summarising an academic text (stage4-extra-a.js) | complete: 5 lessons |
-| s4u3 Werk en carrière | career story + pluperfect and future perfect · job interview + register switching | labour law and contracts · giving a presentation and handling questions · conflict at work and feedback |
-| s4u4 Cultuur en media | arts and media + fixed expressions · real speech: reductions, fillers, Belgian Dutch | Dutch literature and film · social media and public debate · listening: interviews at natural speed (exam format) |
+| s4u3 Werk en carrière | career story + pluperfect and future perfect · job interview + register switching · labour law and contracts · presenting a case and critical questions · conflict and feedback (stage4-extra-b.js) | complete: 5 lessons |
+| s4u4 Cultuur en media | fixed expressions · reductions, fillers, Belgian Dutch · literature and film reviews · social media and public debate · interviews at natural speed in exam format (stage4-extra-b.js) | complete: 5 lessons |
 | s4u5 Debat en abstracte onderwerpen | the betoog · proverbs and idioms in debate and headlines | ethics and dilemmas · economy and inequality · a full timed debate with rebuttal |
 | s4u6 Valkuilen en examentraining | false friends + surviving errors · Staatsexamen: all four parts | a complete mock reading paper · a complete mock writing paper · a complete mock speaking paper |
 

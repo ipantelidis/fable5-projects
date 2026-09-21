@@ -134,7 +134,7 @@
     { id: 'winkelen', title: 'Shopping, clothes and money', nl: 'Winkelen, kleding en geld', icon: '\u{1F6CD}️', themes: ['shopping', 'complaints', 'clothes', 'money', 'economy'] },
     { id: 'stad', title: 'City, transport and travel', nl: 'Stad, vervoer en reizen', icon: '\u{1F6B2}', themes: ['city', 'directions', 'places', 'regions', 'transport', 'travel', 'countries', 'accidents'] },
     { id: 'gezondheid', title: 'Health and body', nl: 'Gezondheid en lichaam', icon: '\u{1FA7A}', themes: ['health', 'body', 'appointments'] },
-    { id: 'werk', title: 'Work and communication', nl: 'Werk en communicatie', icon: '\u{1F4BC}', themes: ['work', 'career', 'meetings', 'email', 'phone', 'communication', 'letters', 'professions'] },
+    { id: 'werk', title: 'Work and communication', nl: 'Werk en communicatie', icon: '\u{1F4BC}', themes: ['work', 'career', 'meetings', 'email', 'phone', 'communication', 'letters', 'professions', 'presenting'] },
     { id: 'studie', title: 'Study, science and technology', nl: 'Studie, wetenschap en techniek', icon: '\u{1F52C}', themes: ['education', 'study', 'exam', 'science', 'technology', 'academic'] },
     { id: 'vrije-tijd', title: 'Free time, sport and culture', nl: 'Vrije tijd, sport en cultuur', icon: '\u{1F3AD}', themes: ['hobbies', 'leisure', 'sport', 'culture', 'media', 'story', 'arts'] },
     { id: 'natuur', title: 'Nature, weather and environment', nl: 'Natuur, weer en milieu', icon: '\u{1F333}', themes: ['nature', 'weather', 'environment', 'animals'] },
