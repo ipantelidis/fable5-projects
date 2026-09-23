@@ -295,6 +295,7 @@
       h('button.btn.btn-ghost', { type: 'button', onclick: () => { if (confirm('Reset ALL progress? This cannot be undone. Export first if you want a backup.')) { NL.state.reset(); U.toast('Progress reset'); NL.app.render(); } } }, 'Reset'),
       file));
     host.appendChild(data);
+    if (NL.sync) host.appendChild(NL.sync.card());
 
     // Keyboard + about
     host.appendChild(h('div.card', h('h3', 'Keyboard shortcuts'), h('ul.learn-list', h('li', h('span.kbd', 'Enter'), ' check answer / continue'), h('li', h('span.kbd', 'Space'), ' replay the audio (outside a text box)'), h('li', h('span.kbd', '← → ↑ ↓'), ' or ', h('span.kbd', '1'), '–', h('span.kbd', '4'), ' choose an option'), h('li', h('span.kbd', 'Esc'), ' close a word popup'))));

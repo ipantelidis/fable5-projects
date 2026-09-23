@@ -106,6 +106,7 @@
     U.on('goal', () => U.toast('\u{1F3AF} Daily goal reached!', 'ok'));
     U.on('state', app.updateHeader);
     NL.game.checkBadges();
+    if (NL.sync) NL.sync.boot();
     if (!location.hash) location.hash = '#/home';
     app.render();
     // offline support on http(s) only: service workers do not run from file://

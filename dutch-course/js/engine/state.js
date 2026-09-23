@@ -38,6 +38,7 @@
     },
     save: U.debounce(() => S.saveNow(), 150),
     saveNow() {
+      state.updatedAt = new Date().toISOString();
       try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { console.warn('state save failed', e); }
       U.emit('state', state);
     },

@@ -112,3 +112,11 @@ Prepared: `manifest.webmanifest`, `icons/icon.svg`, `sw.js` (cache-first, precac
 Built: `js/engine/coach.js`. Rules: welcome back after 3+ idle days, big or normal review queue, streak at risk after 17:00, daily goal within 60 XP, no speaking today, a grammar rule slipped on 3+ times (from the new mistakes buffer and SRS lapses), weakest skill bar, pending unit review, stage exam within reach, next lesson, weekly challenge with one goal left, badge within 10%, vocabulary bank once all lessons are done. Surfaces: home card with the top three, one toast per rule per day, first-run tour (five steps), chat panel with nine quick questions plus keyword matching, quiet mode and tour reset in Settings.
 
 **todo:** tier 2 (free-text questions to Claude through a serverless proxy) after accounts exist; tune rule thresholds once real usage data exists; consider a weekly summary message on Mondays.
+
+## Cloud sync (PLAN.md 5a)
+
+Built, dormant: `js/engine/sync.js` (magic-link sign-in, debounced push after every save, pull on boot and on tab focus, newer-wins merge with a prompt when both sides changed), `js/config.js` (empty by default), `supabase/schema.sql` (one table with row-level security), Settings card, README section.
+
+**todo for the owner:** create the Supabase project, run the schema, enable email magic links, add the site URL as redirect, fill in `js/config.js`, bump `sw.js`, push. Then test: sign in on two browsers, change progress on one, open the other.
+
+**todo later:** guest-to-account upgrade is automatic (first push uploads local state); a leaderboard would need a second, opt-in table.

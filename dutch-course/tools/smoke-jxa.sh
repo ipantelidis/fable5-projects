@@ -8,6 +8,7 @@ OUT="${TMPDIR:-/tmp}/nl-smoke-$$.js"
 {
   cat <<'JS'
 var __out = [], __fails = 0;
+var NL_CONFIG = { supabaseUrl: '', supabaseAnonKey: '' };
 function U_addDays(k, n) { var d = new Date(k + 'T12:00:00'); d.setDate(d.getDate() + n); var m = d.getMonth() + 1, dd = d.getDate(); return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (dd < 10 ? '0' : '') + dd; }
 function log(s){ __out.push(s); }
 function fail(s){ __fails++; __out.push('FAIL ' + s); }
@@ -162,11 +163,12 @@ try {
   if (st9.mistakes.length === 6 && wg && wg.id === 'g1-v2' && NL.coach.suggestions().some(function (x) { return x.id === 'weak-grammar'; })) pass('coach: mistakes recorded and weak grammar detected'); else fail('coach recording: ' + st9.mistakes.length + ' ' + JSON.stringify(wg));
   var ans = ['now', 'progress', 'review', 'voice', 'challenge', 'wrong', 'plan', 'exam'].map(function (q) { return NL.coach.answer(q).length; });
   if (ans.every(function (n) { return n > 0; })) pass('coach: every intent answers'); else fail('coach intents: ' + ans.join(','));
+  if (NL.sync && NL.sync.status() === 'unconfigured' && !NL.sync.configured()) pass('sync: dormant when unconfigured'); else fail('sync should be dormant: ' + (NL.sync && NL.sync.status()));
   /* 9. The new screens render without throwing (stub DOM: catches undefined helpers and bad data access, not layout) */
   [['fluency hub', function (h0) { F.hub(h0); }], ['bank overview', function (h0) { F.bankView(h0); }], ['bank theme', function (h0) { F.bankView(h0, 'eten'); }],
    ['challenge page', function (h0) { F.challengeView(h0); }], ['home with challenge card and hub stage', function (h0) { NL.views.home(h0); }],
    ['stage s5 redirects to hub', function (h0) { NL.views.stage(h0, 's5'); }], ['stage s4 list', function (h0) { NL.views.stage(h0, 's4'); }],
-   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }], ['about', function (h0) { NL.views.about(h0); }], ['coach panel', function (h0) { NL.coach.view(h0); }]
+   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }], ['about', function (h0) { NL.views.about(h0); }], ['coach panel', function (h0) { NL.coach.view(h0); }], ['settings with sync card', function (h0) { NL.views.settings(h0); }]
   ].forEach(function (pair) { try { pair[1](stubEl('main')); pass('renders: ' + pair[0]); } catch (e) { fail('render ' + pair[0] + ': ' + e.message + ' (line ' + e.line + ')'); } });
 } catch (e) { fail('smoke crashed: ' + e.message + ' line ' + e.line + ' ' + (e.stack || '').split('\n').slice(0,3).join(' | ')); }
 log(''); log('SUMMARY fails=' + __fails);

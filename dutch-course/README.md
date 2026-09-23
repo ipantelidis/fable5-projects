@@ -24,6 +24,16 @@ Everything is relative-path, so the sub-folder is fine. Over HTTPS the page regi
 
 To publish the course as its own site instead, copy this folder to a new repository with `index.html` at its root and follow the same two steps. Progress is stored per browser in localStorage, so use Settings → Export progress before switching devices and Import progress on the new one.
 
+## Cloud sync (optional accounts)
+
+Off by default. The course is complete without it. To let people keep progress across devices:
+
+1. Create a free project at supabase.com. In the SQL editor run `supabase/schema.sql` (one table, row-level security so each user can only read and write their own row).
+2. Authentication → Providers: enable Email with magic links. Authentication → URL configuration: add the site URL as an allowed redirect.
+3. Put the project URL and the anon key in `js/config.js`, bump `sw.js`, push.
+
+Settings then shows a **Cloud sync** card: sign in with an email link, and the progress file is saved a few seconds after every change and loaded on other devices. Without a sign-in nothing changes. The anon key is meant to be public; the schema's policies do the protection. The Supabase client library is loaded from a CDN only on configured sites.
+
 ## Privacy
 
 No server, no account, no cookies, no analytics. All progress lives in the browser’s localStorage; export it from Settings to keep a backup. Voice recognition in Chrome and Edge is provided by the browser vendor and may process audio on their servers while the microphone is held; it can be avoided by self-grading speaking exercises. The in-app page **Settings → About this course and your data** says the same to learners.

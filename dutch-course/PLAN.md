@@ -123,7 +123,7 @@ Known word = card with `reps ≥ 2 && interval ≥ 7 && lapses-adjusted accuracy
 
 These three features are wanted after the content phases. They are recorded here so the design stays compatible with them. None of them may break the two hard constraints: the app must keep working from `file://` with no account, and there is still no build step.
 
-### 5a. Accounts and multi-user progress sync
+### 5a. Accounts and multi-user progress sync (built dormant 2026-09-23: js/engine/sync.js, js/config.js, supabase/schema.sql; activates when the owner fills in the two config values and serves over https)
 Goal: several people can use the same live site, each with their own progress, on any device.
 
 - **Approach**: keep localStorage as the source of truth on the device, and add an optional cloud sync layer. Backend-as-a-service loaded from a CDN `<script>` tag (Supabase is the first choice: email magic link and OAuth sign-in, Postgres with row-level security, a generous free tier, and a plain JS client that works without a bundler). Firebase is the fallback.
