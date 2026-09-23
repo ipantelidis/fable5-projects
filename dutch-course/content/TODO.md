@@ -66,7 +66,7 @@ Lessons live in js/content/stage3-u1-4.js and js/content/stage3-u5-8.js. **full*
 
 Stage exam: **done**, 52 hand-written items covering every B1 rule (js/content/stage3-u5-8.js); the engine samples 30 per attempt.
 
-## Stage 4 — B2 (grammar and skills reference complete; 2 full lessons per unit; more lessons to write)
+## Stage 4 — B2 (complete: 15 reference entries, 6 units x 5 lessons = 30 lessons, hand-written exam in Staatsexamen style)
 
 Reference: **done** (15 entries in js/content/stage4.js: long sentences and verb clusters, all past tenses incl. pluperfect and future perfect, the passive in all tenses and its alternatives, subjunctive remnants and fixed expressions, nominalisation and formal written Dutch, argumentative writing, reading strategies, listening to fast speech, discourse markers, register switching, regional variation and Belgian Dutch, advanced idioms and proverbs, false friends with English and German, common errors of advanced learners, and a Staatsexamen NT2 Programma II guide). Every B2 topic in the brief has a full explanation.
 
@@ -78,8 +78,8 @@ Lessons live in js/content/stage4-u1-3.js and js/content/stage4-u4-6.js.
 | s4u2 Wetenschap en technologie | nominalisation · research reports + full passive · AI and ethics · health research in the news · summarising an academic text (stage4-extra-a.js) | complete: 5 lessons |
 | s4u3 Werk en carrière | career story + pluperfect and future perfect · job interview + register switching · labour law and contracts · presenting a case and critical questions · conflict and feedback (stage4-extra-b.js) | complete: 5 lessons |
 | s4u4 Cultuur en media | fixed expressions · reductions, fillers, Belgian Dutch · literature and film reviews · social media and public debate · interviews at natural speed in exam format (stage4-extra-b.js) | complete: 5 lessons |
-| s4u5 Debat en abstracte onderwerpen | the betoog · proverbs and idioms in debate and headlines | ethics and dilemmas · economy and inequality · a full timed debate with rebuttal |
-| s4u6 Valkuilen en examentraining | false friends + surviving errors · Staatsexamen: all four parts | a complete mock reading paper · a complete mock writing paper · a complete mock speaking paper |
+| s4u5 Debat en abstracte onderwerpen | the betoog · proverbs and idioms · ethics and dilemmas · economy and inequality with figures · a timed debate with opening, rebuttal and closing (stage4-extra-c.js) | complete: 5 lessons |
+| s4u6 Valkuilen en examentraining | false friends + surviving errors · Staatsexamen: all four parts · mock reading paper (4 texts, 14 questions) · mock writing paper (6 short + 4 long tasks) · mock speaking paper (4 short + 3 long tasks) (stage4-extra-c.js) | complete: 5 lessons |
 
 Stage exam: **done**, 55 hand-written items in Staatsexamen style incl. an opinion text with exam-type questions (js/content/stage4-u4-6.js); the engine samples 30 per attempt. The writing and long speaking tasks are in lesson s4u6l2 and in Free talk, because a timed exam cannot self-grade them.
 
