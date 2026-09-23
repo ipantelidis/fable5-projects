@@ -91,10 +91,10 @@ Stage 5 is a hub (`#/fluency`), open at every level, not a list of lessons. Engi
 |---|---|
 | Ongoing spaced-repetition review | done (the existing Review, linked from the hub with the due count) |
 | Weekly challenges | done: 12 challenges rotating every Monday, 9 goal kinds (xp, answers, days, voice, lessons, reviews, perfect, bank, accuracy), bonus XP and 3 badges, progress computed from the day log, home-screen card and `#/challenge` page with history |
-| Speaking topics with model answers | done: 15 topics, 60 prompts (A1: 3, A2: 4, B1: 4, B2: 4 incl. exam-style tasks), used by Free talk |
+| Speaking topics with model answers | done: 30 topics, 120 prompts (A1: 7, A2: 8, B1: 8, B2: 7 incl. exam-style tasks) in stage5.js and stage5-talk-2.js, used by Free talk and the Stage 5 hub |
 | Themed vocabulary bank | done: `#/bank` groups every dictionary word into 15 themes with known/learning/new counts; per theme: learn 10 new words (intro cards, then practice), practise the theme, practise weak words. Practised words get SRS cards |
 | Bank vocabulary | about 670 extra words in two files: stage5-bank.js (food, kitchen, furniture, clothes, body, animals, nature, city, professions, character, feelings, sport, arts, technology, law, economy, verbs, adjectives, adverbs) and stage5-bank-2.js (household chores, tools and DIY, school subjects, countries and nationalities, religion, press, banking, medical, cars and traffic, farming, formal verbs, abstract nouns and adjectives). Dictionary total about 3100 words |
 
 **todo, honest gap:** the brief's targets are about 5000 words at B1 and 10000 at B2. The dictionary holds about 3100. Growing the bank is the way to close that gap: add rows to js/content/stage5-bank.js (one line per word, validator-checked), roughly 300 to 500 words per session, frequency-ranked, per theme. Suggested next themes (part 3): office and IT at work, emotions in depth, crime and safety, the human life cycle (birth to old age), festivals and food culture, weather in detail, geography of the Netherlands, more phrasal verb pairs (aan/af/op/uit + verb), the next 300 frequent verbs, colloquial and youth language.
 
-**todo:** more speaking topics (target 30), and challenge variety once the coach from PLAN.md section 5c exists.
+**todo:** challenge variety once the coach from PLAN.md section 5c exists; more topics only if learners ask for specific situations.
