@@ -111,7 +111,9 @@ Prepared: `manifest.webmanifest`, `icons/icon.svg`, `sw.js` (cache-first, precac
 
 Built: `js/engine/coach.js`. Rules: welcome back after 3+ idle days, big or normal review queue, streak at risk after 17:00, daily goal within 60 XP, no speaking today, a grammar rule slipped on 3+ times (from the new mistakes buffer and SRS lapses), weakest skill bar, pending unit review, stage exam within reach, next lesson, weekly challenge with one goal left, badge within 10%, vocabulary bank once all lessons are done. Surfaces: home card with the top three, one toast per rule per day, first-run tour (five steps), chat panel with nine quick questions plus keyword matching, quiet mode and tour reset in Settings.
 
-**todo:** tier 2 (free-text questions to Claude through a serverless proxy) after accounts exist; tune rule thresholds once real usage data exists; consider a weekly summary message on Mondays.
+Tier 2 built 2026-09-23, dormant: `proxy/` holds a Cloudflare Worker (official SDK, `claude-opus-5`, adaptive thinking at low effort, server-side refusal fallback, origin check, optional Supabase sign-in check, optional KV daily limit). Client side in `coach.js`: `summary()`, `relevantGrammar()`, `ask()`, and the chat panel switches to Claude for typed questions when `NL_CONFIG.coachProxyUrl` is set, falling back to the rules on any error.
+
+**todo (owner):** deploy the worker (`proxy/README.md`), fill `coachProxyUrl`. **todo:** tune rule thresholds once real usage data exists; consider a weekly summary message on Mondays; the proxy was written without being run (no node here), so the first deploy needs the curl test in `proxy/README.md`.
 
 ## Cloud sync (PLAN.md 5a)
 

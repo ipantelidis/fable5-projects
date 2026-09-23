@@ -1,0 +1,23 @@
+name = "nederlands-nu-coach"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Comma-separated list of origins allowed to call this worker. Put your GitHub Pages origin here.
+ALLOWED_ORIGINS = "https://ipantelidis.github.io"
+# "true" makes a valid Supabase sign-in (Cloud sync, PLAN.md 5a) mandatory. "false" lets anyone on the allowed origin ask.
+REQUIRE_SIGN_IN = "false"
+# Questions per caller per day (per user id when signed in, else per IP). Only enforced when the RATE KV binding below exists.
+DAILY_LIMIT = "40"
+# Optional, only needed when REQUIRE_SIGN_IN is "true": the same values as js/config.js.
+SUPABASE_URL = ""
+SUPABASE_ANON_KEY = ""
+MODEL = "claude-opus-5"
+
+# Secrets (never in this file): run `npm run secret:key` and paste the Anthropic API key.
+
+# Optional rate limiting: create a KV namespace with `wrangler kv namespace create RATE` and paste the id.
+# [[kv_namespaces]]
+# binding = "RATE"
+# id = "..."

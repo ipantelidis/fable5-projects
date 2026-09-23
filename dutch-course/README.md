@@ -34,9 +34,13 @@ Off by default. The course is complete without it. To let people keep progress a
 
 Settings then shows a **Cloud sync** card: sign in with an email link, and the progress file is saved a few seconds after every change and loaded on other devices. Without a sign-in nothing changes. The anon key is meant to be public; the schema's policies do the protection. The Supabase client library is loaded from a CDN only on configured sites.
 
+## AI coach (optional)
+
+Off by default. The coach page answers from built-in rules and needs no server. To let learners type free questions ("why is it *ik ben gegaan*?") and get a Claude answer that knows their progress, deploy the worker in `proxy/` (see `proxy/README.md`), put its URL in `coachProxyUrl` in `js/config.js`, bump `sw.js`, push. The page then says what is sent: the question, a short anonymous progress summary and up to three grammar entries. If the service fails, the offline answer appears instead.
+
 ## Privacy
 
-No server, no account, no cookies, no analytics. All progress lives in the browser’s localStorage; export it from Settings to keep a backup. Voice recognition in Chrome and Edge is provided by the browser vendor and may process audio on their servers while the microphone is held; it can be avoided by self-grading speaking exercises. The in-app page **Settings → About this course and your data** says the same to learners.
+No server, no account, no cookies, no analytics by default. All progress lives in the browser’s localStorage; export it from Settings to keep a backup. Voice recognition in Chrome and Edge is provided by the browser vendor and may process audio on their servers while the microphone is held; it can be avoided by self-grading speaking exercises. The in-app page **Settings → About this course and your data** says the same to learners.
 
 ## Licence
 

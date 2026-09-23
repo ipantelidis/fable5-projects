@@ -43,6 +43,8 @@
     if (error) throw error;
     return true;
   };
+  /** Current access token (for the coach proxy), or null */
+  S.token = async function () { try { const c = await S.init(); if (!c || !user) return null; const { data } = await c.auth.getSession(); return data && data.session ? data.session.access_token : null; } catch (e) { return null; } };
   S.signOut = async function () { const c = await S.init(); if (!c) return; await c.auth.signOut(); user = null; U.emit('sync', S.status()); };
 
   function localStamp() { return NL.state.get().updatedAt || NL.state.get().created || ''; }

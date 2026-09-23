@@ -1,0 +1,18 @@
+{
+  "name": "nederlands-nu-coach-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Serverless proxy that lets the Nederlands Nu coach ask Claude without exposing an API key.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "secret:key": "wrangler secret put ANTHROPIC_API_KEY"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

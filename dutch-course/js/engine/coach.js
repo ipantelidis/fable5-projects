@@ -1,6 +1,7 @@
 /* Coach (PLAN.md 5c, tier 1): a rule-based personal guide. Reads the existing state (due cards, streak, goal, skills,
    mistakes, lessons, challenges) and produces prioritised suggestions with a reason and a deep link. Surfaces: a home card,
-   one non-blocking toast per day, a first-run tour, a chat panel with quick replies, and a quiet mode. No server, works offline. */
+   one non-blocking toast per day, a first-run tour, a chat panel with quick replies, and a quiet mode. No server, works offline.
+   Tier 2 (bottom of this file): typed questions go to Claude through the proxy in proxy/ when js/config.js names it. */
 (function () {
   'use strict';
   const NL = window.NL, U = NL.util, h = U.h, A = NL.contentApi;
@@ -168,19 +169,90 @@
     return best.a().filter(Boolean);
   };
 
+  /* ------------------------------------------------- tier 2: Claude proxy */
+  /* Dormant until js/config.js sets coachProxyUrl (see proxy/README.md). The browser never holds an API key: it sends the
+     question, a compact progress summary and up to three grammar entries to the proxy, which calls Claude and returns text. */
+  K.aiUrl = function () { const c = window.NL_CONFIG || {}; return c.coachProxyUrl && /^https?:/.test(location.protocol) ? c.coachProxyUrl : null; };
+  K.aiConfigured = () => !!K.aiUrl();
+
+  /** Compact, anonymous progress summary: what the model needs to give advice, nothing more */
+  K.summary = function () {
+    const s = NL.state.get(); const lvl = NL.game.level(); const nxt = K.nextLesson(); const wg = K.weakGrammar();
+    const acc = K.typeAccuracy(14); const accPct = {};
+    Object.keys(acc).forEach((t) => { if (acc[t].n >= 5) accPct[t] = Math.round((acc[t].ok / acc[t].n) * 100); });
+    const cur = NL.fluency && NL.fluency.current();
+    return {
+      level: lvl.n, levelTitle: lvl.title, xp: s.xp, goal: s.goal, todayXp: NL.state.day().xp || 0,
+      streak: NL.game.streakCurrent(), daysSinceActive: K.daysSinceActive(),
+      lessonsDone: Object.values(s.lessons).filter((l) => l.done).length, lessonsTotal: A.allLessons().filter((x) => !x.stage.hub).length,
+      nextLesson: nxt ? { id: nxt.lesson.id, title: nxt.lesson.title, unit: nxt.unit.title, stage: nxt.stage.code } : null,
+      wordsKnown: NL.srs.knownWords(), wordsLearning: NL.srs.learningWords(), due: NL.srs.dueCount(),
+      skills: s.skills, weakestSkill: K.weakestSkill(), weakGrammar: wg ? { id: wg.id, title: wg.title } : null,
+      accuracyByType14d: accPct, voiceToday: NL.state.day().voice || 0,
+      recentMistakes: (s.mistakes || []).slice(-8).map((m) => ({ type: m.type, grammar: m.grammar, q: m.q })),
+      challenge: cur ? { title: cur.challenge.title, daysLeft: cur.daysLeft, done: cur.claimed } : null,
+      sttAvailable: !!(NL.stt && NL.stt.supported()),
+    };
+  };
+
+  function flatten(v, out) { if (v == null) return; if (typeof v === 'string') out.push(v); else if (Array.isArray(v)) v.forEach((x) => flatten(x, out)); else if (typeof v === 'object') Object.keys(v).forEach((k) => flatten(v[k], out)); }
+  /** Up to three grammar entries relevant to the question (title or tag words in the text, plus the weakest rule) */
+  K.relevantGrammar = function (text, limit) {
+    const t = U.normalize(text || ''); const words = t.split(/[^a-z0-9]+/).filter((w) => w.length > 2);
+    const all = Object.values(NL.content.grammar); const scored = [];
+    all.forEach((g) => { const hay = U.normalize(g.title + ' ' + (g.tags || []).join(' ') + ' ' + g.id); let n = 0; words.forEach((w) => { if (hay.includes(w)) n++; }); if (n) scored.push({ g, n }); });
+    scored.sort((a, b) => b.n - a.n);
+    const pick = scored.slice(0, limit || 3).map((x) => x.g);
+    const wg = K.weakGrammar(); if (wg && pick.length < (limit || 3) && !pick.some((g) => g.id === wg.id)) pick.push(wg);
+    return pick.map((g) => { const parts = []; flatten(g.body, parts); return { id: g.id, title: g.title, text: parts.join(' ').replace(/\s+/g, ' ').slice(0, 1500) }; });
+  };
+
+  /** Ask the proxy. history: [{role:'user'|'assistant', content}] of earlier turns (plain text). Resolves to the answer text. */
+  K.ask = async function (text, history) {
+    const url = K.aiUrl(); if (!url) throw new Error('AI coach is not configured');
+    const headers = { 'Content-Type': 'application/json' };
+    const token = NL.sync && NL.sync.token ? await NL.sync.token() : null;
+    if (token) headers.Authorization = 'Bearer ' + token;
+    const body = { question: String(text).slice(0, 600), history: (history || []).slice(-8), summary: K.summary(), grammar: K.relevantGrammar(text), lang: 'en' };
+    const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || ('The coach service answered ' + res.status));
+    if (!data.answer) throw new Error('Empty answer');
+    return String(data.answer);
+  };
+
+  /** Render answer text: blank-line paragraphs, "- " bullets, #/route links */
+  function renderAnswer(text) {
+    const linkify = (line) => { const out = []; const re = /(#\/[a-z0-9/_-]+)/gi; let last = 0, m; while ((m = re.exec(line))) { if (m.index > last) out.push(line.slice(last, m.index)); out.push(h('a', { href: m[1] }, m[1])); last = m.index + m[1].length; } if (last < line.length) out.push(line.slice(last)); return out; };
+    return text.split(/\n{2,}/).map((para) => { const lines = para.split('\n'); if (lines.every((l) => /^\s*[-•]\s/.test(l))) return h('ul', ...lines.map((l) => h('li', ...linkify(l.replace(/^\s*[-•]\s/, ''))))); return h('p', ...linkify(para.replace(/\n/g, ' '))); });
+  }
+
   K.view = function (host) {
+    const ai = K.aiConfigured();
     host.appendChild(h('div.eyebrow', 'Coach'));
     host.appendChild(h('h1', '\u{1F9ED} Ask the coach'));
-    host.appendChild(h('p.muted', 'I read your progress in this browser and answer from that. Nothing leaves your device.'));
-    const log = h('div.coach-chat');
-    const push = (who, nodes) => { const m = h('div.msg.' + who); (Array.isArray(nodes) ? nodes : [nodes]).forEach((n) => m.appendChild(typeof n === 'string' ? h('p', n) : n)); log.appendChild(m); m.scrollIntoView({ block: 'nearest' }); };
+    host.appendChild(h('p.muted', ai ? 'Quick questions are answered on your device. Typed questions go to Claude through this site’s coach service, together with a short summary of your progress (level, streak, weak spots, last mistakes). No name or email is sent.' : 'I read your progress in this browser and answer from that. Nothing leaves your device.'));
+    const log = h('div.coach-chat'); const history = [];
+    const push = (who, nodes) => { const m = h('div.msg.' + who); (Array.isArray(nodes) ? nodes : [nodes]).forEach((n) => m.appendChild(typeof n === 'string' ? h('p', n) : n)); log.appendChild(m); m.scrollIntoView({ block: 'nearest' }); return m; };
     push('coach', INTENTS[0].a());
     host.appendChild(log);
     const quick = h('div.coach-quick');
     INTENTS.forEach((it) => quick.appendChild(h('button.btn.btn-sm', { type: 'button', onclick: () => { push('me', it.q); push('coach', it.a().filter(Boolean)); } }, it.q)));
     host.appendChild(quick);
-    const inp = h('input.input', { type: 'text', placeholder: 'Or type a question…', 'aria-label': 'Ask the coach' });
-    const form = h('form.row', { onsubmit: (e) => { e.preventDefault(); const t = inp.value.trim(); if (!t) return; push('me', t); push('coach', K.answer(t)); inp.value = ''; } }, inp, h('button.btn.btn-primary', { type: 'submit' }, 'Ask'));
+    const inp = h('input.input', { type: 'text', placeholder: ai ? 'Ask anything about Dutch or the course…' : 'Or type a question…', 'aria-label': 'Ask the coach', maxlength: 600 });
+    const btn = h('button.btn.btn-primary', { type: 'submit' }, 'Ask');
+    const form = h('form.row', { onsubmit: async (e) => {
+      e.preventDefault(); const t = inp.value.trim(); if (!t) return; push('me', t); inp.value = '';
+      if (!ai) { push('coach', K.answer(t)); return; }
+      const wait = push('coach', h('p.muted', 'Thinking…')); btn.disabled = true;
+      try {
+        const a = await K.ask(t, history);
+        history.push({ role: 'user', content: t }, { role: 'assistant', content: a }); if (history.length > 8) history.splice(0, history.length - 8);
+        U.clear(wait); renderAnswer(a).forEach((n) => wait.appendChild(n));
+      } catch (err) {
+        U.clear(wait); K.answer(t).forEach((n) => wait.appendChild(n)); wait.appendChild(h('p.muted.small', 'The coach service did not answer (' + err.message + '), so this is the offline answer.'));
+      } finally { btn.disabled = false; wait.scrollIntoView({ block: 'nearest' }); }
+    } }, inp, btn);
     host.appendChild(form);
   };
 })();
