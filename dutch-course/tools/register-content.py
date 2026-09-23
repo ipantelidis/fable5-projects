@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Register a new content file in index.html, tools/test.html and tools/validate.js.
+"""Register a new content file in index.html, tools/test.html, tools/validate.js and the service-worker precache list (and bump its version).
 Usage: python3 tools/register-content.py js/content/NEW.js js/content/AFTER.js"""
 import sys, os
 new, after = sys.argv[1], sys.argv[2]
@@ -12,3 +12,5 @@ def patch(path, old, add):
 patch('index.html', '  <script src="%s"></script>\n' % after, '  <script src="%s"></script>\n' % new)
 patch('tools/test.html', '  <script src="../%s"></script>\n' % after, '  <script src="../%s"></script>\n' % new)
 patch('tools/validate.js', "'%s'" % after, ", '%s'" % new)
+patch('sw.js', "  './%s'" % after, ",\n  './%s'" % new)
+os.system('python3 "%s"' % os.path.join(root, 'tools', 'bump-sw.py'))

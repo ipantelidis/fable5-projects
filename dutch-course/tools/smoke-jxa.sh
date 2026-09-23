@@ -157,7 +157,7 @@ try {
   [['fluency hub', function (h0) { F.hub(h0); }], ['bank overview', function (h0) { F.bankView(h0); }], ['bank theme', function (h0) { F.bankView(h0, 'eten'); }],
    ['challenge page', function (h0) { F.challengeView(h0); }], ['home with challenge card and hub stage', function (h0) { NL.views.home(h0); }],
    ['stage s5 redirects to hub', function (h0) { NL.views.stage(h0, 's5'); }], ['stage s4 list', function (h0) { NL.views.stage(h0, 's4'); }],
-   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }]
+   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }], ['about', function (h0) { NL.views.about(h0); }]
   ].forEach(function (pair) { try { pair[1](stubEl('main')); pass('renders: ' + pair[0]); } catch (e) { fail('render ' + pair[0] + ': ' + e.message + ' (line ' + e.line + ')'); } });
 } catch (e) { fail('smoke crashed: ' + e.message + ' line ' + e.line + ' ' + (e.stack || '').split('\n').slice(0,3).join(' | ')); }
 log(''); log('SUMMARY fails=' + __fails);

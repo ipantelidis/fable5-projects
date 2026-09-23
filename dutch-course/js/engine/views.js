@@ -296,6 +296,27 @@
     check.appendChild(h('button.btn', { type: 'button', onclick: () => { const r = NL.validate(); out.hidden = false; out.textContent = (r.ok ? 'OK — no errors.' : r.errors.length + ' error(s):\n' + r.errors.join('\n')) + '\n\n' + r.warnings.length + ' warning(s)' + (r.warnings.length ? ':\n' + r.warnings.slice(0, 40).join('\n') : '') + '\n\n' + JSON.stringify(r.counts); } }, 'Check content'));
     check.appendChild(out);
     host.appendChild(check);
-    host.appendChild(h('p.muted.small', { style: { marginTop: '16px' } }, 'Nederlands Nu · best experienced in Chrome or Edge (Dutch voices + speech recognition). Firefox and Safari: voice output works, voice input falls back to self-grading.'));
+    host.appendChild(h('p.muted.small', { style: { marginTop: '16px' } }, 'Nederlands Nu · best experienced in Chrome or Edge (Dutch voices + speech recognition). Firefox and Safari: voice output works, voice input falls back to self-grading. ', h('a', { href: '#/about' }, 'About this course and your data')));
+  };
+
+  /* ---------- About ---------- */
+  V.about = function (host) {
+    const C = NL.content;
+    let lessons = 0, exercises = 0;
+    for (const st of C.stages) for (const u of st.units) for (const l of u.lessons) { lessons++; exercises += (l.practice || []).reduce((n, e) => n + (e.type === 'auto' ? e.n : 1), 0) + (l.test || []).length; }
+    host.appendChild(h('h1', 'Over deze cursus'));
+    host.appendChild(h('div.card', h('h3', 'What this is'),
+      h('p', 'Nederlands Nu is a self-contained Dutch course for English speakers, from absolute beginner to CEFR B2: explicit grammar first, then varied practice, with voice output and voice input. It runs entirely in your browser; there is no server and no account.'),
+      h('p.muted.small', C.stages.length + ' stages · ' + lessons + ' lessons · ' + exercises + ' exercises · ' + Object.keys(C.vocab).length + ' dictionary entries · ' + Object.keys(C.grammar).length + ' grammar rules · ' + (C.talk || []).length + ' speaking topics')));
+    host.appendChild(h('div.card', h('h3', 'Your data and privacy'),
+      h('p', 'Everything you do here (progress, XP, review cards, settings) is stored only in this browser, in localStorage. Nothing is sent anywhere. Closing the tab keeps it; clearing site data or using a private window loses it. Use Settings → Export progress to keep a backup or move to another device.'),
+      h('p', 'Voice output uses your browser’s built-in speech synthesis. Voice input uses your browser’s speech recognition; in Chrome and Edge that service is provided by the browser vendor and audio may be processed on their servers while you hold the microphone button. If you prefer not to use it, speaking exercises can be self-graded instead.'),
+      h('p', 'The site sets no cookies and uses no analytics. When served over HTTPS it installs a small service worker so the course keeps working offline.')));
+    host.appendChild(h('div.card', h('h3', 'Content'),
+      h('p', 'All explanations and exercises were written for this course. Pedagogical order follows mainstream NT2 practice and the CEFR can-do descriptors. Dutch is modern Netherlands Dutch; Belgian variants are pointed out where they matter. Facts about institutions, exams and rules were correct to the author’s knowledge when written and change over time: always check the current source (DUO, the Belastingdienst, your gemeente, the exam board) before acting on them.'),
+      h('p', 'Found a mistake? Settings → Check content runs the built-in validator; wording errors are best reported to the repository that hosts this course.')));
+    host.appendChild(h('div.card', h('h3', 'Best browser'),
+      h('p', 'Chrome or Edge on desktop or Android give Dutch voices and speech recognition. Safari and Firefox play Dutch audio but do not offer recognition; speaking exercises then use self-grading.')));
+    host.appendChild(h('div.row', { style: { marginTop: '16px' } }, h('a.btn', { href: '#/settings' }, 'Back to settings'), h('a.btn', { href: '#/home' }, 'Home')));
   };
 })();

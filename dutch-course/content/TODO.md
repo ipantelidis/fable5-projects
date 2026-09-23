@@ -98,3 +98,11 @@ Stage 5 is a hub (`#/fluency`), open at every level, not a list of lessons. Engi
 **todo, honest gap:** the brief's targets are about 5000 words at B1 and 10000 at B2. The dictionary holds about 3100. Growing the bank is the way to close that gap: add rows to js/content/stage5-bank.js (one line per word, validator-checked), roughly 300 to 500 words per session, frequency-ranked, per theme. Suggested next themes (part 3): office and IT at work, emotions in depth, crime and safety, the human life cycle (birth to old age), festivals and food culture, weather in detail, geography of the Netherlands, more phrasal verb pairs (aan/af/op/uit + verb), the next 300 frequent verbs, colloquial and youth language.
 
 **todo:** challenge variety once the coach from PLAN.md section 5c exists; more topics only if learners ask for specific situations.
+
+## Deployment (PLAN.md 5b)
+
+Prepared: `manifest.webmanifest`, `icons/icon.svg`, `sw.js` (cache-first, precaches every file listed in index.html), service-worker registration on http(s) only, the in-app **About** page (`#/about`, linked from Settings) with the privacy note, and README deploy and licence sections.
+
+**todo for the owner:** GitHub → Settings → Pages → Deploy from branch `main`, folder `/ (root)`. The course then lives at `https://<user>.github.io/fable5-projects/dutch-course/`. After that, open it once in Chrome on a phone, check the install prompt and that it reloads offline. Choose a licence (README says none yet).
+
+**rule:** after changing any file, run `python3 tools/bump-sw.py` (register-content.py does it automatically) so returning visitors get the update.

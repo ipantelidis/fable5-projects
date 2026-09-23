@@ -15,11 +15,22 @@ python -m http.server 8000
 
 ## Deploy on GitHub Pages
 
-1. Push this folder to a GitHub repository (the `index.html` must be at the repository root).
-2. Repository → Settings → Pages → Source: "Deploy from a branch", branch `main`, folder `/ (root)`.
-3. Wait a minute; the course is live at `https://<user>.github.io/<repo>/`.
+This folder lives inside the `fable5-projects` repository, so the simplest route needs no build and no workflow:
 
-No build, no workflow files needed. Progress is stored per browser in localStorage, so use Settings → Export progress before switching devices and Import progress on the new one.
+1. Repository → Settings → Pages → Source: "Deploy from a branch", branch `main`, folder `/ (root)`.
+2. Wait a minute; the course is live at `https://<user>.github.io/fable5-projects/dutch-course/`.
+
+Everything is relative-path, so the sub-folder is fine. Over HTTPS the page registers a small service worker (`sw.js`) that caches the app for offline use and can be installed to a phone’s home screen (`manifest.webmanifest`). After changing any file, bump `VERSION` in `sw.js` so returning visitors get the update.
+
+To publish the course as its own site instead, copy this folder to a new repository with `index.html` at its root and follow the same two steps. Progress is stored per browser in localStorage, so use Settings → Export progress before switching devices and Import progress on the new one.
+
+## Privacy
+
+No server, no account, no cookies, no analytics. All progress lives in the browser’s localStorage; export it from Settings to keep a backup. Voice recognition in Chrome and Edge is provided by the browser vendor and may process audio on their servers while the microphone is held; it can be avoided by self-grading speaking exercises. The in-app page **Settings → About this course and your data** says the same to learners.
+
+## Licence
+
+© 2026 the repository owner. No open licence has been chosen yet; until one is added, all rights are reserved for both the code and the course content.
 
 ## Best browser for voice
 

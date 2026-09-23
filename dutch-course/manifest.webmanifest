@@ -1,0 +1,14 @@
+{
+  "name": "Nederlands Nu — Dutch from zero to B2",
+  "short_name": "Nederlands Nu",
+  "description": "A self-contained, gamified Dutch course with explicit grammar, voice input and voice output.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#faf7f2",
+  "theme_color": "#1f5f8b",
+  "lang": "en",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

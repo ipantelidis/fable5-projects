@@ -26,6 +26,7 @@
     [/^\/dictionary$/, (host) => NL.views.dictionary(host), 'dictionary'],
     [/^\/badges$/, (host) => NL.views.badges(host), 'home'],
     [/^\/settings$/, (host) => NL.views.settings(host), 'settings'],
+    [/^\/about$/, (host) => NL.views.about(host), 'settings'],
   ];
 
   function reviewIntro(host) {
@@ -105,6 +106,8 @@
     NL.game.checkBadges();
     if (!location.hash) location.hash = '#/home';
     app.render();
+    // offline support on http(s) only: service workers do not run from file://
+    if (/^https?:/.test(location.protocol) && 'serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js').catch(() => {}); }
     // self-test hook for tools/browser-test.js
     window.__NL_READY = true;
   }

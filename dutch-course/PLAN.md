@@ -131,7 +131,7 @@ Goal: several people can use the same live site, each with their own progress, o
 - **Engine changes**: new `js/engine/sync.js` (sign in, sign out, push on every `state.save()` debounced to a few seconds, pull on boot and on tab focus). Settings gets a Sign in card. Without sign-in nothing changes. No user content is ever sent anywhere except the progress blob.
 - **Open decisions for that phase**: Supabase project ownership, whether to allow anonymous "guest" accounts that can be upgraded later, and whether a leaderboard between users is wanted (it would need a second table with opt-in).
 
-### 5b. Live deployment for everyone
+### 5b. Live deployment for everyone (prepared 2026-09-23: manifest, icon, service worker, About page with privacy note, README notes; only the GitHub Pages switch in the repository settings remains, which the owner must flip)
 - **Hosting**: GitHub Pages from the `main` branch, `dutch-course/` published as the site root (either move the folder to a dedicated repository, or add a tiny GitHub Actions workflow that copies `dutch-course/` to the `gh-pages` branch; the app itself still needs no build).
 - **Needs before going public**: a favicon and `manifest.json` so the site installs as a home-screen app on phones, a service worker for offline use (all files are static, so a cache-first worker of about 40 lines is enough), an `Over deze cursus` page with a short privacy note, and a content licence line in the README.
 - **Voice**: GitHub Pages is HTTPS, which speech recognition requires; nothing else changes.
