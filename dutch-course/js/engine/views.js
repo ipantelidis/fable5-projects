@@ -28,6 +28,8 @@
     const hour = new Date().getHours();
     const greet = hour < 12 ? 'Goedemorgen' : hour < 18 ? 'Goedemiddag' : 'Goedenavond';
 
+    if (NL.coach && !NL.coach.state().seenTour && s.xp === 0) host.appendChild(NL.coach.tourCard());
+
     host.appendChild(h('div.hero',
       h('div', h('div.eyebrow', 'Level ' + lvl.n + ' · ' + lvl.title), h('h1', T.say(greet + '!'), ' ', h('span.muted', { style: { fontWeight: 400, fontSize: '1.2rem' } }, s.xp ? 'Ready for more?' : 'Let’s learn some real Dutch.'))),
       h('div', h('div.row.row-between.small', h('span', s.xp + ' XP'), h('span.muted', lvl.next.xp - s.xp + ' XP to level ' + lvl.next.n + ' (' + lvl.next.title + ')')), h('div.progress.gold', h('div.bar', { style: { width: Math.round(lvl.progress * 100) + '%' } }))),
@@ -50,6 +52,7 @@
     if (hint && !s.settings.sttSeen) host.appendChild(h('div.notice', hint, ' Voice output still works here.'));
     else if (!T.hasDutchVoice() && T.supported()) host.appendChild(h('div.notice', 'No Dutch voice was found in this browser yet. Chrome and Edge include Dutch voices; on Windows you can add "Nederlands" under Settings → Time & language → Speech.'));
 
+    if (NL.coach) host.appendChild(NL.coach.homeCard());
     if (NL.fluency) host.appendChild(NL.fluency.homeCard());
 
     /* Stages */
@@ -276,6 +279,10 @@
     setting('Daily goal (XP)', 'A lesson is roughly 150–250 XP.', goal);
     setting('Unlock everything', 'Skip the stage exams. You are an adult; go where you like.', sw(s.settings.unlockAll, (v) => { s.settings.unlockAll = v; NL.state.save(); }));
     setting('Placement test', 'Find your level and unlock stages accordingly.', h('a.btn.btn-sm', { href: '#/placement' }, 'Take the test'));
+    if (NL.coach) {
+      setting('Coach: quiet mode', 'Keep the coach card, but no toasts or nudges.', sw(NL.coach.state().quiet, (v) => { NL.coach.state().quiet = v; NL.state.save(); }));
+      setting('Welcome tour', 'Show the five-step introduction on the home screen again.', h('button.btn.btn-sm', { type: 'button', onclick: () => { NL.coach.resetTour(); location.hash = '#/home'; NL.app.render(); } }, 'Show the tour'));
+    }
     host.appendChild(card);
 
     // Progress

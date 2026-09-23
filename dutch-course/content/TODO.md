@@ -106,3 +106,9 @@ Prepared: `manifest.webmanifest`, `icons/icon.svg`, `sw.js` (cache-first, precac
 **todo for the owner:** GitHub → Settings → Pages → Deploy from branch `main`, folder `/ (root)`. The course then lives at `https://<user>.github.io/fable5-projects/dutch-course/`. After that, open it once in Chrome on a phone, check the install prompt and that it reloads offline. Choose a licence (README says none yet).
 
 **rule:** after changing any file, run `python3 tools/bump-sw.py` (register-content.py does it automatically) so returning visitors get the update.
+
+## Coach (PLAN.md 5c, tier 1)
+
+Built: `js/engine/coach.js`. Rules: welcome back after 3+ idle days, big or normal review queue, streak at risk after 17:00, daily goal within 60 XP, no speaking today, a grammar rule slipped on 3+ times (from the new mistakes buffer and SRS lapses), weakest skill bar, pending unit review, stage exam within reach, next lesson, weekly challenge with one goal left, badge within 10%, vocabulary bank once all lessons are done. Surfaces: home card with the top three, one toast per rule per day, first-run tour (five steps), chat panel with nine quick questions plus keyword matching, quiet mode and tour reset in Settings.
+
+**todo:** tier 2 (free-text questions to Claude through a serverless proxy) after accounts exist; tune rule thresholds once real usage data exists; consider a weekly summary message on Mondays.

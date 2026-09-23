@@ -313,6 +313,22 @@ pre.report { background: var(--card-2); padding: var(--s3); border-radius: var(-
 .toast.show { opacity: 1; transform: none; }
 .toast-badge { background: var(--gold); color: #1f1d1a; }
 .toast-level { background: var(--accent-2); color: #fff; }
+.toast-info { background: var(--accent); color: #fff; }
+/* coach */
+.coach-list { display: grid; gap: var(--s2); margin-top: var(--s3); }
+.coach-item { display: grid; grid-template-columns: 32px 1fr auto; gap: var(--s3); align-items: center; padding: var(--s3); border-radius: var(--r); background: var(--card-2); text-decoration: none; color: inherit; min-height: 44px; }
+.coach-item .ico { font-size: 1.4rem; text-align: center; }
+.coach-item b { display: block; }
+.coach-item .why { display: block; font-size: .85rem; color: var(--muted); }
+@media (max-width: 480px) { .coach-item { grid-template-columns: 32px 1fr; } .coach-item .btn { grid-column: 2; justify-self: start; } }
+.coach-tour { border: 2px solid var(--accent); }
+.coach-chat { display: grid; gap: var(--s3); margin: var(--s4) 0; }
+.coach-chat .msg { padding: var(--s3) var(--s4); border-radius: var(--r); max-width: 90%; }
+.coach-chat .msg p { margin: 0 0 6px; }
+.coach-chat .msg p:last-child { margin-bottom: 0; }
+.coach-chat .msg.coach { background: var(--card-2); justify-self: start; }
+.coach-chat .msg.me { background: var(--accent-soft); justify-self: end; }
+.coach-quick { display: flex; flex-wrap: wrap; gap: var(--s2); margin-bottom: var(--s3); }
 
 .notice { padding: var(--s3) var(--s4); border-radius: var(--r); background: var(--warn-soft); border: 1px solid var(--warn); font-size: .95rem; margin-bottom: var(--s4); }
 .notice-info { background: var(--accent-soft); border-color: var(--accent); }

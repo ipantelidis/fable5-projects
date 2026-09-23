@@ -27,6 +27,7 @@
     [/^\/badges$/, (host) => NL.views.badges(host), 'home'],
     [/^\/settings$/, (host) => NL.views.settings(host), 'settings'],
     [/^\/about$/, (host) => NL.views.about(host), 'settings'],
+    [/^\/coach$/, (host) => NL.coach.view(host), 'coach'],
   ];
 
   function reviewIntro(host) {
@@ -62,6 +63,7 @@
     if (!matched) { setNav('home'); host.appendChild(h('div.card', h('h2', 'Page not found'), h('a.btn', { href: '#/home' }, 'Home'))); }
     app.updateHeader();
     U.$('#word-dialog').hidden = true;
+    if (NL.coach && /^\/?$|^\/home$/.test(hash) && NL.coach.state().seenTour) setTimeout(() => NL.coach.nudge(), 600);
     if (!/\/lesson\//.test(hash)) window.scrollTo(0, 0);
   };
   function setNav(name) { U.$$('.nav a').forEach((a) => a.classList.toggle('active', a.dataset.nav === name)); }

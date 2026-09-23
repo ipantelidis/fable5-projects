@@ -153,11 +153,20 @@ try {
   if (!bankBad.length) pass('vocabulary bank: every group yields a practice round'); else fail('bank practice rounds too short: ' + bankBad.join(', '));
   var byLevel = {}; C.talk.forEach(function (t) { byLevel[t.level] = (byLevel[t.level] || 0) + 1; });
   if (C.talk.length >= 12 && byLevel.A1 && byLevel.A2 && byLevel.B1 && byLevel.B2) pass('speaking topics: ' + C.talk.length + ' topics ' + JSON.stringify(byLevel)); else fail('speaking topics missing a level: ' + JSON.stringify(byLevel));
+  /* 8b. Coach: suggestions, recording, answers */
+  var st9 = NL.state.load(); st9.coach = { seenTour: true, quiet: false, nudged: {}, dismissed: {} }; st9.mistakes = [];
+  var sug = NL.coach.suggestions();
+  if (sug.length && sug.every(function (x) { return x.title && x.href && x.why; })) pass('coach: ' + sug.length + ' suggestions, top = ' + sug[0].id); else fail('coach suggestions malformed');
+  for (var mi = 0; mi < 6; mi++) NL.coach.record({ type: 'fill', grammar: ['g1-v2'], nl: 'test ___' }, { ok: false }, { title: 'x' });
+  var wg = NL.coach.weakGrammar();
+  if (st9.mistakes.length === 6 && wg && wg.id === 'g1-v2' && NL.coach.suggestions().some(function (x) { return x.id === 'weak-grammar'; })) pass('coach: mistakes recorded and weak grammar detected'); else fail('coach recording: ' + st9.mistakes.length + ' ' + JSON.stringify(wg));
+  var ans = ['now', 'progress', 'review', 'voice', 'challenge', 'wrong', 'plan', 'exam'].map(function (q) { return NL.coach.answer(q).length; });
+  if (ans.every(function (n) { return n > 0; })) pass('coach: every intent answers'); else fail('coach intents: ' + ans.join(','));
   /* 9. The new screens render without throwing (stub DOM: catches undefined helpers and bad data access, not layout) */
   [['fluency hub', function (h0) { F.hub(h0); }], ['bank overview', function (h0) { F.bankView(h0); }], ['bank theme', function (h0) { F.bankView(h0, 'eten'); }],
    ['challenge page', function (h0) { F.challengeView(h0); }], ['home with challenge card and hub stage', function (h0) { NL.views.home(h0); }],
    ['stage s5 redirects to hub', function (h0) { NL.views.stage(h0, 's5'); }], ['stage s4 list', function (h0) { NL.views.stage(h0, 's4'); }],
-   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }], ['about', function (h0) { NL.views.about(h0); }]
+   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }], ['about', function (h0) { NL.views.about(h0); }], ['coach panel', function (h0) { NL.coach.view(h0); }]
   ].forEach(function (pair) { try { pair[1](stubEl('main')); pass('renders: ' + pair[0]); } catch (e) { fail('render ' + pair[0] + ': ' + e.message + ' (line ' + e.line + ')'); } });
 } catch (e) { fail('smoke crashed: ' + e.message + ' line ' + e.line + ' ' + (e.stack || '').split('\n').slice(0,3).join(' | ')); }
 log(''); log('SUMMARY fails=' + __fails);

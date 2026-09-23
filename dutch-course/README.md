@@ -56,7 +56,7 @@ When speech recognition is unavailable, speaking exercises still work: you liste
 index.html            app shell
 css/app.css           design tokens, layout, components, dark mode
 js/engine/            state, SRS, TTS, STT, checker, gamification, exercises, lesson runner, review modes, views,
-                      fluency (weekly challenges, vocabulary bank, Stage 5 hub)
+                      fluency (weekly challenges, vocabulary bank, Stage 5 hub), coach (rule-based guide: suggestions, tour, chat)
 js/content/index.js   content helpers (N, VB, W, PH, G, mc, fill, build, ...)
 js/content/stage*.js  course content: a grammar-reference file per stage plus lesson files per pair of units;
                       stage5.js holds speaking topics, weekly challenges and bank themes, stage5-bank.js the extra bank words

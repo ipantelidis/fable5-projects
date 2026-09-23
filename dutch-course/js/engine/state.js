@@ -10,7 +10,7 @@
       streak: { current: 0, best: 0, last: null }, badges: {}, levelSeen: 1,
       lessons: {}, unitsReviewed: {}, exams: {}, challenges: {}, unlocked: { s0: true, s1: true },
       skills: { grammar: 0, vocab: 0, listening: 0, speaking: 0, reading: 0, writing: 0 },
-      srs: { cards: {} }, stats: { answers: 0, correct: 0, voice: 0, sessions: 0, bestCombo: 0 },
+      srs: { cards: {} }, mistakes: [], coach: { seenTour: false, quiet: false, nudged: {}, dismissed: {} }, stats: { answers: 0, correct: 0, voice: 0, sessions: 0, bestCombo: 0 },
       settings: { voice: null, rate: 'normal', theme: 'auto', mute: false, unlockAll: false, showTranslations: true, sttSeen: false },
     };
   }
@@ -18,10 +18,11 @@
   function migrate(s) {
     const f = fresh();
     const out = Object.assign({}, f, s);
-    for (const k of ['streak', 'badges', 'lessons', 'unitsReviewed', 'exams', 'challenges', 'unlocked', 'skills', 'srs', 'stats', 'settings', 'dayLog']) {
+    for (const k of ['streak', 'badges', 'lessons', 'unitsReviewed', 'exams', 'challenges', 'coach', 'unlocked', 'skills', 'srs', 'stats', 'settings', 'dayLog']) {
       out[k] = Object.assign({}, f[k], s && s[k]);
     }
     if (!out.srs.cards) out.srs.cards = {};
+    if (!Array.isArray(out.mistakes)) out.mistakes = [];
     return out;
   }
 
