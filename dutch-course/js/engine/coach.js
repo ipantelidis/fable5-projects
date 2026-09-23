@@ -102,8 +102,8 @@
   K.homeCard = function () {
     const c = coachState();
     const sug = K.suggestions().slice(0, 3);
-    const card = h('div.card.coach-card', { style: { marginTop: '24px' } });
-    card.appendChild(h('div.row.row-between', h('h3', { style: { margin: 0 } }, '\u{1F9ED} Coach'), h('a.small', { href: '#/coach' }, 'Ask the coach')));
+    const card = h('div.card.coach-card');
+    card.appendChild(h('div.row.row-between', h('h3.m-0', '\u{1F9ED} Coach'), h('a.btn.btn-sm.btn-ghost', { href: '#/coach' }, 'Ask the coach')));
     const list = h('div.coach-list');
     sug.forEach((x) => list.appendChild(h('a.coach-item', { href: x.href }, h('span.ico', x.icon), h('span', h('b', x.title), h('span.why', x.why)), h('span.btn.btn-sm.btn-primary', x.cta))));
     card.appendChild(list);

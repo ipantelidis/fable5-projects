@@ -1,6 +1,6 @@
 /* Nederlands Nu service worker: cache-first for the app shell so the course works offline once visited.
    Bump VERSION whenever content or engine files change; old caches are removed on activate. */
-const VERSION = 'nl-2026-09-23-5';
+const VERSION = 'nl-2026-09-23-6';
 const ASSETS = [
   './',
   './index.html',

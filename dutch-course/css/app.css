@@ -116,12 +116,30 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .play-big.slow { width: 52px; height: 52px; font-size: 1.1rem; background: var(--card-2); color: var(--ink); }
 
 /* Home */
-.hero { display: flex; flex-direction: column; gap: var(--s4); }
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: var(--s3); }
+/* Sections: one spacing rhythm for every home/hub block instead of inline margins */
+.section { margin-top: var(--s7); }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s4); }
+.section-head h2 { margin: 0; }
+.section > .card + .card, .section > .card + .card-link, .section > .card-link + .card { margin-top: var(--s4); }
+.m-0 { margin: 0; } .mt-1 { margin-top: var(--s1); } .mb-2 { margin-bottom: var(--s2); } .mt-2 { margin-top: var(--s2); margin-bottom: 0; } .mt-4 { margin-top: var(--s4); }
+.card-link { display: block; text-decoration: none; color: inherit; transition: border-color var(--t); }
+.card-link:hover { border-color: var(--accent); }
+
+.hero { display: flex; flex-direction: column; gap: var(--s5); }
+.hero h1 { margin-bottom: var(--s1); }
+.lead { font-size: 1.15rem; color: var(--muted); margin: 0; }
+.cta { display: flex; gap: var(--s3); flex-wrap: wrap; }
+.cta .btn { flex: 1 1 220px; }
+.cta-meta { margin: calc(-1 * var(--s3)) 0 0; }
+.level-line { display: grid; gap: var(--s2); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--s3); }
+.stat-goal .progress { height: 6px; margin-top: var(--s2); }
+.badge-row { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s2); font-size: 1.6rem; }
 .stat { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: var(--s3) var(--s4); }
 .stat .n { font-size: 1.6rem; font-weight: 700; font-family: var(--serif); line-height: 1.1; }
 .stat .l { font-size: .8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
-.stage-card { display: block; text-decoration: none; color: inherit; }
+.stage-card { display: block; text-decoration: none; color: inherit; transition: border-color var(--t), transform var(--t); }
+.stage-card:hover { border-color: var(--accent); transform: translateY(-1px); }
 .stage-card.locked { opacity: .6; }
 .stage-code { font-family: var(--serif); font-size: 2rem; color: var(--accent); font-weight: 700; line-height: 1; }
 .unit-list { display: flex; flex-direction: column; gap: var(--s3); }

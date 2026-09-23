@@ -19,6 +19,20 @@
   }
 
   /* ---------- Home ---------- */
+  /** Accessible progress bar */
+  function bar(pct, cls, label) {
+    pct = Math.max(0, Math.min(100, Math.round(pct)));
+    return h('div.progress' + (cls ? '.' + cls : ''), { role: 'progressbar', 'aria-label': label, 'aria-valuenow': String(pct), 'aria-valuemin': '0', 'aria-valuemax': '100' }, h('div.bar', { style: { width: pct + '%' } }));
+  }
+  V.bar = bar;
+  function section(title, link, ...kids) {
+    const sec = h('section.section');
+    if (title) sec.appendChild(h('div.section-head', h('h2', title), link ? h('a.btn.btn-sm.btn-ghost', { href: link.href }, link.text) : null));
+    kids.forEach((k) => { if (k) sec.appendChild(k); });
+    return sec;
+  }
+  V.section = section;
+
   V.home = function (host) {
     const s = NL.state.get();
     const lvl = NL.game.level();
@@ -27,36 +41,40 @@
     const nxt = nextLesson();
     const hour = new Date().getHours();
     const greet = hour < 12 ? 'Goedemorgen' : hour < 18 ? 'Goedemiddag' : 'Goedenavond';
+    const goalPct = U.pct(day.xp, s.dailyGoal);
 
     if (NL.coach && !NL.coach.state().seenTour && s.xp === 0) host.appendChild(NL.coach.tourCard());
 
+    /* Hero: greeting, the one primary action, today's numbers */
+    const cta = h('div.cta');
+    if (nxt) cta.appendChild(h('a.btn.btn-primary.btn-lg', { href: '#/lesson/' + nxt.lesson.id }, (s.xp ? 'Continue: ' : 'Start: ') + nxt.lesson.title));
+    cta.appendChild(h('a.btn.btn-lg' + (due ? '.btn-accent' : ''), { href: '#/review/go' }, 'Review' + (due ? ' · ' + U.plural(due, 'card') + ' due' : '')));
     host.appendChild(h('div.hero',
-      h('div', h('div.eyebrow', 'Level ' + lvl.n + ' · ' + lvl.title), h('h1', T.say(greet + '!'), ' ', h('span.muted', { style: { fontWeight: 400, fontSize: '1.2rem' } }, s.xp ? 'Ready for more?' : 'Let’s learn some real Dutch.'))),
-      h('div', h('div.row.row-between.small', h('span', s.xp + ' XP'), h('span.muted', lvl.next.xp - s.xp + ' XP to level ' + lvl.next.n + ' (' + lvl.next.title + ')')), h('div.progress.gold', h('div.bar', { style: { width: Math.round(lvl.progress * 100) + '%' } }))),
+      h('div',
+        h('div.eyebrow', 'Level ' + lvl.n + ' · ' + lvl.title),
+        h('h1', T.say(greet + '!')),
+        h('p.lead', s.xp ? 'Ready for more?' : 'Let’s learn some real Dutch.')),
+      cta,
+      nxt ? h('p.muted.small.cta-meta', nxt.stage.title + ' · ' + nxt.unit.title + ' · about ' + (nxt.lesson.minutes || 15) + ' min') : null,
       h('div.stats',
         h('div.stat', h('div.n', '\u{1F525} ' + NL.game.streakCurrent()), h('div.l', 'day streak')),
         h('div.stat', h('div.n', String(NL.srs.knownWords())), h('div.l', 'words known')),
         h('div.stat', h('div.n', String(NL.srs.learningWords())), h('div.l', 'learning')),
-        h('div.stat', h('div.n', day.xp + '/' + s.dailyGoal), h('div.l', 'today’s goal')),
+        h('div.stat.stat-goal', h('div.n', day.xp + '/' + s.dailyGoal), h('div.l', 'today’s goal'), bar(goalPct, goalPct >= 100 ? 'ok' : '', 'Daily goal')),
       ),
-      h('div.progress.ok', { 'aria-label': 'Daily goal' }, h('div.bar', { style: { width: Math.min(100, U.pct(day.xp, s.dailyGoal)) + '%' } })),
+      h('div.level-line',
+        h('div.row.row-between.small', h('span', h('b', s.xp + ' XP')), h('span.muted', (lvl.next.xp - s.xp) + ' XP to level ' + lvl.next.n + ' · ' + lvl.next.title)),
+        bar(lvl.progress * 100, 'gold', 'Progress to the next level')),
     ));
-
-    const cta = h('div.row', { style: { marginTop: '24px' } });
-    if (nxt) cta.appendChild(h('a.btn.btn-primary.btn-lg', { href: '#/lesson/' + nxt.lesson.id }, (s.xp ? 'Continue: ' : 'Start: ') + nxt.lesson.title + ' →'));
-    cta.appendChild(h('a.btn.btn-lg' + (due ? '.btn-accent' : ''), { href: '#/review/go' }, '\u{1F501} Review' + (due ? ' · ' + due + ' due' : '')));
-    host.appendChild(cta);
-    if (nxt) host.appendChild(h('p.muted.small', { style: { marginTop: '8px' } }, nxt.stage.title + ' · ' + nxt.unit.title + ' · ~' + (nxt.lesson.minutes || 15) + ' min'));
 
     const hint = NL.stt.bestBrowserHint();
     if (hint && !s.settings.sttSeen) host.appendChild(h('div.notice', hint, ' Voice output still works here.'));
     else if (!T.hasDutchVoice() && T.supported()) host.appendChild(h('div.notice', 'No Dutch voice was found in this browser yet. Chrome and Edge include Dutch voices; on Windows you can add "Nederlands" under Settings → Time & language → Speech.'));
 
-    if (NL.coach) host.appendChild(NL.coach.homeCard());
-    if (NL.fluency) host.appendChild(NL.fluency.homeCard());
+    /* Today: coach suggestions and the weekly challenge */
+    host.appendChild(section(null, null, NL.coach ? NL.coach.homeCard() : null, NL.fluency ? NL.fluency.homeCard() : null));
 
     /* Stages */
-    host.appendChild(h('h2', { style: { marginTop: '32px' } }, 'Your path'));
     const grid = h('div.grid');
     for (const st of NL.content.stages) {
       if (st.hub) { // Stage 5: a hub (review, challenges, talk topics, vocabulary bank), open at every level
@@ -64,40 +82,35 @@
         grid.appendChild(h('a.card.stage-card', { href: '#/fluency', 'aria-label': st.title },
           h('div.row.row-between', h('div.stage-code', st.cefr), h('span.pill', known + '/' + total + ' words')),
           h('h3', st.title), h('p.muted.small', st.blurb),
-          h('div.progress', h('div.bar', { style: { width: U.pct(known, total) + '%' } }))));
+          bar(U.pct(known, total), '', 'Words known')));
         continue;
       }
       const unlocked = NL.game.isUnlocked(st.id);
       const p = lessonPct(st);
-      const card = h('a.card.stage-card' + (unlocked ? '' : '.locked'), { href: unlocked ? '#/stage/' + st.id : '#/settings', 'aria-label': st.title + (unlocked ? '' : ' (locked)') },
-        h('div.row.row-between', h('div.stage-code', st.cefr), h('span.pill' + (p.pct === 100 ? '.pill-ok' : ''), unlocked ? p.done + '/' + p.n : '\u{1F512}')),
+      grid.appendChild(h('a.card.stage-card' + (unlocked ? '' : '.locked'), { href: unlocked ? '#/stage/' + st.id : '#/settings', 'aria-label': st.title + (unlocked ? '' : ' (locked)') },
+        h('div.row.row-between', h('div.stage-code', st.cefr), h('span.pill' + (p.pct === 100 ? '.pill-ok' : ''), unlocked ? p.done + '/' + p.n : 'Locked')),
         h('h3', st.title), h('p.muted.small', st.blurb),
-        h('div.progress' + (p.pct === 100 ? '.ok' : ''), h('div.bar', { style: { width: p.pct + '%' } })));
-      grid.appendChild(card);
+        bar(p.pct, p.pct === 100 ? 'ok' : '', 'Lessons finished')));
     }
-    host.appendChild(grid);
+    host.appendChild(section('Your path', null, grid));
 
     /* Practice modes */
-    host.appendChild(h('h2', { style: { marginTop: '32px' } }, 'Practice modes'));
     const modes = h('div.mode-grid');
-    [['speed', '⏱️', 'Speed round', '60 s vocabulary'], ['sprint', '\u{1F3C3}', 'Conjugation sprint', '60 s verb forms'], ['listening', '\u{1F3A7}', 'Listening only', 'dictation + choose'], ['speaking', '\u{1F399}️', 'Speaking only', 'say the sentences'], ['freetalk', '\u{1F5E8}️', 'Free talk', 'topics + model answers']].forEach(([id, ico, name, sub]) => modes.appendChild(h('a.mode', { href: '#/mode/' + id }, h('span.ico', ico), h('b', name), h('span', sub))));
-    modes.appendChild(h('a.mode', { href: '#/bank' }, h('span.ico', '\u{1F5C2}️'), h('b', 'Vocabulary bank'), h('span', 'browse by theme')));
-    modes.appendChild(h('a.mode', { href: '#/challenge' }, h('span.ico', '\u{1F3C5}'), h('b', 'Weekly challenge'), h('span', 'a new goal every Monday')));
-    host.appendChild(modes);
+    [['mode/speed', '⏱️', 'Speed round', '60 s vocabulary'], ['mode/sprint', '\u{1F3C3}', 'Conjugation sprint', '60 s verb forms'], ['mode/listening', '\u{1F3A7}', 'Listening only', 'dictation + choose'], ['mode/speaking', '\u{1F399}️', 'Speaking only', 'say the sentences'], ['mode/freetalk', '\u{1F5E8}️', 'Free talk', 'topics + model answers'], ['bank', '\u{1F5C2}️', 'Vocabulary bank', 'browse by theme'], ['challenge', '\u{1F3C5}', 'Weekly challenge', 'a new goal every Monday']]
+      .forEach(([id, ico, name, sub]) => modes.appendChild(h('a.mode', { href: '#/' + id }, h('span.ico', { 'aria-hidden': 'true' }, ico), h('b', name), h('span', sub))));
+    host.appendChild(section('Practice', null, modes));
 
-    /* Skills + streak calendar */
-    const two = h('div.grid-2', { style: { marginTop: '32px' } });
+    /* Progress: skills, streak calendar, badges */
     const sk = h('div.card', h('h3', 'Skills'));
     const skills = h('div.skills');
     const max = Math.max(50, ...Object.values(s.skills));
-    for (const k of ['grammar', 'vocab', 'listening', 'speaking', 'reading', 'writing']) skills.appendChild(h('div.skill', h('span', k[0].toUpperCase() + k.slice(1)), h('div.progress', h('div.bar', { style: { width: U.pct(s.skills[k] || 0, max) + '%' } })), h('span.muted.small', String(s.skills[k] || 0))));
+    for (const k of ['grammar', 'vocab', 'listening', 'speaking', 'reading', 'writing']) skills.appendChild(h('div.skill', h('span', k[0].toUpperCase() + k.slice(1)), bar(U.pct(s.skills[k] || 0, max), '', k + ' skill'), h('span.muted.small', String(s.skills[k] || 0))));
     sk.appendChild(skills);
-    two.appendChild(sk);
-    two.appendChild(h('div.card', h('h3', 'Streak calendar'), calendar(), h('p.muted.small', { style: { marginTop: '8px', marginBottom: 0 } }, 'Best streak: ' + s.streak.best + ' days · Dark = goal reached')));
-    host.appendChild(two);
-
+    const cal = h('div.card', h('h3', 'Streak calendar'), calendar(), h('p.muted.small.mt-2', 'Best streak: ' + s.streak.best + ' days · Dark = goal reached'));
     const earned = Object.keys(s.badges).length;
-    host.appendChild(h('div.card', { style: { marginTop: '16px' } }, h('div.row.row-between', h('h3', { style: { margin: 0 } }, 'Badges · ' + earned + '/' + NL.game.BADGES.length), h('a.btn.btn-sm', { href: '#/badges' }, 'See all')), h('div.row', { style: { marginTop: '8px' } }, NL.game.BADGES.filter((b) => s.badges[b.id]).slice(0, 8).map((b) => h('span', { title: b.name, style: { fontSize: '1.6rem' } }, b.icon)))));
+    const badges = h('div.card', h('div.row.row-between', h('h3.m-0', 'Badges · ' + earned + '/' + NL.game.BADGES.length), h('a.btn.btn-sm.btn-ghost', { href: '#/badges' }, 'See all')),
+      earned ? h('div.badge-row', NL.game.BADGES.filter((b) => s.badges[b.id]).slice(0, 8).map((b) => h('span', { title: b.name, 'aria-label': b.name, role: 'img' }, b.icon))) : h('p.muted.small.m-0', 'Finish a lesson to earn your first badge.'));
+    host.appendChild(section('Progress', null, h('div.grid-2', sk, cal), badges));
   };
 
   function calendar() {
@@ -116,7 +129,6 @@
     return wrap;
   }
 
-  /* ---------- Stage ---------- */
   V.stage = function (host, id) {
     const st = A.findStage(id);
     if (!st) return host.appendChild(h('p', 'Stage not found.'));

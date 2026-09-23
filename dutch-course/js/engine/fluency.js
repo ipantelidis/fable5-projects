@@ -97,9 +97,9 @@
     const cur = F.current();
     if (!cur) return h('div');
     const done = cur.progress.filter((p) => p.done).length;
-    return h('a.card', { href: '#/challenge', style: { display: 'block', marginTop: '24px', textDecoration: 'none', color: 'inherit' }, 'aria-label': 'Weekly challenge' },
+    return h('a.card.card-link', { href: '#/challenge', 'aria-label': 'Weekly challenge' },
       h('div.row.row-between', h('div.eyebrow', 'Weekly challenge'), h('span.pill' + (cur.claimed ? '.pill-ok' : ''), cur.claimed ? 'Done' : done + '/' + cur.progress.length + ' · ' + (cur.daysLeft === 0 ? 'last day' : U.plural(cur.daysLeft, 'day') + ' left'))),
-      h('h3', { style: { margin: '4px 0 8px' } }, (cur.challenge.icon ? cur.challenge.icon + ' ' : '') + cur.challenge.title),
+      h('h3.mt-1.mb-2', (cur.challenge.icon ? cur.challenge.icon + ' ' : '') + cur.challenge.title),
       h('div.progress' + (cur.claimed ? '.ok' : ''), h('div.bar', { style: { width: Math.round(cur.progress.reduce((n, p) => n + p.pct, 0) / cur.progress.length) + '%' } })));
   };
 
@@ -269,7 +269,7 @@
       h('div.stat', h('div.n', String(due)), h('div.l', 'due today')),
       h('div.stat', h('div.n', String(Object.keys(NL.state.get().challenges || {}).length)), h('div.l', 'challenges won'))));
     host.appendChild(h('div.row', { style: { marginTop: '16px' } }, h('a.btn.btn-lg' + (due ? '.btn-primary' : ''), { href: '#/review/go' }, '\u{1F501} Daily review' + (due ? ' · ' + due + ' due' : ''))));
-    host.appendChild(F.homeCard());
+    const hc = F.homeCard(); hc.classList.add('mt-4'); host.appendChild(hc);
 
     host.appendChild(h('h2', { style: { marginTop: '32px' } }, 'Speaking topics'));
     host.appendChild(h('p.muted', 'Pick a topic, answer each prompt out loud, then compare with a model answer.'));
