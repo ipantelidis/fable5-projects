@@ -75,7 +75,7 @@
     fill('De opzegtermijn ___ één maand.', ['bedraagt', 'is'], 'The notice period is one month.', 'bedraagt.'),
     fill('Na drie tijdelijke contracten volgt een contract voor ___ tijd.', ['onbepaalde'], 'After three temporary contracts a permanent contract follows.', 'onbepaalde tijd.'),
     build('The works council must agree to the reorganisation.', 'De ondernemingsraad moet instemmen met de reorganisatie.', ['instemt', 'over'], 'instemmen met.'),
-    tr('en-nl', 'Is there a non-compete clause in it?', ['Staat er een concurrentiebeding in?'], 'staat er … in.'),
+    tr('en-nl', 'Is there a non-compete clause in it?', ['Staat er een concurrentiebeding in?', 'Zit er een concurrentiebeding in?'], 'staat er … in.'),
     speak('Het contract wordt stilzwijgend verlengd, tenzij een van de partijen schriftelijk opzegt.', 'The contract is tacitly renewed, unless one of the parties gives notice in writing.'),
   ]));
 
@@ -192,7 +192,7 @@
     build('The effect on me is that I have to take over your part.', 'Het effect op mij is dat ik jouw deel moet overnemen.', ['moet ik', 'neem over'], 'dat … moet overnemen.'),
     build('I did not mean it like that.', 'Zo bedoelde ik het niet.', ['ik bedoelde', 'bedoel'], 'Fronted zo + inversion.'),
     build('Can we agree that you respond within two days?', 'Kunnen we afspreken dat je binnen twee dagen reageert?', ['reageer je', 'spreken af'], 'afspreken dat … reageert.'),
-    tr('en-nl', 'It was based on a misunderstanding.', ['Het berustte op een misverstand.'], 'berusten op.'),
+    tr('en-nl', 'It was based on a misunderstanding.', ['Het berustte op een misverstand.', 'Het was gebaseerd op een misverstand.'], 'berusten op.'),
     tr('nl-en', 'Daar herken ik me niet in. Mag ik vertellen hoe ik het heb ervaren?', ['I do not recognise myself in that. May I tell you how I experienced it?'], 'zich herkennen in.'),
     fix('Je bent altijd te laat en je hebt geen respect.', ['Ik merk dat je de laatste weken vaak te laat bent. Het effect is dat we steeds opnieuw moeten beginnen.'], 'Behaviour and effect, not judgement.'),
     dict('Het was niet zo ver gekomen als we eerder hadden gepraat.', 'It would not have come this far if we had talked earlier.', 'Unreal past.'),
@@ -205,7 +205,7 @@
     fill('___ je dat? (Do you recognise that?)', ['Herken'], 'Do you recognise that?', 'herken je.'),
     fill('Ik bedoel het niet als ___. (reproach)', ['verwijt'], 'I do not mean it as a reproach.', 'het verwijt.'),
     build('Name the behaviour, not the person.', 'Benoem het gedrag, niet de persoon.', ['benoemt', 'de gedrag'], 'Imperative; het gedrag.'),
-    tr('en-nl', 'A mediator has been brought in.', ['Er is een bemiddelaar ingeschakeld.'], 'is … ingeschakeld.'),
+    tr('en-nl', 'A mediator has been brought in.', ['Er is een bemiddelaar ingeschakeld.', 'Er werd een bemiddelaar ingeschakeld.', 'Er is een mediator ingeschakeld.'], 'is … ingeschakeld.'),
     speak('Goed dat je het zegt. Zo bedoelde ik het niet, maar ik had het eerder moeten melden.', 'Good that you say so. I did not mean it like that, but I should have reported it earlier.'),
   ]));
 
@@ -257,7 +257,7 @@
     build('The main character hardly develops.', 'De hoofdpersoon ontwikkelt zich nauwelijks.', ['hem', 'ontwikkeld'], 'zich ontwikkelen.'),
     build('The acting performances are convincing.', 'De acteerprestaties zijn overtuigend.', ['overtuigende', 'is'], 'Plural; predicate adjective without -e.'),
     build('It is a moving film about guilt.', 'Het is een ontroerende film over schuld.', ['ontroerend', 'van'], 'de film → ontroerende.'),
-    tr('en-nl', 'Turn on the Dutch subtitles.', ['Zet de Nederlandse ondertiteling aan.'], 'aanzetten.'),
+    tr('en-nl', 'Turn on the Dutch subtitles.', ['Zet de Nederlandse ondertiteling aan.', 'Zet de Nederlandse ondertitels aan.', 'Doe de Nederlandse ondertiteling aan.'], 'aanzetten.'),
     tr('nl-en', 'De stijl is sober en ironisch; bij herlezing vallen de details pas op hun plaats.', ['The style is sober and ironic; only on rereading do the details fall into place.'], 'pas = only then.'),
     fix('De verfilming afwijkt van het boek.', ['De verfilming wijkt af van het boek.'], 'Separable: wijkt … af.'),
     dict('De aanslag beschrijft hoe één nacht in 1945 een heel leven bepaalt.', 'The Assault describes how one night in 1945 determines a whole life.', 'beschrijft hoe … bepaalt.'),
@@ -400,7 +400,7 @@
     listen('Niet onaardig, dat eerste album, maar het tweede, daar was ik, om het zo maar te zeggen, minder van onder de indruk.', ['The first album was quite good; the speaker was unimpressed by the second.', 'Both albums were terrible.', 'The second album was the best.'], 0, 'niet onaardig; minder onder de indruk.'),
     mc('"Dat viel een beetje tegen" usually means', ['a small disappointment', 'a big disappointment, politely put'], 1, 'Understatement.'),
     fill('"Zeg maar" is een typisch ___.', ['stopwoord'], '"Zeg maar" is a typical filler word.', 'stopwoord.'),
-    tr('en-nl', 'What is the gist of her answer?', ['Wat is de strekking van haar antwoord?'], 'strekking.'),
+    tr('en-nl', 'What is the gist of her answer?', ['Wat is de strekking van haar antwoord?', 'Wat is de kern van haar antwoord?'], 'strekking.'),
     speak('Dat is niet niks, maar laat ik het zo zeggen: zonder hulp was het me niet gelukt.', 'That is quite something, but let me put it this way: without help I would not have managed.'),
   ]));
 })();

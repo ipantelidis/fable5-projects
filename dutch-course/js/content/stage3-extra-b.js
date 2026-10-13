@@ -54,7 +54,7 @@
     build('What can we do at home?', 'Wat kunnen wij thuis doen?', ['doen thuis', 'kan'], 'kunnen … doen.'),
     build('What does she still find hard?', 'Waar heeft ze nog moeite mee?', ['Wat', 'met'], 'waar … mee.'),
     build('I am not worried about that.', 'Daar maak ik me geen zorgen over.', ['ik maak', 'niet'], 'daar … over; geen zorgen.'),
-    tr('en-nl', 'How is he doing in class?', ['Hoe gaat het met hem in de klas?'], 'hoe gaat het met.'),
+    tr('en-nl', 'How is he doing in class?', ['Hoe gaat het met hem in de klas?', 'Hoe gaat het in de klas met hem?'], 'hoe gaat het met.'),
     tr('nl-en', 'De juf zei dat hij zelfstandig werkt, maar niet altijd oplet.', ['The teacher said that he works independently, but does not always pay attention.'], 'zei dat …; oplet at the end.'),
     fix('Wat heeft ze moeite met?', ['Waar heeft ze moeite mee?'], 'waar … mee.'),
     dict('Waar is hij goed in, en waar heeft hij moeite mee?', 'What is he good at, and what does he find hard?', 'goed in; moeite mee.'),
@@ -132,7 +132,7 @@
     fill('Spreken is een ___ onderdeel. (oral)', ['mondeling'], 'Speaking is an oral part.', 'het onderdeel + een → no -e.'),
     fill('Kies het juiste ___.', ['antwoord'], 'Choose the right answer.', 'antwoord.'),
     build('The result comes by post.', 'De uitslag komt per post.', ['met', 'het'], 'per post.'),
-    tr('en-nl', 'I have to resit the writing part.', ['Ik moet het onderdeel schrijven herkansen.'], 'herkansen.'),
+    tr('en-nl', 'I have to resit the writing part.', ['Ik moet het onderdeel schrijven herkansen.', 'Ik moet het schrijfonderdeel herkansen.', 'Ik moet het onderdeel schrijven overdoen.', 'Ik moet het onderdeel schrijven opnieuw doen.'], 'herkansen.'),
     speak('Als je zakt voor één onderdeel, hoef je alleen dat onderdeel te herkansen.', 'If you fail one part, you only have to resit that part.'),
   ]));
 
@@ -258,7 +258,7 @@
     fill('Je had me ___ bellen. (should)', ['moeten'], 'You should have called me.', 'had moeten.'),
     fill('Had ik het ___ geweten!', ['maar'], 'If only I had known!', 'Had ik … maar.'),
     build('I could have known.', 'Ik had het kunnen weten.', ['gekund', 'kon'], 'had kunnen weten.'),
-    tr('en-nl', 'In retrospect it was the right choice.', ['Achteraf was het de juiste keuze.'], 'achteraf + inversion.'),
+    tr('en-nl', 'In retrospect it was the right choice.', ['Achteraf was het de juiste keuze.', 'Achteraf gezien was het de juiste keuze.', 'Achteraf bekeken was het de juiste keuze.', 'Het was achteraf de juiste keuze.'], 'achteraf + inversion.'),
     speak('Had ik maar eerder hulp gezocht; dan was het nooit zo ver gekomen.', 'If only I had sought help earlier; then it would never have come this far.'),
   ]));
 
@@ -310,7 +310,7 @@
     build('Could I temporarily work four days?', 'Zou ik tijdelijk vier dagen kunnen werken?', ['Kan', 'werk'], 'zou … kunnen werken.'),
     build('I hardly sleep because I worry about my work.', 'Ik slaap nauwelijks omdat ik over mijn werk pieker.', ['pieker ik', 'niet'], 'omdat … pieker.'),
     build('I am looking for a better balance.', 'Ik zoek een betere balans.', ['beter', 'het'], 'de balans → betere.'),
-    tr('en-nl', 'After that week I was exhausted.', ['Na die week was ik uitgeput.'], 'uitgeput.'),
+    tr('en-nl', 'After that week I was exhausted.', ['Na die week was ik uitgeput.', 'Ik was uitgeput na die week.', 'Na die week was ik doodmoe.'], 'uitgeput.'),
     tr('nl-en', 'De werkdruk is al maanden te hoog, en ik heb nog geen afspraak met de bedrijfsarts.', ['The work pressure has been too high for months, and I do not have an appointment with the company doctor yet.'], 'al maanden; nog geen.'),
     fix('Ik heb last over stress.', ['Ik heb last van stress.'], 'last hebben van.'),
     dict('Eerlijk gezegd wordt het me te veel; ik slaap nauwelijks nog.', 'Honestly, it is getting too much for me; I hardly sleep any more.', 'wordt het me te veel.'),
@@ -380,7 +380,7 @@
     build('When do I get the result?', 'Wanneer krijg ik de uitslag?', ['ik krijg', 'het'], 'Question word + verb + subject.'),
     build('The infection is treated with antibiotics.', 'De ontsteking wordt met antibiotica behandeld.', ['behandelt', 'door'], 'wordt … behandeld.'),
     build('Could you explain that in simpler words?', 'Kunt u dat in eenvoudiger woorden uitleggen?', ['leg uit', 'eenvoudig'], 'kunt u … uitleggen.'),
-    tr('en-nl', 'How long does the recovery take?', ['Hoe lang duurt het herstel?'], 'het herstel.'),
+    tr('en-nl', 'How long does the recovery take?', ['Hoe lang duurt het herstel?', 'Hoelang duurt het herstel?'], 'het herstel.'),
     tr('nl-en', 'U mag na de verdoving niet zelf autorijden.', ['You may not drive yourself after the anaesthetic.', 'After the anaesthetic you are not allowed to drive yourself.'], 'mag niet; zelf.'),
     fix('U wordt morgen opereren.', ['U wordt morgen geopereerd.'], 'Passive needs the participle.'),
     dict('U wordt dinsdag geopereerd en u moet die ochtend nuchter komen.', 'You are being operated on on Tuesday and you have to come on an empty stomach that morning.', 'wordt geopereerd; nuchter.'),

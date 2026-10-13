@@ -69,7 +69,7 @@
     fill('De premier leidt het ___.', ['kabinet'], 'The prime minister leads the cabinet.', 'het kabinet.'),
     fill('De wet ___ morgen in de Kamer besproken. (present passive)', ['wordt'], 'The bill is discussed in the House tomorrow.', 'wordt.'),
     build('Every vote counts.', 'Elke stem telt.', ['elk', 'tellen'], 'de stem → elke stem.'),
-    tr('en-nl', 'The mayor is appointed, not elected.', ['De burgemeester wordt benoemd, niet gekozen.'], 'benoemd / gekozen.'),
+    tr('en-nl', 'The mayor is appointed, not elected.', ['De burgemeester wordt benoemd, niet gekozen.', 'De burgemeester wordt benoemd en niet gekozen.'], 'benoemd / gekozen.'),
     speak('Ik mag bij de gemeenteraadsverkiezingen stemmen, maar niet bij de landelijke verkiezingen.', 'I may vote in the municipal elections, but not in the national elections.'),
   ]));
 
@@ -184,7 +184,7 @@
     build('The conclusion is that more must be built.', 'De conclusie is dat er meer gebouwd moet worden.', ['moet er', 'bouwen'], 'dat er … gebouwd moet worden.'),
     fix('Ik vind dat de auteur gelijk heeft over de huren.', ['De auteur stelt dat de huren te hoog zijn.', 'Volgens de auteur zijn de huren te hoog.'], 'A summary is neutral: report, do not judge.'),
     fix('De auteur stelt dat zijn de huren te hoog.', ['De auteur stelt dat de huren te hoog zijn.'], 'Verb at the end after dat.'),
-    tr('en-nl', 'According to the author, too little has been built.', ['Volgens de auteur is er te weinig gebouwd.'], 'volgens + inversion; is … gebouwd.'),
+    tr('en-nl', 'According to the author, too little has been built.', ['Volgens de auteur is er te weinig gebouwd.', 'Volgens de schrijver is er te weinig gebouwd.'], 'volgens + inversion; is … gebouwd.'),
     tr('nl-en', 'Beperk je tot de hoofdzaken en laat de bijzaken weg.', ['Limit yourself to the main points and leave out the side issues.', 'Stick to the main points and leave out the details.'], 'hoofdzaken / bijzaken.'),
     dict('De auteur stelt dat er jarenlang te weinig is gebouwd.', 'The author states that too little has been built for years.', 'stelt dat … is gebouwd.'),
     read('Steeds meer jongeren blijven thuis wonen. Het aantal twintigers dat nog bij de ouders woont, is in tien jaar met een kwart gestegen. De belangrijkste oorzaak is het tekort aan betaalbare woningen: voor een sociale huurwoning sta je in de grote steden al snel tien jaar op de wachtlijst, en een koopwoning is voor starters onbereikbaar geworden. Zo vertelt de 27-jarige Daan dat hij ondanks een vaste baan geen hypotheek kan krijgen. Daarnaast speelt de studieschuld een rol, want banken tellen die mee bij een hypotheekaanvraag. Deskundigen waarschuwen dat jongeren hierdoor belangrijke beslissingen uitstellen, zoals samenwonen en kinderen krijgen. Zij pleiten daarom voor meer kleine, betaalbare woningen speciaal voor starters.', [

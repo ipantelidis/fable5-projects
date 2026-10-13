@@ -220,7 +220,7 @@
     build('The study shows that costs are rising.', 'Uit het onderzoek blijkt dat de kosten stijgen.', ['Het onderzoek blijkt', 'stijgen de kosten'], 'uit … blijkt dat … stijgen.'),
     build('With regard to privacy there are concerns.', 'Met betrekking tot privacy zijn er zorgen.', ['er zijn', 'over'], 'Fronted phrase + inversion.'),
     build('The data were collected by means of interviews.', 'De gegevens zijn door middel van interviews verzameld.', ['hebben', 'met middel'], 'zijn … verzameld; door middel van.'),
-    tr('en-nl', 'There is a connection between sleep and memory.', ['Er is een verband tussen slaap en geheugen.'], 'een verband tussen.'),
+    tr('en-nl', 'There is a connection between sleep and memory.', ['Er is een verband tussen slaap en geheugen.', 'Er bestaat een verband tussen slaap en geheugen.', 'Er is een verband tussen slapen en geheugen.'], 'een verband tussen.'),
     tr('nl-en', 'De invoering van de maatregel leidde tot een afname van het aantal ongelukken.', ['The introduction of the measure led to a decrease in the number of accidents.'], 'Two nominalisations.'),
     fix('Het onderzoek blijkt dat de kosten stijgen.', ['Uit het onderzoek blijkt dat de kosten stijgen.'], 'blijken needs uit: uit het onderzoek blijkt.'),
     dict('Uit het onderzoek blijkt een sterke toename van het aantal thuiswerkers.', 'The study shows a strong increase in the number of people working from home.', 'blijkt; toename.'),
@@ -233,7 +233,7 @@
     fill('Uit de resultaten ___ dat de hypothese niet klopt.', ['blijkt'], 'The results show that the hypothesis is not correct.', 'blijkt.'),
     fill('Door ___ van een enquête zijn de gegevens verzameld.', ['middel'], 'The data were collected by means of a survey.', 'door middel van.'),
     build('The sample was too small.', 'De steekproef was te klein.', ['kleine', 'het'], 'de steekproef; te klein.'),
-    tr('en-nl', 'The study demonstrates that the method works.', ['Het onderzoek toont aan dat de methode werkt.'], 'toont aan dat … werkt.'),
+    tr('en-nl', 'The study demonstrates that the method works.', ['Het onderzoek toont aan dat de methode werkt.', 'Het onderzoek laat zien dat de methode werkt.', 'Uit het onderzoek blijkt dat de methode werkt.', 'De studie toont aan dat de methode werkt.'], 'toont aan dat … werkt.'),
     speak('Met betrekking tot gegevensbescherming bestaan er nog grote zorgen.', 'With regard to data protection there are still great concerns.'),
   ]));
 
@@ -374,7 +374,7 @@
     fill('___ ik maar beter geluisterd!', ['Had'], 'If only I had listened better!', 'Had ik maar.'),
     fill('Je had het me ___ zeggen. (should)', ['moeten'], 'You should have told me.', 'had moeten.'),
     build('By then I will have finished the report.', 'Tegen die tijd zal ik het rapport hebben afgerond.', ['zijn', 'afronden'], 'zal … hebben afgerond.'),
-    tr('en-nl', 'I had never dared to ask for a raise.', ['Ik had nooit om opslag durven vragen.'], 'had … durven vragen (double infinitive).'),
+    tr('en-nl', 'I had never dared to ask for a raise.', ['Ik had nooit om opslag durven vragen.', 'Ik had nooit om loonsverhoging durven vragen.', 'Ik had nooit durven vragen om opslag.'], 'had … durven vragen (double infinitive).'),
     speak('Achteraf had ik eerder moeten overstappen, maar ik heb er geen spijt van.', 'In retrospect I should have switched earlier, but I do not regret it.'),
   ]));
 

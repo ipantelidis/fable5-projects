@@ -74,7 +74,7 @@
     fill('De voordelen wegen niet op ___ de risico’s.', ['tegen'], 'The benefits do not outweigh the risks.', 'opwegen tegen.'),
     fill('Een arts mag een ___ hebben. (conscientious objection)', ['gewetensbezwaar'], 'A doctor may have a conscientious objection.', 'gewetensbezwaar.'),
     build('Does the end justify the means?', 'Rechtvaardigt het doel de middelen?', ['rechtvaardigen', 'het middel'], 'Verb first.'),
-    tr('en-nl', 'Norms and values change with time.', ['Normen en waarden veranderen met de tijd.'], 'normen en waarden.'),
+    tr('en-nl', 'Norms and values change with time.', ['Normen en waarden veranderen met de tijd.', 'Normen en waarden veranderen in de loop van de tijd.', 'Normen en waarden veranderen mee met de tijd.'], 'normen en waarden.'),
     speak('Ik ben er niet principieel tegen, maar het is alleen gerechtvaardigd als er geen ander middel is.', 'I am not against it on principle, but it is only justified if there is no other means.'),
   ]));
 
@@ -126,7 +126,7 @@
     build('The allowance is phased out as you earn more.', 'De toeslag wordt afgebouwd naarmate je meer verdient.', ['verdien je', 'omdat'], 'naarmate … verdient.'),
     build('That average hides big differences.', 'Dat gemiddelde verbergt grote verschillen.', ['die', 'groot'], 'het gemiddelde → dat.'),
     build('The minimum wage has been raised substantially.', 'Het minimumloon is fors verhoogd.', ['heeft', 'verhogen'], 'is … verhoogd.'),
-    tr('en-nl', 'Whoever loses their job is entitled to a benefit.', ['Wie zijn baan verliest, heeft recht op een uitkering.'], 'wie …, heeft recht op.'),
+    tr('en-nl', 'Whoever loses their job is entitled to a benefit.', ['Wie zijn baan verliest, heeft recht op een uitkering.', 'Wie zijn werk verliest, heeft recht op een uitkering.', 'Wie haar baan verliest, heeft recht op een uitkering.'], 'wie …, heeft recht op.'),
     tr('nl-en', 'De verzorgingsstaat staat onder druk door de vergrijzing.', ['The welfare state is under pressure from the ageing population.', 'The welfare state is under pressure because of the ageing population.'], 'onder druk staan.'),
     fix('De huren zijn gestegen met 35 procent in tien jaar geworden.', ['De huren zijn in tien jaar met 35 procent gestegen.'], 'No geworden; participle last.'),
     dict('Per saldo gaan de meeste huishoudens erop vooruit, maar dat gemiddelde verbergt grote verschillen.', 'On balance most households are better off, but that average hides big differences.', 'erop vooruitgaan.'),
@@ -196,7 +196,7 @@
     build('My opponent states that the plan costs jobs.', 'Mijn opponent stelt dat het plan banen kost.', ['kost banen', 'stellen'], 'stelt dat … kost.'),
     build('That example undermines your own proposition.', 'Dat voorbeeld ondermijnt uw eigen stelling.', ['die', 'ondermijnen'], 'het voorbeeld → dat.'),
     build('One example is not proof.', 'Eén voorbeeld is nog geen bewijs.', ['niet', 'een bewijs geen'], 'nog geen bewijs.'),
-    tr('en-nl', 'Your argument rests on an assumption that is not correct.', ['Uw betoog berust op een aanname die niet klopt.'], 'berusten op; die … klopt.'),
+    tr('en-nl', 'Your argument rests on an assumption that is not correct.', ['Uw betoog berust op een aanname die niet klopt.', 'Je betoog berust op een aanname die niet klopt.', 'Jouw betoog berust op een aanname die niet klopt.', 'Uw betoog berust op een onjuiste aanname.', 'Uw betoog is gebaseerd op een aanname die niet klopt.'], 'berusten op; die … klopt.'),
     tr('nl-en', 'Van dat argument blijft weinig overeind.', ['Little remains of that argument.', 'Not much of that argument is left standing.'], 'overeind blijven.'),
     fix('Mijn opponent stelt dat kost het plan banen.', ['Mijn opponent stelt dat het plan banen kost.'], 'Verb at the end after dat.'),
     dict('Zelfs als de omzet tijdelijk daalt, volgt daaruit niet dat het beleid mislukt is.', 'Even if turnover falls temporarily, it does not follow that the policy has failed.', 'zelfs als …, volgt daaruit niet dat.'),
@@ -273,7 +273,7 @@
     mc('"Een afleider" is', ['a wrong option designed to look right', 'the correct answer'], 0, 'Distractor.'),
     fill('"Echter" kondigt een ___ aan.', ['tegenstelling'], '"Echter" announces a contrast.', 'tegenstelling.'),
     build('Tick the right answer.', 'Kruis het juiste antwoord aan.', ['aankruis', 'de'], 'kruis … aan.'),
-    tr('en-nl', 'Which statement is correct according to the text?', ['Welke bewering is juist volgens de tekst?'], 'bewering.'),
+    tr('en-nl', 'Which statement is correct according to the text?', ['Welke bewering is juist volgens de tekst?', 'Welke bewering is volgens de tekst juist?', 'Welke bewering klopt volgens de tekst?', 'Welke uitspraak is juist volgens de tekst?'], 'bewering.'),
     speak('Ik lees eerst de vragen, dan de eerste zin van elke alinea, en daarna zoek ik de antwoorden.', 'I read the questions first, then the first sentence of each paragraph, and after that I look for the answers.'),
   ]));
 
@@ -320,7 +320,7 @@
     fill('Signaalwoorden zorgen voor ___. (coherence)', ['samenhang'], 'Signal words provide coherence.', 'samenhang.'),
     fix('Ik schrijf u omdat ik ben het niet eens met uw besluit.', ['Ik schrijf u omdat ik het niet eens ben met uw besluit.'], 'omdat: verb to the end.'),
     build('Formulate your request in one sentence.', 'Formuleer je verzoek in één zin.', ['formuleert', 'de verzoek'], 'Imperative; het verzoek.'),
-    tr('en-nl', 'A complete text scores better than a beautiful half.', ['Een volledige tekst scoort beter dan een mooie halve.'], 'volledige; beter dan.'),
+    tr('en-nl', 'A complete text scores better than a beautiful half.', ['Een volledige tekst scoort beter dan een mooie halve.', 'Een complete tekst scoort beter dan een mooie halve.'], 'volledige; beter dan.'),
     speak('Ik onderstreep eerst de lezer, het doel en alle aandachtspunten, en daarna maak ik een kort plan.', 'First I underline the reader, the purpose and all the points to cover, and then I make a short plan.'),
   ]));
 
@@ -363,7 +363,7 @@
     fill('Maak je een fout? Praat gewoon ___.', ['door'], 'Do you make a mistake? Just keep talking.', 'doorpraten.'),
     fill('___: ik ben voor, mits het goed geregeld wordt. (in summary)', ['Samengevat'], 'In summary: I am in favour, provided it is well arranged.', 'samengevat.'),
     build('Use the full speaking time.', 'Gebruik de volle spreektijd.', ['gebruikt', 'vol'], 'Imperative; de spreektijd → volle.'),
-    tr('en-nl', 'Do you not know a word? Describe it.', ['Weet je een woord niet? Omschrijf het.'], 'omschrijven.'),
+    tr('en-nl', 'Do you not know a word? Describe it.', ['Weet je een woord niet? Omschrijf het.', 'Ken je een woord niet? Omschrijf het.', 'Weet je een woord niet? Beschrijf het.'], 'omschrijven.'),
   ], [
     mc('"Vloeiendheid" means', ['speaking without any mistakes', 'carrying on smoothly, also after a mistake'], 1, 'Fluency.'),
     fill('Schrijf alleen ___ op, geen zinnen. (key words)', ['trefwoorden'], 'Only write down key words, not sentences.', 'trefwoorden.'),

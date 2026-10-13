@@ -53,7 +53,7 @@
     build('The costs are earned back in seven years.', 'De kosten worden in zeven jaar terugverdiend.', ['wordt', 'verdienen terug'], 'Plural: worden … terugverdiend.'),
     build('A grant can be applied for at the municipality.', 'Er kan subsidie worden aangevraagd bij de gemeente.', ['aanvragen', 'Het'], 'er kan … worden aangevraagd.'),
     build('Is that target feasible?', 'Is die doelstelling haalbaar?', ['dat', 'haalbare'], 'de doelstelling → die.'),
-    tr('en-nl', 'Our block is being made sustainable next year.', ['Onze flat wordt volgend jaar verduurzaamd.'], 'wordt verduurzaamd.'),
+    tr('en-nl', 'Our block is being made sustainable next year.', ['Onze flat wordt volgend jaar verduurzaamd.', 'Ons blok wordt volgend jaar verduurzaamd.', 'Ons flatgebouw wordt volgend jaar verduurzaamd.', 'Onze flat wordt volgend jaar duurzaam gemaakt.'], 'wordt verduurzaamd.'),
     tr('nl-en', 'Volgens tegenstanders is de overstap voor veel gezinnen niet betaalbaar.', ['According to opponents the switch is not affordable for many families.'], 'volgens + inversion.'),
     fix('De ketel moet worden vervangt.', ['De ketel moet worden vervangen.', 'De ketel moet vervangen worden.'], 'Participle: vervangen.'),
     dict('Voor isolatie kan subsidie worden aangevraagd bij de gemeente.', 'A grant for insulation can be applied for at the municipality.', 'kan … worden aangevraagd.'),
@@ -130,7 +130,7 @@
     fill('Voetgangers hebben hier ___.', ['voorrang'], 'Pedestrians have right of way here.', 'voorrang hebben.'),
     fill('In de stad is de ___ dertig. (speed limit)', ['maximumsnelheid'], 'In the city the speed limit is thirty.', 'maximumsnelheid.'),
     build('The municipality encourages cycling.', 'De gemeente stimuleert het fietsen.', ['stimuleren', 'de fietsen'], 'het + infinitive as a noun.'),
-    tr('en-nl', 'Public transport has become expensive.', ['Het openbaar vervoer is duur geworden.'], 'is … geworden.'),
+    tr('en-nl', 'Public transport has become expensive.', ['Het openbaar vervoer is duur geworden.', 'Het ov is duur geworden.', 'Het OV is duur geworden.'], 'is … geworden.'),
     speak('De trein is sneller dan de auto, maar niet zo betrouwbaar als vroeger.', 'The train is faster than the car, but not as reliable as it used to be.'),
   ]));
 
@@ -196,7 +196,7 @@
     fill('Wij verzoeken u de stoep ___ herstellen.', ['te'], 'We request you to repair the pavement.', 'te.'),
     fill('___ de bewoners schrijf ik u deze brief.', ['Namens'], 'On behalf of the residents I am writing you this letter.', 'namens.'),
     build('You can report nuisance online.', 'U kunt overlast online melden.', ['meldt', 'kan u'], 'kunt … melden.'),
-    tr('en-nl', 'The street lighting has been broken for a week.', ['De straatverlichting is al een week kapot.'], 'al een week.'),
+    tr('en-nl', 'The street lighting has been broken for a week.', ['De straatverlichting is al een week kapot.', 'De straatverlichting is al een week stuk.'], 'al een week.'),
     speak('Graag vernemen wij binnen twee weken wat u gaat doen.', 'We would like to hear within two weeks what you are going to do.'),
   ]));
 
@@ -259,7 +259,7 @@
     fill('Je kunt ___ aanvragen tot 1 september.', ['uitstel'], 'You can apply for an extension until 1 September.', 'uitstel.'),
     fill('Veel gegevens zijn al vooraf ___.', ['ingevuld'], 'Many details are already pre-filled.', 'ingevuld.'),
     build('I am getting money back this year.', 'Ik krijg dit jaar geld terug.', ['terugkrijg', 'krijgt'], 'krijg … terug.'),
-    tr('en-nl', 'Mortgage interest is partly deductible.', ['De hypotheekrente is gedeeltelijk aftrekbaar.'], 'aftrekbaar.'),
+    tr('en-nl', 'Mortgage interest is partly deductible.', ['De hypotheekrente is gedeeltelijk aftrekbaar.', 'De hypotheekrente is deels aftrekbaar.', 'De hypotheekrente is voor een deel aftrekbaar.', 'Hypotheekrente is gedeeltelijk aftrekbaar.'], 'aftrekbaar.'),
     speak('Ik heb uitstel aangevraagd, omdat ik mijn jaaropgaaf nog niet had ontvangen.', 'I applied for an extension, because I had not received my annual statement yet.'),
   ]));
 
@@ -322,7 +322,7 @@
     fill('Waterschade is ___. (covered)', ['gedekt'], 'Water damage is covered.', 'gedekt.'),
     fill('Bij diefstal moet je eerst ___ doen.', ['aangifte'], 'In case of theft you first have to make a police report.', 'aangifte doen.'),
     build('My claim was rejected.', 'Mijn claim is afgewezen.', ['heeft', 'afwijzen'], 'is afgewezen.'),
-    tr('en-nl', 'The premium is going up next year.', ['De premie gaat volgend jaar omhoog.'], 'omhoog gaan.'),
+    tr('en-nl', 'The premium is going up next year.', ['De premie gaat volgend jaar omhoog.', 'De premie stijgt volgend jaar.', 'Volgend jaar gaat de premie omhoog.'], 'omhoog gaan.'),
     speak('De schade wordt vergoed, maar er geldt een eigen risico van honderd euro.', 'The damage is reimbursed, but an excess of a hundred euros applies.'),
   ]));
 

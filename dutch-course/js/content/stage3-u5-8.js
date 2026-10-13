@@ -131,7 +131,7 @@
     art('kringloopwinkel', 'de', 'de winkel.'),
     fill('mogelijk → ___ (noun)', ['mogelijkheid'], 'possible → possibility', '-heid.'),
     build('Paper is recycled.', 'Papier wordt gerecycled.', ['is', 'recyclen'], 'wordt gerecycled.'),
-    tr('en-nl', 'Bring a reusable bag.', ['Neem een herbruikbare tas mee.'], 'herbruikbare (de-word); neem … mee.'),
+    tr('en-nl', 'Bring a reusable bag.', ['Neem een herbruikbare tas mee.', 'Breng een herbruikbare tas mee.'], 'herbruikbare (de-word); neem … mee.'),
     speak('Deze verpakking is herbruikbaar, dus gooi haar niet weg.', 'This packaging is reusable, so do not throw it away.'),
   ]));
 
@@ -226,7 +226,7 @@
     mc('De vrouw ___ ik het gaf.', ['waaraan', 'aan wie'], 1, 'Person → aan wie.'),
     fill('Dat hangt ___ van de rente.', ['af'], 'That depends on the interest rate.', 'afhangen van.'),
     build('That is the account I save in.', 'Dat is de rekening waarop ik spaar.', ['die', 'spaar ik'], 'waarop … spaar.'),
-    tr('en-nl', 'I transferred the money.', ['Ik heb het geld overgemaakt.'], 'overmaken.'),
+    tr('en-nl', 'I transferred the money.', ['Ik heb het geld overgemaakt.', 'Ik maakte het geld over.'], 'overmaken.'),
     speak('De lening waarover ik je vertelde, heb ik uiteindelijk niet afgesloten.', 'In the end I did not take out the loan I told you about.'),
   ]));
 
@@ -349,7 +349,7 @@
     build('May I respond to that?', 'Mag ik daar even op reageren?', ['over', 'dat'], 'daar … op reageren.'),
     build('We have to take a decision today.', 'We moeten vandaag een besluit nemen.', ['maken', 'nemen een besluit'], 'een besluit nemen.'),
     build('Tom will join later.', 'Tom sluit later aan.', ['aansluit', 'komt'], 'sluit … aan.'),
-    tr('en-nl', 'Let us wrap up. Who does what?', ['Laten we afronden. Wie doet wat?'], 'afronden.'),
+    tr('en-nl', 'Let us wrap up. Who does what?', ['Laten we afronden. Wie doet wat?', 'Laten we het afronden. Wie doet wat?'], 'afronden.'),
     tr('nl-en', 'Over de begroting hebben we het nog niet gehad.', ['We have not talked about the budget yet.', 'We have not discussed the budget yet.'], 'het hebben over = to talk about.'),
     fix('Volgend kwartaal wij starten het project.', ['Volgend kwartaal starten we het project.', 'Volgend kwartaal starten wij het project.'], 'Inversion after a fronted time.'),
     fix('Ik stuur morgen het je.', ['Ik stuur het je morgen.'], 'Pronouns before time.'),
@@ -488,7 +488,7 @@
     build('I will get straight to the point.', 'Ik val maar met de deur in huis.', ['huis in', 'de deur met'], 'Fixed idiom.'),
     build('I will keep you posted.', 'Ik hou je op de hoogte.', ['hoog', 'in'], 'op de hoogte houden.'),
     build('When it is your birthday, you treat others yourself.', 'Als je jarig bent, trakteer je zelf.', ['je trakteert', 'bent jarig'], 'als … bent; trakteer je.'),
-    tr('en-nl', 'The Dutch are known for their directness.', ['Nederlanders staan bekend om hun directheid.'], 'bekendstaan om.'),
+    tr('en-nl', 'The Dutch are known for their directness.', ['Nederlanders staan bekend om hun directheid.', 'De Nederlanders staan bekend om hun directheid.', 'Nederlanders zijn bekend om hun directheid.'], 'bekendstaan om.'),
     tr('nl-en', 'Doe maar gewoon, dan doe je al gek genoeg.', ['Just act normal, that is crazy enough.', 'Just be normal, that is already crazy enough.'], 'The Dutch motto.'),
     fix('Hij kijkt de hond uit de boom.', ['Hij kijkt de kat uit de boom.'], 'Idioms are fixed: kat.'),
     dict('Hoe was het examen? Ach, het viel wel mee.', 'How was the exam? Oh, it was not so bad.', 'viel wel mee.'),
@@ -546,7 +546,7 @@
     fill('In de ___ eeuw (1600s) was Amsterdam een wereldstad.', ['zeventiende'], 'In the seventeenth century Amsterdam was a world city.', 'zeventiende.'),
     fill('Op 5 mei vieren we de ___.', ['bevrijding'], 'On 5 May we celebrate the liberation.', 'bevrijding.'),
     build('Slavery was abolished in 1863.', 'De slavernij werd in 1863 afgeschaft.', ['is geworden', 'schafte af'], 'werd … afgeschaft.'),
-    tr('en-nl', 'The Netherlands has been a kingdom since 1815.', ['Nederland is sinds 1815 een koninkrijk.'], 'sinds + present.'),
+    tr('en-nl', 'The Netherlands has been a kingdom since 1815.', ['Nederland is sinds 1815 een koninkrijk.', 'Nederland is een koninkrijk sinds 1815.', 'Nederland is al sinds 1815 een koninkrijk.'], 'sinds + present.'),
     speak('Tijdens de Gouden Eeuw werd Amsterdam rijk door de handel, maar die rijkdom had ook een donkere kant.', 'During the Golden Age Amsterdam became rich through trade, but that wealth also had a dark side.'),
   ]));
 

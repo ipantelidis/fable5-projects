@@ -339,7 +339,7 @@
     mc('"Als voorgerecht neem ik de soep." Why "neem ik"?', ['because it is a question', 'because "Als voorgerecht" is in first position, so the verb comes next', 'because soep is a de-word'], 1, 'Inversion after a fronted element.'),
     fill('Om acht uur ___ de film.', ['begint'], 'At eight the film starts.', 'de film = het/hij form: begint.'),
     fill('___ neem ik de soep, daarna de vis.', ['Eerst'], 'First I take the soup, then the fish.', 'eerst = first.'),
-    tr('en-nl', 'I would like to book a table.', ['Ik wil graag een tafel reserveren.'], 'ik wil graag + reserveren at the end.'),
+    tr('en-nl', 'I would like to book a table.', ['Ik wil graag een tafel reserveren.', 'Ik zou graag een tafel willen reserveren.', 'Ik wil een tafel reserveren.', 'Ik zou graag een tafel reserveren.'], 'ik wil graag + reserveren at the end.'),
     tr('nl-en', 'Wilt u nog een toetje?', ['Would you like a dessert?', 'Do you want a dessert?', 'Would you like another dessert?'], 'wilt u = would you like (formal); toetje = dessert.'),
     dict('Vanavond eten we in een restaurant in de Pijp.', 'Tonight we are eating in a restaurant in de Pijp.', 'vanavond + eten + we.'),
     listen('Als hoofdgerecht neem ik de kip met rijst.', ['As a main course I will have the chicken with rice.', 'As a starter I will have the chicken soup.', 'As a dessert I will have the rice.'], 0, 'hoofdgerecht = main course.'),

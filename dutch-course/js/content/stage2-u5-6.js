@@ -121,7 +121,7 @@
     mc('Ik blijf thuis omdat ik ___.', ['ben moe', 'moe ben'], 1, 'Verb at the end.'),
     fill('Ze zegt dat ze een nieuwe baan ___. (hebben)', ['heeft'], 'She says that she has a new job.', 'heeft at the end.'),
     build('If I have time, I will call you.', 'Als ik tijd heb, bel ik je.', ['ik bel', 'heb tijd'], 'als … heb; bel ik.'),
-    tr('en-nl', 'I have a permanent contract.', ['Ik heb een vast contract.'], 'vast = permanent.'),
+    tr('en-nl', 'I have a permanent contract.', ['Ik heb een vast contract.', 'Ik heb een contract voor onbepaalde tijd.'], 'vast = permanent.'),
     listen('Wat voor werk doe je? — Ik werk op de afdeling verkoop.', ['What kind of work do you do? — I work in the sales department.', 'Where do you work? — In a shop.', 'Do you like your work? — Yes, in sales.'], 0, 'afdeling verkoop.'),
     speak('Ik werk parttime omdat ik twee kleine kinderen heb.', 'I work part time because I have two small children.'),
   ]));
@@ -191,7 +191,7 @@
     build('I had to call in sick this morning.', 'Ik heb me vanmorgen ziek moeten melden.', ['gemoeten', 'gemeld'], 'heb … moeten melden.'),
     build('We are going to postpone the deadline.', 'We gaan de deadline uitstellen.', ['stellen uit', 'uitgesteld'], 'gaan … uitstellen.'),
     build('I want to check with my boss first.', 'Ik wil eerst met mijn baas overleggen.', ['overleg', 'wil ik'], 'wil … overleggen.'),
-    tr('en-nl', 'I still have ten holiday days.', ['Ik heb nog tien vakantiedagen.'], 'nog = still.'),
+    tr('en-nl', 'I still have ten holiday days.', ['Ik heb nog tien vakantiedagen.', 'Ik heb nog tien vrije dagen.', 'Ik heb nog tien verlofdagen.'], 'nog = still.'),
     tr('nl-en', 'Ik heb de taak niet op tijd kunnen afmaken.', ['I was not able to finish the task on time.', 'I could not finish the task on time.'], 'heb … kunnen afmaken.'),
     fix('Ik heb gisteren gemoeten overwerken.', ['Ik heb gisteren moeten overwerken.'], 'Modal in the perfect: infinitive, not participle.'),
     fix('Ik moet morgen bellen mijn baas.', ['Ik moet morgen mijn baas bellen.'], 'bellen at the end.'),
@@ -205,7 +205,7 @@
     conj('afmaken', 'wij', 'perf', ['hebben afgemaakt'], 'afgemaakt.'),
     fill('Ik wil dit eerst ___. (afmaken)', ['afmaken'], 'I want to finish this first.', 'infinitive at the end.'),
     build('I have to prepare a presentation tomorrow.', 'Ik moet morgen een presentatie voorbereiden.', ['bereid voor', 'voorbereid'], 'moet … voorbereiden.'),
-    tr('en-nl', 'I called in sick.', ['Ik heb me ziek gemeld.'], 'zich ziek melden.'),
+    tr('en-nl', 'I called in sick.', ['Ik heb me ziek gemeld.', 'Ik heb mij ziek gemeld.', 'Ik meldde me ziek.', 'Ik meldde mij ziek.'], 'zich ziek melden.'),
     speak('We hebben de deadline moeten uitstellen omdat de planning te krap was.', 'We had to postpone the deadline because the schedule was too tight.'),
   ]));
 
@@ -362,7 +362,7 @@
     build('Walking is as healthy as cycling.', 'Wandelen is even gezond als fietsen.', ['dan', 'gezonder'], 'even … als.'),
     build('My sister is sportier than me.', 'Mijn zus is sportiever dan ik.', ['als', 'sportief'], 'sportiever dan ik.'),
     build('I have a better bike than you.', 'Ik heb een betere fiets dan jij.', ['beter', 'als'], 'de fiets → een betere fiets.'),
-    tr('en-nl', 'Running is more tiring than swimming.', ['Hardlopen is vermoeiender dan zwemmen.'], 'vermoeiender dan.'),
+    tr('en-nl', 'Running is more tiring than swimming.', ['Hardlopen is vermoeiender dan zwemmen.', 'Rennen is vermoeiender dan zwemmen.'], 'vermoeiender dan.'),
     tr('nl-en', 'Fitness vind ik saaier dan tennis.', ['I find gym training more boring than tennis.', 'I think fitness is more boring than tennis.'], 'saaier = more boring.'),
     fix('Zwemmen is meer gezond dan lopen.', ['Zwemmen is gezonder dan lopen.'], 'No "meer": gezonder.'),
     fix('Hij is groter als ik.', ['Hij is groter dan ik.'], 'than = dan (als is heard, but dan is correct).'),

@@ -111,7 +111,7 @@
     fill('Het is kwart ___ zeven.', ['over', 'voor'], 'It is 7:15 (or 6:45).', 'kwart over zeven = 7:15; kwart voor zeven = 6:45.'),
     fill('De film begint ___ acht uur.', ['om'], 'The film starts at eight.', '"at" a clock time is "om": om acht uur.'),
     tr('en-nl', 'It is 3:30.', ['Het is half vier.'], 'half vier: halfway to four.'),
-    tr('en-nl', 'It is 9:45.', ['Het is kwart voor tien.'], 'kwart voor tien: quarter to ten.'),
+    tr('en-nl', 'It is 9:45.', ['Het is kwart voor tien.', 'Het is negen uur vijfenveertig.'], 'kwart voor tien: quarter to ten.'),
     tr('en-nl', 'What time is it?', ['Hoe laat is het?'], 'Literally "How late is it?"'),
     build('The appointment is at half past ten.', 'De afspraak is om half elf.', ['half tien', 'op'], '10:30 = half elf (halfway to eleven). At + time = om.'),
     build('I work from nine to five.', 'Ik werk van negen tot vijf.', ['om', 'uur'], 'van … tot … = from … to … Hours without "uur" are fine after van/tot.'),
@@ -334,7 +334,7 @@
     listen('De trein vertrekt van spoor drie.', ['The train leaves from platform 3.', 'The tram stops at stop 3.', 'The bus is on street 3.'], 0, 'spoor drie = platform 3.'),
     mc('"links" means …', ['right', 'left', 'straight'], 1, 'links = left.'),
     fill('___ is de halte?', ['Waar'], 'Where is the stop?', 'waar = where.'),
-    tr('en-nl', 'How do I get to the market?', ['Hoe kom ik bij de markt?'], 'hoe kom ik bij de markt.'),
+    tr('en-nl', 'How do I get to the market?', ['Hoe kom ik bij de markt?', 'Hoe kom ik naar de markt?'], 'hoe kom ik bij de markt.'),
     build('It is nearby, on the corner.', 'Het is dichtbij, op de hoek.', ['ver', 'brug'], 'dichtbij = nearby; op de hoek = on the corner.'),
     speak('Let op: fietsers!', 'Watch out: cyclists!'),
   ]));

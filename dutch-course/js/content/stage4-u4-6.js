@@ -394,7 +394,7 @@
     build('I would advise you to phone first.', 'Ik zou u aanraden om eerst te bellen.', ['raad aan', 'bellen te'], 'zou … aanraden om … te bellen.'),
     build('If I understand correctly, you are asking for my opinion.', 'Als ik het goed begrijp, vraagt u om mijn mening.', ['u vraagt', 'begrijp ik'], 'als … begrijp; vraagt u.'),
     build('You can take each part separately.', 'Je kunt elk onderdeel apart afleggen.', ['elke', 'leg af'], 'het onderdeel → elk onderdeel.'),
-    tr('en-nl', 'What is the main idea of the text?', ['Wat is de hoofdgedachte van de tekst?'], 'hoofdgedachte.'),
+    tr('en-nl', 'What is the main idea of the text?', ['Wat is de hoofdgedachte van de tekst?', 'Wat is het hoofdidee van de tekst?'], 'hoofdgedachte.'),
     tr('nl-en', 'Let op de signaalwoorden; ze laten zien hoe de alinea’s samenhangen.', ['Pay attention to the signal words; they show how the paragraphs are connected.'], 'signaalwoorden; alinea’s.'),
     read('Leestekst (examenstijl). Flexwerk: vrijheid of onzekerheid? Het aantal mensen met een flexibel contract is in tien jaar sterk toegenomen. Werkgevers wijzen op de voordelen: zij kunnen snel inspelen op drukte, en werknemers zouden meer vrijheid hebben. Uit onderzoek blijkt echter dat die vrijheid vooral geldt voor hoogopgeleide zzp’ers. Voor wie een oproepcontract heeft, betekent flexwerk vooral onzekerheid: geen vast inkomen, geen hypotheek en weinig scholing. Dit heeft ook gevolgen voor de samenleving als geheel, want mensen zonder zekerheid stellen grote beslissingen uit, zoals het krijgen van kinderen. De wetgever heeft daarom besloten vaste contracten aantrekkelijker te maken. Of dat voldoende is, moet nog blijken.', [
       { q: 'Wat is de hoofdgedachte van de tekst?', options: ['Flexwerk geeft iedereen meer vrijheid.', 'Flexwerk biedt sommigen vrijheid, maar veel anderen vooral onzekerheid.', 'Flexwerk moet worden verboden.'], answer: 1, explain: 'The turn after "echter" carries the main point.' },
@@ -413,7 +413,7 @@
     fill('Wat is de functie van ___ 3? (paragraph)', ['alinea'], 'What is the function of paragraph 3?', 'alinea.'),
     fill('Ik zou u ___ om eerst te bellen. (advise)', ['aanraden'], 'I would advise you to phone first.', 'aanraden.'),
     build('Read the task carefully.', 'Lees de opdracht goed.', ['leest', 'het'], 'de opdracht.'),
-    tr('en-nl', 'I am in favour, for two reasons.', ['Ik ben voor, en wel om twee redenen.'], 'en wel om.'),
+    tr('en-nl', 'I am in favour, for two reasons.', ['Ik ben voor, en wel om twee redenen.', 'Ik ben voor, om twee redenen.', 'Ik ben ervoor, om twee redenen.'], 'en wel om.'),
     speak('Als ik het goed begrijp, vraagt u om mijn mening. Volgens mij is het een goed plan, en wel om twee redenen.', 'If I understand correctly, you are asking for my opinion. In my view it is a good plan, for two reasons.'),
   ]));
 
@@ -426,7 +426,7 @@
     build('I overlooked that mistake.', 'Ik heb die fout over het hoofd gezien.', ['overzien', 'dat'], 'over het hoofd zien; die fout.'),
     build('I would advise you to contact the municipality.', 'Ik zou u aanraden om contact op te nemen met de gemeente.', ['opnemen te', 'raad'], 'contact op te nemen met.'),
     fix('Hun zeggen dat het maakt geen zin.', ['Zij zeggen dat het geen zin heeft.', 'Ze zeggen dat het geen zin heeft.'], 'hun is not a subject; zin hebben; verb at the end.'),
-    tr('en-nl', 'What is the main idea of the text?', ['Wat is de hoofdgedachte van de tekst?'], 'hoofdgedachte.'),
+    tr('en-nl', 'What is the main idea of the text?', ['Wat is de hoofdgedachte van de tekst?', 'Wat is het hoofdidee van de tekst?'], 'hoofdgedachte.'),
     listen('Bij schrijfvaardigheid wordt uw tekst beoordeeld op inhoud, opbouw, grammatica en woordkeuze.', ['In the writing part your text is assessed on content, structure, grammar and word choice.', 'In the writing part only spelling counts.', 'The writing part is not assessed.'], 0, 'beoordeeld op.'),
     speak('Ik leg in juni het staatsexamen af; uiteindelijk wil ik in Nederland gaan studeren.', 'I am taking the state exam in June; eventually I want to study in the Netherlands.'),
   ]));

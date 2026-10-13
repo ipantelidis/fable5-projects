@@ -214,7 +214,7 @@
     fill('De trein vertrekt ___ vijf minuten.', ['over'], 'The train leaves in five minutes.', 'over = from now.'),
     mc('"Ik ben pas een week hier" means', ['I have been here for only a week', 'I have been here for a whole week', 'I was here a week ago'], 0, 'pas = only.'),
     build('I saw the doctor two days ago.', 'Ik heb twee dagen geleden de dokter gezien.', ['voor', 'sinds'], 'twee dagen geleden.'),
-    tr('en-nl', 'I exercise three times a week.', ['Ik sport drie keer per week.'], 'keer per week.'),
+    tr('en-nl', 'I exercise three times a week.', ['Ik sport drie keer per week.', 'Ik sport drie keer in de week.', 'Ik sport drie maal per week.'], 'keer per week.'),
     speak('Sinds vorige week voel ik me beter, maar ik ben nog steeds een beetje moe.', 'Since last week I have felt better, but I am still a little tired.'),
   ]));
 

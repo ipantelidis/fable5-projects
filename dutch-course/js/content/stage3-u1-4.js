@@ -86,7 +86,7 @@
     mc('Het onderzoek ___ vandaag verscheen, is betrouwbaar.', ['die', 'dat'], 1, 'het onderzoek → dat.'),
     fill('Iets ___ ik niet begrijp: waarom stijgen de huren?', ['wat'], 'Something I do not understand: why are rents rising?', 'iets → wat.'),
     build('The newspaper I read is reliable.', 'De krant die ik lees, is betrouwbaar.', ['dat', 'lees ik'], 'die … lees.'),
-    tr('en-nl', 'According to the news, the elections are in March.', ['Volgens het nieuws zijn de verkiezingen in maart.'], 'volgens + inversion.'),
+    tr('en-nl', 'According to the news, the elections are in March.', ['Volgens het nieuws zijn de verkiezingen in maart.', 'Volgens het journaal zijn de verkiezingen in maart.', 'De verkiezingen zijn volgens het nieuws in maart.'], 'volgens + inversion.'),
     speak('De partij die de verkiezingen won, wil de woningnood aanpakken.', 'The party that won the elections wants to tackle the housing shortage.'),
   ]));
 
@@ -129,7 +129,7 @@
     fill('De brand ___ snel geblust. (perfect)', ['is'], 'The fire has been put out quickly.', 'is + participle.'),
     fill('___ wordt gebeld. (impersonal)', ['Er'], 'Someone is ringing.', 'er wordt.'),
     build('The suspect was arrested by the police.', 'De verdachte werd door de politie aangehouden.', ['heeft', 'hield aan'], 'werd … door … aangehouden.'),
-    tr('en-nl', 'The cause is still unknown.', ['De oorzaak is nog onbekend.'], 'onbekend.'),
+    tr('en-nl', 'The cause is still unknown.', ['De oorzaak is nog onbekend.', 'De oorzaak is nog steeds onbekend.', 'De oorzaak is nog niet bekend.'], 'onbekend.'),
     speak('Er wordt onderzoek gedaan naar de oorzaak van het ongeluk.', 'An investigation is being carried out into the cause of the accident.'),
   ]));
 
@@ -224,7 +224,7 @@
     fill('Ik geloof niet ___ dat klopt.', ['dat'], 'I do not believe that is right.', 'dat.'),
     fill('Hij vroeg ___ ik het ermee eens was.', ['of'], 'He asked whether I agreed.', 'of = whether.'),
     build('The disadvantage is that it takes time.', 'Het nadeel is dat het tijd kost.', ['kost het', 'voordeel'], 'dat … kost.'),
-    tr('en-nl', 'I doubt whether that works.', ['Ik twijfel of dat werkt.'], 'twijfelen of.'),
+    tr('en-nl', 'I doubt whether that works.', ['Ik twijfel of dat werkt.', 'Ik betwijfel of dat werkt.', 'Ik twijfel eraan of dat werkt.'], 'twijfelen of.'),
     speak('Daar ben ik het niet mee eens. Bovendien is het veel te duur.', 'I do not agree with that. Moreover it is far too expensive.'),
   ]));
 
@@ -385,7 +385,7 @@
     build('I had my thesis checked.', 'Ik heb mijn scriptie laten nakijken.', ['gelaten', 'nagekeken'], 'heb … laten nakijken.'),
     build('Keep practising every day.', 'Blijf elke dag oefenen.', ['te', 'oefent'], 'blijven + infinitive.'),
     build('She refuses to give tutoring.', 'Ze weigert bijles te geven.', ['geven te', 'geeft'], 'weigeren + te.'),
-    tr('en-nl', 'I cannot keep up with the pace.', ['Ik kan het tempo niet bijhouden.'], 'kunnen + bijhouden, no te.'),
+    tr('en-nl', 'I cannot keep up with the pace.', ['Ik kan het tempo niet bijhouden.', 'Ik kan het tempo niet volgen.'], 'kunnen + bijhouden, no te.'),
     tr('nl-en', 'Ik ben aan het leren voor mijn examen, dus ik kan vanavond niet.', ['I am studying for my exam, so I cannot tonight.', 'I am busy studying for my exam so I can’t make it tonight.'], 'aan het leren.'),
     fix('Ik probeer elke dag oefenen.', ['Ik probeer elke dag te oefenen.'], 'proberen + te.'),
     fix('Ik moet te leren.', ['Ik moet leren.'], 'No te after a modal.'),

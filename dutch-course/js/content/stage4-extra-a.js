@@ -124,7 +124,7 @@
     build('The inflow has admittedly risen, but less than is claimed.', 'De instroom is weliswaar gestegen, maar minder dan wordt beweerd.', ['Weliswaar de', 'als'], 'weliswaar … maar; minder dan.'),
     build('That does not alter the fact that the pressure is real.', 'Dat neemt niet weg dat de druk reëel is.', ['is reëel', 'neem'], 'dat … is at the end.'),
     build('You have to distinguish asylum and labour migration.', 'Je moet asiel en arbeidsmigratie onderscheiden.', ['onderscheidt', 'van'], 'moet … onderscheiden.'),
-    tr('en-nl', 'Without public support every plan fails.', ['Zonder draagvlak mislukt elk plan.'], 'zonder + inversion; het plan → elk.'),
+    tr('en-nl', 'Without public support every plan fails.', ['Zonder draagvlak mislukt elk plan.', 'Zonder draagvlak mislukt ieder plan.', 'Elk plan mislukt zonder draagvlak.'], 'zonder + inversion; het plan → elk.'),
     tr('nl-en', 'In tegenstelling tot wat vaak wordt gedacht, komen de meeste migranten uit andere EU-landen.', ['Contrary to what is often thought, most migrants come from other EU countries.'], 'in tegenstelling tot.'),
     fix('De instroom is weliswaar gestegen, dus de cijfers vallen mee.', ['De instroom is weliswaar gestegen, maar de cijfers vallen mee.'], 'weliswaar needs maar.'),
     dict('Door de vergrijzing neemt de vraag naar zorgpersoneel de komende jaren sterk toe.', 'Because of the ageing population the demand for care staff will increase sharply in the coming years.', 'neemt … toe.'),
