@@ -118,6 +118,7 @@
     U.on('goal', () => U.toast('\u{1F3AF} Daily goal reached!', 'ok'));
     U.on('state', app.updateHeader);
     NL.game.checkBadges();
+    if (NL.tts.loadAudioIndex) NL.tts.loadAudioIndex();
     if (NL.sync) NL.sync.boot();
     // Ask the browser to keep this site's storage (progress lives in localStorage; Safari may otherwise clear it after a week away)
     try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().then((ok) => { app.storagePersisted = ok; }); } catch (e) {}

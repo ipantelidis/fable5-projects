@@ -49,11 +49,51 @@
     return RATES[(s && s.settings.rate) || 'normal'];
   };
 
+  /* ---- Course audio: pre-generated recordings (tools/audio/build.py, open-source Piper voice "pim"), keyed by a hash of
+     the normalised text. Used when a recording exists and the learner has not chosen the browser voice; otherwise the
+     browser's speech synthesis speaks. The index (audio/index.json) is a list of hashes, loaded once on first use. */
+  T.key = (text) => String(text).replace(/\s+/g, ' ').trim();
+  T.hash = function (text) { // FNV-1a 32-bit over UTF-8 bytes; must match tools/audio/build.py
+    const bytes = new TextEncoder().encode(T.key(text)); let h = 0x811c9dc5;
+    for (let i = 0; i < bytes.length; i++) { h ^= bytes[i]; h = Math.imul(h, 0x01000193) >>> 0; }
+    return ('0000000' + h.toString(16)).slice(-8);
+  };
+  let audioIndex = null, audioLoading = null, player = null;
+  T.loadAudioIndex = function () {
+    if (audioIndex || audioLoading) return audioLoading || Promise.resolve(audioIndex);
+    if (typeof fetch === 'undefined') return Promise.resolve(null);
+    audioLoading = fetch('audio/index.json').then((r) => (r.ok ? r.json() : [])).then((list) => { audioIndex = new Set(list); U.emit('audio-index', audioIndex.size); return audioIndex; }).catch(() => { audioIndex = new Set(); return audioIndex; });
+    return audioLoading;
+  };
+  const source = () => { const s = NL.state.get(); return (s && s.settings.voiceSource) || 'course'; };
+  T.hasRecording = (text) => !!(audioIndex && audioIndex.has(T.hash(text)));
+  T.recordingsAvailable = () => !!(audioIndex && audioIndex.size);
+  function playRecording(text, opts) {
+    const hsh = T.hash(text);
+    if (player) { try { player.pause(); } catch (e) {} }
+    const a = new Audio('audio/' + hsh.slice(0, 2) + '/' + hsh + '.mp3');
+    const r = typeof opts.rate === 'number' ? opts.rate : (opts.rate ? RATES[opts.rate] : T.rate());
+    a.playbackRate = Math.max(0.5, Math.min(2, r / RATES.normal)); a.preservesPitch = true;
+    let ended = false; const end = (e) => { if (ended) return; ended = true; if (opts.onend) opts.onend(e); };
+    a.onended = end;
+    a.onerror = () => { if (ended) return; ended = true; speakSynth(text, opts); }; // missing or unplayable file: fall back
+    player = a;
+    const p = a.play(); if (p && p.catch) p.catch(() => { if (!ended) { ended = true; speakSynth(text, opts); } });
+    return true;
+  }
+
   /** speak(text, {rate:'slow'|'normal'|'fast'|number, onend}) */
   T.speak = function (text, opts) {
     opts = opts || {};
-    if (!T.supported() || !text) return false;
+    if (!text) return false;
     lastText = text;
+    U.emit('speak', text);
+    if (source() !== 'browser' && T.hasRecording(text)) return playRecording(text, opts);
+    if (!audioIndex) T.loadAudioIndex();
+    return speakSynth(text, opts);
+  };
+  function speakSynth(text, opts) {
+    if (!T.supported()) { if (opts.onend) setTimeout(opts.onend, 0); return false; }
     try { synth.cancel(); } catch (e) {}
     const u = new SpeechSynthesisUtterance(text);
     const v = T.current();
@@ -63,12 +103,11 @@
     u.pitch = 1;
     if (opts.onend) u.onend = opts.onend;
     u.onerror = (e) => { if (opts.onend) opts.onend(e); };
-    U.emit('speak', text);
     synth.speak(u);
     return true;
-  };
+  }
   T.replay = () => (lastText ? T.speak(lastText) : false);
-  T.stop = () => { try { synth.cancel(); } catch (e) {} };
+  T.stop = () => { try { synth.cancel(); } catch (e) {} if (player) { try { player.pause(); } catch (e) {} } };
   T.last = () => lastText;
 
   /** Make an element speak its text when clicked */

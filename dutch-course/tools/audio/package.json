@@ -1,0 +1,1 @@
+{ "name": "nl-audio-build", "private": true, "type": "module", "dependencies": { "@mintplex-labs/piper-tts-web": "1.0.5" } }

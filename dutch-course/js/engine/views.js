@@ -69,7 +69,7 @@
 
     const hint = NL.stt.bestBrowserHint();
     if (hint && !s.settings.sttSeen) host.appendChild(h('div.notice', hint, ' Voice output still works here.'));
-    else if (!T.hasDutchVoice() && T.supported()) host.appendChild(h('div.notice', 'No Dutch voice was found in this browser yet. Chrome and Edge include Dutch voices; on Windows you can add "Nederlands" under Settings → Time & language → Speech.'));
+    else if (!T.hasDutchVoice() && T.supported() && !(T.recordingsAvailable && T.recordingsAvailable())) host.appendChild(h('div.notice', 'No Dutch voice was found in this browser yet. Chrome and Edge include Dutch voices; on Windows you can add "Nederlands" under Settings → Time & language → Speech.'));
 
     const wk = NL.progress && NL.progress.weekCard(); if (wk) host.appendChild(h('div.section', wk));
     if (NL.sync) host.appendChild(NL.sync.homePrompt());
@@ -302,6 +302,7 @@
     U.on('voices', fillVoices);
     voiceSel.addEventListener('change', () => { s.settings.voice = voiceSel.value; NL.state.save(); T.speak('Hallo! Ik ben je nieuwe stem.'); });
     setting('Dutch voice', T.supported() ? 'Best available nl-NL voice is chosen automatically.' : 'Speech synthesis is not supported in this browser.', h('div.row', voiceSel, h('button.btn.btn-sm', { type: 'button', onclick: () => T.speak('Goedemiddag, hoe gaat het met je?') }, '▶ Test')));
+    if (T.recordingsAvailable && T.recordingsAvailable()) setting('Audio source', 'Course recordings use one consistent, tested Dutch voice. Your browser voice is used for anything not recorded.', seg([['course', 'Course recordings'], ['browser', 'Browser voice']], s.settings.voiceSource || 'course', (v) => { s.settings.voiceSource = v; NL.state.save(); T.speak('Dit is de nieuwe stem.'); }));
     setting('Speech speed', 'Slow is useful for dictation.', seg([['slow', 'Slow'], ['normal', 'Normal'], ['fast', 'Fast']], s.settings.rate, (v) => { s.settings.rate = v; NL.state.save(); T.speak('Dit is de snelheid van de stem.'); }));
     setting('Voice input', NL.stt.supported() ? 'Speech recognition is available. Allow microphone access when asked.' : (NL.stt.bestBrowserHint() || 'Not available.') + ' Speaking exercises fall back to self-grading.', h('span.pill' + (NL.stt.supported() ? '.pill-ok' : '.pill-warn'), NL.stt.supported() ? 'available' : 'unavailable'));
     setting('Sound effects', null, sw(!s.settings.mute, (v) => { s.settings.mute = !v; NL.state.save(); if (v) NL.sfx.correct(); }));

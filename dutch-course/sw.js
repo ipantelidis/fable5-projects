@@ -1,6 +1,7 @@
 /* Nederlands Nu service worker: cache-first for the app shell so the course works offline once visited.
    Bump VERSION whenever content or engine files change; old caches are removed on activate. */
-const VERSION = 'nl-2026-10-13-27';
+const VERSION = 'nl-2026-10-13-28';
+const AUDIO_CACHE = 'nl-audio-1'; // recordings survive version updates; the index is network-first so new recordings appear
 const ASSETS = [
   './',
   './index.html',
@@ -78,12 +79,21 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
+  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== VERSION && k !== AUDIO_CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
 });
 
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
+  const path = new URL(req.url).pathname;
+  if (path.endsWith('/audio/index.json')) {
+    event.respondWith(fetch(req).then((res) => { if (res && res.ok) { const copy = res.clone(); caches.open(AUDIO_CACHE).then((c) => c.put(req, copy)); } return res; }).catch(() => caches.match(req, { cacheName: AUDIO_CACHE })));
+    return;
+  }
+  if (path.includes('/audio/') && path.endsWith('.mp3')) {
+    event.respondWith(caches.open(AUDIO_CACHE).then((c) => c.match(req).then((hit) => hit || fetch(req).then((res) => { if (res && res.ok) c.put(req, res.clone()); return res; }))));
+    return;
+  }
   event.respondWith(
     caches.match(req, { ignoreSearch: true }).then((hit) => hit || fetch(req).then((res) => {
       if (res && res.ok) { const copy = res.clone(); caches.open(VERSION).then((c) => c.put(req, copy)); }

@@ -32,11 +32,27 @@ Off by default. The course is complete without it. To let people keep progress a
 2. Authentication → Providers: enable Email with magic links. Authentication → URL configuration: add the site URL as an allowed redirect.
 3. Put the project URL and the anon key in `js/config.js`, bump `sw.js`, push.
 
+To avoid sending email at all, enable GitHub or Google under Authentication → Providers in Supabase (free; GitHub needs an OAuth app from github.com/settings/developers with the callback URL Supabase shows) and list it in `authProviders` in `js/config.js`. The card then shows "Sign in with GitHub/Google" buttons above the email option.
+
 Settings then shows a **Cloud sync** card: sign in with an email link, and the progress file is saved a few seconds after every change and loaded on other devices. Without a sign-in nothing changes. The anon key is meant to be public; the schema's policies do the protection. The Supabase client library is loaded from a CDN only on configured sites.
 
 ## AI coach (optional)
 
 Off by default. The coach page answers from built-in rules and needs no server. To let learners type free questions ("why is it *ik ben gegaan*?") and get a Claude answer that knows their progress, deploy the worker in `proxy/` (see `proxy/README.md`), put its URL in `coachProxyUrl` in `js/config.js`, bump `sw.js`, push. The page then says what is sent: the question, a short anonymous progress summary and up to three grammar entries. If the service fails, the offline answer appears instead.
+
+## Course audio (free, generated locally)
+
+Dutch text is spoken from pre-generated MP3 recordings in `audio/` when one exists, and by the browser's own voice otherwise (Settings → Audio source lets learners choose). The recordings use the open-source Piper voice `nl_NL-pim-medium`, chosen with a speech-recognition test (95% word accuracy, against 92.5% for the macOS Dutch voice). Files are named by a hash of the text, so a changed sentence simply gets a new file.
+
+After changing content:
+
+```
+sh tools/audio/setup.sh                       # once: Python venv, phonemizer, voice model (not committed)
+node tools/shots/collect-audio-texts.mjs      # writes tools/audio/texts.json from the course
+tools/audio/.venv/bin/python tools/audio/build.py --prune   # generates only new texts, removes unused files
+```
+
+The service worker keeps recordings in their own cache, so they survive site updates and work offline once played.
 
 ## Privacy
 

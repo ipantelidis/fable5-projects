@@ -45,6 +45,12 @@
   };
   /** Current access token (for the coach proxy), or null */
   S.token = async function () { try { const c = await S.init(); if (!c || !user) return null; const { data } = await c.auth.getSession(); return data && data.session ? data.session.access_token : null; } catch (e) { return null; } };
+  S.providers = () => { const c = window.NL_CONFIG || {}; return Array.isArray(c.authProviders) ? c.authProviders.filter((x) => ['github', 'google', 'apple', 'azure', 'gitlab', 'discord'].includes(x)) : []; };
+  S.signInWith = async function (provider) {
+    const c = await S.init(); if (!c) throw new Error('Cloud sync is not configured on this site.');
+    const { error } = await c.auth.signInWithOAuth({ provider, options: { redirectTo: location.href.split('#')[0] } });
+    if (error) throw error;
+  };
   S.signOut = async function () { const c = await S.init(); if (!c) return; await c.auth.signOut(); user = null; U.emit('sync', S.status()); };
 
   function localStamp() { return NL.state.get().updatedAt || NL.state.get().created || ''; }
@@ -113,7 +119,11 @@
       } else {
         const inp = h('input.input', { type: 'email', placeholder: 'you@example.com', 'aria-label': 'Email address', required: true, style: { maxWidth: '280px' } });
         const form = h('form.row', { onsubmit: async (e) => { e.preventDefault(); try { await S.signIn(inp.value.trim()); body.appendChild(h('p.small', { style: { color: 'var(--ok)' } }, 'Check your email for a sign-in link. Open it on this device.')); } catch (err) { body.appendChild(h('p.small', { style: { color: 'var(--bad)' } }, 'Could not send the link: ' + err.message)); } } }, inp, h('button.btn.btn-sm.btn-primary', { type: 'submit' }, 'Send sign-in link'));
-        body.appendChild(h('p.muted.small', 'Sign in with an email link to keep your progress in sync across devices. Only the progress file is stored, nothing else.'));
+        const prov = S.providers();
+        const NAMES = { github: 'GitHub', google: 'Google', apple: 'Apple', azure: 'Microsoft', gitlab: 'GitLab', discord: 'Discord' };
+        body.appendChild(h('p.muted.small', 'Sign in to keep your progress in sync across devices. Only the progress file is stored, nothing else.'));
+        if (prov.length) body.appendChild(h('div.row.mb-2', ...prov.map((pv) => h('button.btn.btn-sm' + (pv === prov[0] ? '.btn-primary' : ''), { type: 'button', onclick: async () => { try { await S.signInWith(pv); } catch (err) { body.appendChild(h('p.small', { style: { color: 'var(--bad)' } }, 'Could not start sign-in: ' + err.message)); } } }, 'Sign in with ' + (NAMES[pv] || pv)))));
+        if (prov.length) body.appendChild(h('p.muted.small.m-0', 'Or get a sign-in link by email:'));
         body.appendChild(form);
         if (st === 'idle') S.init().then(render).catch(() => {});
       }
