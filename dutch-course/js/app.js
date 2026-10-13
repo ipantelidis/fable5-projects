@@ -29,6 +29,7 @@
     [/^\/settings(?:\/(sync))?$/, (host, focus) => NL.views.settings(host, focus), 'settings'],
     [/^\/about$/, (host) => NL.views.about(host), 'settings'],
     [/^\/coach$/, (host) => NL.coach.view(host), 'coach'],
+    [/^\/progress$/, (host) => NL.progress.view(host), 'home'],
     [/^\/sounds(?:\/([\w-]+))?(?:\/(listen|speak))?$/, (host, id, mode) => NL.sounds.view(host, id, mode), 'home'],
   ];
 

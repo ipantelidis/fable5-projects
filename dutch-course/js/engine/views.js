@@ -71,6 +71,7 @@
     if (hint && !s.settings.sttSeen) host.appendChild(h('div.notice', hint, ' Voice output still works here.'));
     else if (!T.hasDutchVoice() && T.supported()) host.appendChild(h('div.notice', 'No Dutch voice was found in this browser yet. Chrome and Edge include Dutch voices; on Windows you can add "Nederlands" under Settings → Time & language → Speech.'));
 
+    const wk = NL.progress && NL.progress.weekCard(); if (wk) host.appendChild(h('div.section', wk));
     if (NL.sync) host.appendChild(NL.sync.homePrompt());
 
     /* Today: coach suggestions and the weekly challenge */
@@ -113,7 +114,7 @@
     const earned = Object.keys(s.badges).length;
     const badges = h('div.card', h('div.row.row-between', h('h3.m-0', 'Badges · ' + earned + '/' + NL.game.BADGES.length), h('a.btn.btn-sm.btn-ghost', { href: '#/badges' }, 'See all')),
       earned ? h('div.badge-row', NL.game.BADGES.filter((b) => s.badges[b.id]).slice(0, 8).map((b) => h('span', { title: b.name, 'aria-label': b.name, role: 'img' }, b.icon))) : h('p.muted.small.m-0', 'Finish a lesson to earn your first badge.'));
-    host.appendChild(section('Progress', null, h('div.grid-2', sk, cal), badges));
+    host.appendChild(section('Progress', { href: '#/progress', text: 'See all' }, h('div.grid-2', sk, cal), badges));
   };
 
   function calendar() {

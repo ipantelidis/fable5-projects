@@ -47,9 +47,13 @@
   ];
 
   /** Record one answer. Returns { xp, combo, levelUp } */
+  let lastAnswerAt = 0;
   G.answer = function (info) {
     const s = NL.state.get();
     const day = NL.state.day();
+    // active practice time: the gap since the previous answer, capped at 90 s so an idle tab does not count; 15 s for a first answer
+    const now = Date.now(); const gap = lastAnswerAt ? now - lastAnswerAt : 15000; lastAnswerAt = now;
+    day.ms = (day.ms || 0) + Math.min(gap, 90000);
     s.stats.answers++; day.answers++;
     if (info.correct) { s.stats.correct++; day.correct++; }
     if (info.voice) { s.stats.voice++; day.voice = (day.voice || 0) + 1; }

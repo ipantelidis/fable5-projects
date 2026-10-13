@@ -9,7 +9,10 @@
 
   SRS.card = function (id, kind) {
     const c = cards();
-    if (!c[id]) c[id] = { id, kind: kind || (NL.content.vocab[id] ? 'vocab' : 'grammar'), ef: 2.5, reps: 0, interval: 0, due: U.today(), lapses: 0, seen: 0, correct: 0, last: null };
+    if (!c[id]) {
+      c[id] = { id, kind: kind || (NL.content.vocab[id] ? 'vocab' : 'grammar'), ef: 2.5, reps: 0, interval: 0, due: U.today(), lapses: 0, seen: 0, correct: 0, last: null, created: U.today() };
+      const d = NL.state.day(); if (c[id].kind === 'vocab') d.newWords = (d.newWords || 0) + 1; else d.newRules = (d.newRules || 0) + 1;
+    }
     return c[id];
   };
   SRS.has = (id) => !!cards()[id];
