@@ -94,6 +94,16 @@ node tools/browser-test.js --size=400,900   # narrow viewport
 
 The content validator is also available inside the app: Settings → Check content.
 
+### Screenshots (optional, needs Node)
+
+`tools/shots/shot.mjs` opens the course in headless Chromium, seeds a mid-course learner, and saves full-page screenshots to `tools/shots/out/`. It also reports console errors and horizontal overflow. One-time setup: `cd tools/shots && npm install && npx playwright install chromium`. Then:
+
+```
+node tools/shots/shot.mjs home home mid 375,1280 light,dark
+```
+
+Arguments: route, file name, seed (`mid` or `fresh`), widths, themes, full page (`1` or `0`).
+
 ## Extending the content
 
 Every lesson is data in `js/content/`. Add words with `N()` (noun), `VB()` (verb), `W()` (other), `PH()` (phrase); add rules with `G()`; build exercises with `mc()`, `fill()`, `tr()`, `build()`, `conj()`, `art()`, `plural()`, `dict()`, `listen()`, `speak()`, `free()`, `match()`, `read()`, `fix()`, `write()`. `auto(n, kinds)` generates n extra exercises from the lesson vocabulary at runtime. Run the validator after editing.

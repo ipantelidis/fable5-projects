@@ -120,7 +120,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .section { margin-top: var(--s7); }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s4); }
 .section-head h2 { margin: 0; }
-.section > .card + .card, .section > .card + .card-link, .section > .card-link + .card { margin-top: var(--s4); }
+.section > * + * { margin-top: var(--s4); }
+.grid > .card + .card, .grid-2 > .card + .card { margin-top: 0; }
+.coach-tour { margin-bottom: var(--s6); }
+.stage-card h3 { margin: var(--s2) 0 var(--s1); }
+.stage-card p { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: var(--s3); }
+.stage-card .progress { margin-top: auto; }
+.stage-card > .row { flex-wrap: nowrap; }
+.stage-card > .row .pill { white-space: nowrap; }
 .m-0 { margin: 0; } .mt-1 { margin-top: var(--s1); } .mb-2 { margin-bottom: var(--s2); } .mt-2 { margin-top: var(--s2); margin-bottom: 0; } .mt-4 { margin-top: var(--s4); }
 .card-link { display: block; text-decoration: none; color: inherit; transition: border-color var(--t); }
 .card-link:hover { border-color: var(--accent); }
@@ -130,7 +137,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .lead { font-size: 1.15rem; color: var(--muted); margin: 0; }
 .cta { display: flex; gap: var(--s3); flex-wrap: wrap; }
 .cta .btn { flex: 1 1 220px; }
-.cta-meta { margin: calc(-1 * var(--s3)) 0 0; }
+.btn-stack { flex-direction: column; gap: 2px; text-align: center; }
+.btn-sub { font-size: .85rem; font-weight: 400; opacity: .85; }
+.hero + .notice { margin-top: var(--s5); margin-bottom: 0; }
+@media (max-width: 759px) { .nav { -webkit-mask-image: linear-gradient(to right, #000 85%, transparent); mask-image: linear-gradient(to right, #000 85%, transparent); padding-right: var(--s6); } }
 .level-line { display: grid; gap: var(--s2); }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--s3); }
 .stat-goal .progress { height: 6px; margin-top: var(--s2); }
@@ -138,7 +148,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .stat { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: var(--s3) var(--s4); }
 .stat .n { font-size: 1.6rem; font-weight: 700; font-family: var(--serif); line-height: 1.1; }
 .stat .l { font-size: .8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
-.stage-card { display: block; text-decoration: none; color: inherit; transition: border-color var(--t), transform var(--t); }
+.stage-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: border-color var(--t), transform var(--t); }
 .stage-card:hover { border-color: var(--accent); transform: translateY(-1px); }
 .stage-card.locked { opacity: .6; }
 .stage-code { font-family: var(--serif); font-size: 2rem; color: var(--accent); font-weight: 700; line-height: 1; }
