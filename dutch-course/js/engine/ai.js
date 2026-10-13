@@ -162,7 +162,6 @@
     modelBtn.addEventListener('click', () => { modelBtn.hidden = true; mount.appendChild(h('div.card', h('div.eyebrow', 'Model answer'), h('div.story-nl', NL.ui.dutch(t.ex.model)), t.ex.modelEn ? h('p.muted.small', t.ex.modelEn) : null, h('div.eyebrow.mt-4', 'Checklist'), h('ul.learn-list', ...t.ex.checklist.map((c) => h('li', c))))); });
     const fb = AI.feedbackButton(() => ta.value, t.ex.prompt, t.level, mount);
     host.appendChild(h('div.row', fb, modelBtn));
-    if (!AI.configured()) host.appendChild(h('p.muted.small.mt-2', 'AI corrections appear here when the site owner switches on the coach service.'));
     host.appendChild(mount);
   };
 })();
