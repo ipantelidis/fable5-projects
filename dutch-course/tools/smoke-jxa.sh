@@ -24,7 +24,7 @@ function stubEl(tag) {
     parentNode: null, parentElement: null, firstChild: null, lastChild: null, nextSibling: null, offsetWidth: 0, offsetHeight: 0 };
   return base;
 }
-var window = this; var self = this; window.window = window;
+var window = this; var self = this; window.window = window; window.scrollTo = function () {};
 var Node = function () {}; var Element = Node; var HTMLElement = Node;
 var document = stubEl('document');
 document.createElement = function(t){ return stubEl(t); };
@@ -185,7 +185,7 @@ try {
   [['fluency hub', function (h0) { F.hub(h0); }], ['bank overview', function (h0) { F.bankView(h0); }], ['bank theme', function (h0) { F.bankView(h0, 'eten'); }],
    ['challenge page', function (h0) { F.challengeView(h0); }], ['home with challenge card and hub stage', function (h0) { NL.views.home(h0); }],
    ['stage s5 redirects to hub', function (h0) { NL.views.stage(h0, 's5'); }], ['stage s4 list', function (h0) { NL.views.stage(h0, 's4'); }],
-   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }], ['about', function (h0) { NL.views.about(h0); }], ['coach panel', function (h0) { NL.coach.view(h0); }], ['mistakes empty', function (h0) { NL.review.mistakes(h0); }], ['sound pairs', function (h0) { NL.sounds.view(h0); }], ['sound pair detail', function (h0) { NL.sounds.view(h0, 'ui-ou-eu'); }], ['sound pair listening', function (h0) { NL.sounds.view(h0, 'g-k-h', 'listen'); }], ['sound pair speaking', function (h0) { NL.sounds.view(h0, 'eu-uu', 'speak'); }], ['progress page', function (h0) { NL.progress.view(h0); }], ['settings with sync card', function (h0) { NL.views.settings(h0); }]
+   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }], ['about', function (h0) { NL.views.about(h0); }], ['coach panel', function (h0) { NL.coach.view(h0); }], ['mistakes empty', function (h0) { NL.review.mistakes(h0); }], ['sound pairs', function (h0) { NL.sounds.view(h0); }], ['sound pair detail', function (h0) { NL.sounds.view(h0, 'ui-ou-eu'); }], ['sound pair listening', function (h0) { NL.sounds.view(h0, 'g-k-h', 'listen'); }], ['sound pair speaking', function (h0) { NL.sounds.view(h0, 'eu-uu', 'speak'); }], ['progress page', function (h0) { NL.progress.view(h0); }], ['stories list', function (h0) { NL.stories.view(h0); }], ['story reader', function (h0) { NL.stories.view(h0, 'a2-huisarts'); }], ['story questions', function (h0) { NL.stories.view(h0, 'b1-koningsdag', 'questions'); }], ['settings with sync card', function (h0) { NL.views.settings(h0); }]
   ].forEach(function (pair) { try { pair[1](stubEl('main')); pass('renders: ' + pair[0]); } catch (e) { fail('render ' + pair[0] + ': ' + e.message + ' (line ' + e.line + ')'); } });
 } catch (e) { fail('smoke crashed: ' + e.message + ' line ' + e.line + ' ' + (e.stack || '').split('\n').slice(0,3).join(' | ')); }
 log(''); log('SUMMARY fails=' + __fails);

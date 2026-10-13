@@ -19,7 +19,8 @@
     const host = opts.host;
     U.clear(host);
     const top = h('div.lesson-top');
-    const prog = h('div.progress.progress-lg', h('div.bar', { style: { width: '0%' } }));
+    const progBar = h('div.bar', { style: { width: '0%' } });
+    const prog = h('div.progress.progress-lg', progBar);
     const combo = h('div.combo', { 'aria-live': 'polite' });
     const quit = h('button.btn-icon', { type: 'button', 'aria-label': 'Leave session', title: 'Leave' }, '×');
     quit.addEventListener('click', () => { if (confirm('Leave this session? Progress in it will be lost.')) { S.stop(); if (opts.onQuit) opts.onQuit(); else history.back(); } });
@@ -45,7 +46,7 @@
 
     function updateProgress() {
       const totalNow = sess.done + queue.length;
-      prog.firstChild.style.width = Math.round((sess.done / Math.max(1, totalNow)) * 100) + '%';
+      progBar.style.width = Math.round((sess.done / Math.max(1, totalNow)) * 100) + '%';
       combo.textContent = sess.combo >= 2 ? '⚡' + sess.combo : '';
       if (opts.onProgress) opts.onProgress(sess);
     }
