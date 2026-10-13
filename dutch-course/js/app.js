@@ -29,6 +29,7 @@
     [/^\/settings(?:\/(sync))?$/, (host, focus) => NL.views.settings(host, focus), 'settings'],
     [/^\/about$/, (host) => NL.views.about(host), 'settings'],
     [/^\/coach$/, (host) => NL.coach.view(host), 'coach'],
+    [/^\/sounds(?:\/([\w-]+))?(?:\/(listen|speak))?$/, (host, id, mode) => NL.sounds.view(host, id, mode), 'home'],
   ];
 
   function reviewIntro(host) {
@@ -64,7 +65,7 @@
     let matched = false;
     for (const [re, fn, nav] of routes) {
       const m = re.exec(hash);
-      if (m) { matched = true; setNav(nav); try { fn(host, m[1]); } catch (e) { console.error(e); host.appendChild(h('div.notice', 'Something went wrong rendering this screen: ' + e.message)); } break; }
+      if (m) { matched = true; setNav(nav); try { fn(host, ...m.slice(1)); } catch (e) { console.error(e); host.appendChild(h('div.notice', 'Something went wrong rendering this screen: ' + e.message)); } break; }
     }
     if (!matched) { setNav('home'); host.appendChild(h('div.card', h('h2', 'Page not found'), h('a.btn', { href: '#/home' }, 'Home'))); }
     app.updateHeader();

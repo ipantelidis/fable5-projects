@@ -1,6 +1,6 @@
 /* Nederlands Nu service worker: cache-first for the app shell so the course works offline once visited.
    Bump VERSION whenever content or engine files change; old caches are removed on activate. */
-const VERSION = 'nl-2026-10-13-13';
+const VERSION = 'nl-2026-10-13-15';
 const ASSETS = [
   './',
   './index.html',
@@ -28,6 +28,7 @@ const ASSETS = [
   './js/engine/views.js',
   './js/engine/fluency.js',
   './js/engine/coach.js',
+  './js/engine/sounds.js',
   './js/engine/sync.js',
   './js/config.js',
   './js/content/stage0.js',
@@ -61,6 +62,7 @@ const ASSETS = [
   './js/content/stage5-bank.js',
   './js/content/stage5-bank-2.js',
   './js/content/stage5-talk-2.js',
+  './js/content/stage5-sounds.js',
   './js/app.js'
 ];
 

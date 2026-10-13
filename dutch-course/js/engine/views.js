@@ -99,7 +99,7 @@
     /* Practice modes */
     const modes = h('div.mode-grid');
     const nMist = NL.coach ? NL.coach.mistakeItems().length : 0;
-    [['mode/mistakes', '\u{1F3AF}', 'My mistakes', nMist ? U.plural(nMist, 'exercise') + ' to redo' : 'redo what you missed'], ['mode/speed', '⏱️', 'Speed round', '60 s vocabulary'], ['mode/sprint', '\u{1F3C3}', 'Conjugation sprint', '60 s verb forms'], ['mode/listening', '\u{1F3A7}', 'Listening only', 'dictation + choose'], ['mode/speaking', '\u{1F399}️', 'Speaking only', 'say the sentences'], ['mode/freetalk', '\u{1F5E8}️', 'Free talk', 'topics + model answers'], ['bank', '\u{1F5C2}️', 'Vocabulary bank', 'browse by theme'], ['challenge', '\u{1F3C5}', 'Weekly challenge', 'a new goal every Monday']]
+    [['sounds', '\u{1F444}', 'Sound pairs', 'train your ear and mouth'], ['mode/mistakes', '\u{1F3AF}', 'My mistakes', nMist ? U.plural(nMist, 'exercise') + ' to redo' : 'redo what you missed'], ['mode/speed', '⏱️', 'Speed round', '60 s vocabulary'], ['mode/sprint', '\u{1F3C3}', 'Conjugation sprint', '60 s verb forms'], ['mode/listening', '\u{1F3A7}', 'Listening only', 'dictation + choose'], ['mode/speaking', '\u{1F399}️', 'Speaking only', 'say the sentences'], ['mode/freetalk', '\u{1F5E8}️', 'Free talk', 'topics + model answers'], ['bank', '\u{1F5C2}️', 'Vocabulary bank', 'browse by theme'], ['challenge', '\u{1F3C5}', 'Weekly challenge', 'a new goal every Monday']]
       .forEach(([id, ico, name, sub]) => modes.appendChild(h('a.mode', { href: '#/' + id }, h('span.ico', { 'aria-hidden': 'true' }, ico), h('b', name), h('span', sub))));
     host.appendChild(section('Practice', null, modes));
 

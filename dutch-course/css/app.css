@@ -393,3 +393,10 @@ pre.report { background: var(--card-2); padding: var(--s3); border-radius: var(-
 .sync-prompt { display: flex; justify-content: space-between; align-items: center; gap: var(--s3); flex-wrap: wrap; margin-top: var(--s5); }
 .sync-prompt b { display: block; }
 .sync-prompt .desc { font-size: .9rem; color: var(--muted); }
+.pair-row { grid-template-columns: 1fr auto 1fr; }
+.pair-row .vs { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+.pair-row > div:last-child { justify-content: flex-end; text-align: right; }
+.pair-list { margin-top: var(--s4); }
+.options-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+.options-row .opt.nl { justify-content: center; font-family: var(--serif); font-size: 1.6rem; min-height: 72px; }
+a.btn-icon { text-decoration: none; color: var(--ink); }
