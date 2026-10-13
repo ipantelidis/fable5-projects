@@ -48,13 +48,14 @@
     /* Hero: greeting, the one primary action, today's numbers */
     const cta = h('div.cta');
     if (nxt) cta.appendChild(h('a.btn.btn-primary.btn-lg.btn-stack', { href: '#/lesson/' + nxt.lesson.id }, h('span', (s.xp ? 'Continue: ' : 'Start: ') + nxt.lesson.title), h('span.btn-sub', nxt.unit.title + ' · about ' + (nxt.lesson.minutes || 15) + ' min')));
-    cta.appendChild(h('a.btn.btn-lg' + (due ? '.btn-accent' : ''), { href: '#/review/go' }, 'Review' + (due ? ' · ' + U.plural(due, 'card') + ' due' : '')));
+    if (due || s.xp > 0) cta.appendChild(h('a.btn.btn-lg' + (due ? '.btn-accent' : ''), { href: '#/review/go' }, 'Review' + (due ? ' · ' + U.plural(due, 'card') + ' due' : '')));
     host.appendChild(h('div.hero',
       h('div',
         h('div.eyebrow', 'Level ' + lvl.n + ' · ' + lvl.title),
         h('h1', T.say(greet + '!')),
         h('p.lead', s.xp ? 'Ready for more?' : 'Let’s learn some real Dutch.')),
       cta,
+      s.xp === 0 && !Object.keys(s.lessons).length ? h('p.muted.small.m-0', 'Already know some Dutch? ', h('a', { href: '#/placement' }, 'Take the placement test'), ' (about 10 minutes) and skip what you know.') : null,
       h('div.stats',
         h('div.stat', h('div.n', '\u{1F525} ' + NL.game.streakCurrent()), h('div.l', 'day streak')),
         h('div.stat', h('div.n', String(NL.srs.knownWords())), h('div.l', 'words known')),
