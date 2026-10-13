@@ -1,6 +1,6 @@
-// usage: node shot.mjs <route> <name> [seed=fresh|mid] [widths=375,1280] [themes=light,dark] [fullPage=1]
+// usage: node shot.mjs <route> <name> [seed=fresh|mid] [widths=375,1280] [themes=light,dark] [fullPage=1] [clicks="Next: vocabulary|type:abc|Check"]
 import { chromium } from 'playwright';
-const [route = 'home', name = 'home', seed = 'mid', widths = '375,1280', themes = 'light', full = '1'] = process.argv.slice(2);
+const [route = 'home', name = 'home', seed = 'mid', widths = '375,1280', themes = 'light', full = '1', clicks = ''] = process.argv.slice(2);
 const base = new URL('../../index.html', import.meta.url).href;
 const out = new URL('./out/', import.meta.url).pathname;
 import { mkdirSync } from 'node:fs'; mkdirSync(out, { recursive: true });
@@ -26,6 +26,12 @@ for (const theme of themes.split(',')) for (const w of widths.split(',').map(Num
   });
   await page.evaluate((r) => { location.hash = '#/' + r; if (NL.app && NL.app.render) NL.app.render(); }, route);
   await page.waitForTimeout(500);
+  // clicks: '|'-separated steps; 'type:text' fills the focused/first text input, anything else clicks the button or link with that text
+  for (const step of clicks.split('|').filter(Boolean)) {
+    if (step.startsWith('type:')) await page.locator('#view input[type=text], #view textarea').first().fill(step.slice(5));
+    else await page.locator('#view').getByRole('button', { name: step }).or(page.locator('#view').getByRole('link', { name: step })).first().click();
+    await page.waitForTimeout(350);
+  }
   const file = `${out}${name}-${theme}-${w}.png`;
   await page.screenshot({ path: file, fullPage: full === '1' });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);

@@ -26,7 +26,7 @@
     top.appendChild(quit); top.appendChild(prog); top.appendChild(combo);
     host.appendChild(top);
     if (opts.title) host.appendChild(h('div.eyebrow', opts.title));
-    const exHost = h('div');
+    const exHost = h('div.session-body');
     host.appendChild(exHost);
     const bar = h('div.check-bar');
     const barInner = h('div.check-bar-inner');
@@ -168,7 +168,7 @@
       else if (b.table) {
         const t = h('table.tbl');
         if (b.table.caption) t.appendChild(h('caption', b.table.caption));
-        const thead = h('thead'), tr = h('tr'); b.table.head.forEach((c) => tr.appendChild(h('th', c))); thead.appendChild(tr); t.appendChild(thead);
+        if (b.table.head && b.table.head.some(Boolean)) { const thead = h('thead'), tr = h('tr'); b.table.head.forEach((c) => tr.appendChild(h('th', c))); thead.appendChild(tr); t.appendChild(thead); }
         const tb = h('tbody');
         b.table.rows.forEach((r) => { const row = h('tr'); r.forEach((c, i) => row.appendChild(h('td', cellText(c, i, b.table)))); tb.appendChild(row); });
         t.appendChild(tb);
@@ -183,8 +183,15 @@
   /** Table cells: Dutch cells (marked with a leading *) become speakable */
   function cellText(c, i, table) {
     if (typeof c !== 'string') return c;
-    if (c.startsWith('*')) return T.say(c.slice(1));
-    return richText(c);
+    if (c.indexOf('*') === -1 || c.indexOf('**') !== -1) return richText(c);
+    // every *segment is Dutch and speakable; a segment ends at a comma, arrow, semicolon or the next marker
+    const frag = document.createDocumentFragment();
+    c.split(/(\*[^*,;→]+)/).forEach((part) => {
+      if (!part) return;
+      if (part[0] === '*') { const m = part.slice(1).match(/^(.*?)(\s*)$/); frag.appendChild(T.say(m[1])); if (m[2]) frag.appendChild(document.createTextNode(m[2])); }
+      else frag.appendChild(richText(part));
+    });
+    return frag;
   }
   /** Inline markup: **bold**, `dutch` (speakable), _italic_ */
   function richText(s) {
