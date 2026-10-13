@@ -104,6 +104,12 @@ node tools/shots/shot.mjs home home mid 375,1280 light,dark
 
 Arguments: route, file name, seed (`mid` or `fresh`), widths, themes, full page (`1` or `0`).
 
+Two more browser checks live in the same folder:
+
+- `node tools/shots/allex.mjs` renders every lesson, test and exam exercise (generated drills three times each, about 5,000 in total), answers each one correctly through the real buttons and inputs, and lists any that throw, render empty or reject the right answer. Run it after adding content.
+- `node tools/shots/live.mjs [url]` checks the deployed site: load time, service worker, manifest, cache size, and that home and a lesson still open offline.
+- `node tools/shots/icons.mjs` regenerates the PNG app icons from the design in the script.
+
 ## Extending the content
 
 Every lesson is data in `js/content/`. Add words with `N()` (noun), `VB()` (verb), `W()` (other), `PH()` (phrase); add rules with `G()`; build exercises with `mc()`, `fill()`, `tr()`, `build()`, `conj()`, `art()`, `plural()`, `dict()`, `listen()`, `speak()`, `free()`, `match()`, `read()`, `fix()`, `write()`. `auto(n, kinds)` generates n extra exercises from the lesson vocabulary at runtime. Run the validator after editing.

@@ -1,12 +1,16 @@
 /* Nederlands Nu service worker: cache-first for the app shell so the course works offline once visited.
    Bump VERSION whenever content or engine files change; old caches are removed on activate. */
-const VERSION = 'nl-2026-10-13-6';
+const VERSION = 'nl-2026-10-13-7';
 const ASSETS = [
   './',
   './index.html',
   './css/app.css',
   './manifest.webmanifest',
   './icons/icon.svg',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/maskable-512.png',
+  './icons/apple-touch-icon.png',
   './js/engine/util.js',
   './js/engine/state.js',
   './js/engine/srs.js',
