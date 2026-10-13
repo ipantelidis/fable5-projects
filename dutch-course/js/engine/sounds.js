@@ -52,13 +52,14 @@
   function frame(host, set, title) {
     U.clear(host);
     const top = h('div.lesson-top');
-    const prog = h('div.progress.progress-lg', h('div.bar', { style: { width: '0%' } }));
+    const barEl = h('div.bar', { style: { width: '0%' } });
+    const prog = h('div.progress.progress-lg', barEl);
     top.appendChild(h('a.btn-icon', { href: '#/sounds/' + set.id, 'aria-label': 'Leave' }, '×')); top.appendChild(prog);
     host.appendChild(top);
     host.appendChild(h('div.eyebrow', set.title + ' · ' + title));
     const body = h('div.session-body');
     host.appendChild(body);
-    return { body, setProgress: (i) => { prog.firstChild.style.width = Math.round((i / ROUNDS) * 100) + '%'; } };
+    return { body, setProgress: (i) => { barEl.style.width = Math.round((i / ROUNDS) * 100) + '%'; } };
   }
   function done(host, set, kind, score, total) {
     const pct = Math.round((score / total) * 100);
