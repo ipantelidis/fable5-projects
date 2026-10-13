@@ -122,3 +122,11 @@ Built, dormant: `js/engine/sync.js` (magic-link sign-in, debounced push after ev
 **todo for the owner:** create the Supabase project, run the schema, enable email magic links, add the site URL as redirect, fill in `js/config.js`, bump `sw.js`, push. Then test: sign in on two browsers, change progress on one, open the other.
 
 **todo later:** guest-to-account upgrade is automatic (first push uploads local state); a leaderboard would need a second, opt-in table.
+
+## UI polish and features (PLAN.md 5d), 2026-10-13
+
+Screens are now checked with `tools/shots/shot.mjs` (headless Chromium). Done: home, lesson learn/vocabulary/practice/feedback, dictionary, settings; 13 more routes swept for console errors and overflow at 375px dark.
+Fixed: table cells with several `*Dutch` segments showed raw asterisks; vocabulary cards were ~490px tall (global `.ex` min-height); check bar floated mid-screen; settings could recurse forever in the voice list; 7 duplicate dictionary words (validator now warns on duplicates).
+New for learners: My mistakes mode (`#/mode/mistakes`, redo the exact exercises you missed; right answer clears them; coach suggests it at 5+); export the current dictionary list as tab-separated text for Anki/Quizlet/spreadsheets.
+
+**todo:** detailed look at stage/unit pages, review modes, coach, bank theme pages; SVG icons instead of emoji (checklist item); empty states on first visit.
