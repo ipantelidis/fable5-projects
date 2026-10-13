@@ -36,6 +36,11 @@
     const cards = Object.values(NL.state.get().srs.cards).filter((c) => c.seen > 0);
     host.appendChild(h('h1', 'Review'));
     host.appendChild(h('p.muted', 'Spaced repetition keeps what you learned. Items you get wrong come back sooner and in more exercise types.'));
+    if (!cards.length) {
+      const nxt = NL.coach && NL.coach.nextLesson();
+      host.appendChild(h('div.card', h('h3', 'Nothing to review yet'), h('p', 'Every word and grammar rule you meet in a lesson becomes a review card. Cards come back after one day, then three, then a week and longer, timed so you remember them for good.'), h('div.row', nxt ? h('a.btn.btn-primary', { href: '#/lesson/' + nxt.lesson.id }, 'Start a lesson') : null, h('a.btn', { href: '#/home' }, 'Home'))));
+      return;
+    }
     host.appendChild(h('div.stats', h('div.stat', h('div.n', String(due)), h('div.l', 'due today')), h('div.stat', h('div.n', String(dv)), h('div.l', 'words')), h('div.stat', h('div.n', String(dg)), h('div.l', 'grammar rules')), h('div.stat', h('div.n', String(cards.length)), h('div.l', 'cards total'))));
     host.appendChild(h('div.row', { style: { marginTop: '24px' } }, h('a.btn.btn-primary.btn-lg', { href: '#/review/go' }, due ? 'Review ' + U.plural(Math.min(due, 20), 'item') : 'Practice the weakest items'), h('a.btn', { href: '#/home' }, 'Home')));
     const weak = NL.srs.weakest(8, 'vocab').filter((c) => c.lapses > 0);

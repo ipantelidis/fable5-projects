@@ -7,4 +7,6 @@ window.NL_CONFIG = {
   supabaseUrl: '',
   supabaseAnonKey: '',
   coachProxyUrl: '',
+  // Where "Report a problem" under each exercise sends learners (a pre-filled GitHub issue). Empty hides the link.
+  reportUrl: 'https://github.com/ipantelidis/fable5-projects/issues/new',
 };

@@ -124,6 +124,8 @@
         feedback.appendChild(d);
       } else if (!result.ok && result.userText && !result.voice) feedback.appendChild(h('div.small.muted', 'You wrote: ' + result.userText));
       if (result.explain) { const p = h('p.explain'); result.explain.split('\n').forEach((line, i) => { if (i) p.appendChild(h('br')); p.appendChild(document.createTextNode(line)); }); feedback.appendChild(p); }
+      const rep = reportLink(ex, result, opts);
+      if (rep) feedback.appendChild(rep);
       exHost.appendChild(feedback);
       if (result.correctText && result.correctNl && !result.ok && ex.type !== 'speak') setTimeout(() => T.speak(result.correctText), 200);
       feedback.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
@@ -154,6 +156,17 @@
     next();
     return sess;
   };
+
+  /** "Report a problem" link: opens a pre-filled issue (NL_CONFIG.reportUrl, GitHub issues by default) with the exercise data */
+  function reportLink(ex, result, opts) {
+    const base = (window.NL_CONFIG && window.NL_CONFIG.reportUrl) || '';
+    if (!base) return null;
+    const q = String(ex.nl || ex.prompt || ex.q || ex.word || ex.verb || ex.wrong || ex.type).slice(0, 80);
+    const data = { type: ex.type, where: opts.title || '', route: location.hash, prompt: q, expected: ex.answer != null ? ex.answer : (ex.nl || null), userAnswer: result.userText || null, accepted: !!result.ok };
+    const body = 'What is wrong? (for example: my answer should be accepted, the translation is off, the audio is wrong)\n\n\n---\nExercise data (filled in automatically):\n```json\n' + JSON.stringify(data, null, 2) + '\n```\n' + 'Browser: ' + navigator.userAgent;
+    const url = base + (base.indexOf('?') === -1 ? '?' : '&') + 'title=' + encodeURIComponent('Exercise: ' + q) + '&labels=content&body=' + encodeURIComponent(body);
+    return h('div.report-row', h('a.small', { href: url, target: '_blank', rel: 'noopener' }, 'Report a problem with this exercise'));
+  }
 
   /* ---------------- Lesson flow ---------------- */
   const L = (NL.lesson = {});

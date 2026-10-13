@@ -42,6 +42,8 @@ Off by default. The coach page answers from built-in rules and needs no server. 
 
 No server, no account, no cookies, no analytics by default. All progress lives in the browser’s localStorage; export it from Settings to keep a backup. Voice recognition in Chrome and Edge is provided by the browser vendor and may process audio on their servers while the microphone is held; it can be avoided by self-grading speaking exercises. The in-app page **Settings → About this course and your data** says the same to learners.
 
+The **Report a problem** link under each exercise opens a pre-filled GitHub issue (exercise data and browser name, no progress or personal data). Nothing is sent unless the learner submits it on GitHub; set `reportUrl` in `js/config.js` to another address, or empty to hide the link.
+
 ## Licence
 
 © 2026 the repository owner. No open licence has been chosen yet; until one is added, all rights are reserved for both the code and the course content.
