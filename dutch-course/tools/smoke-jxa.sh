@@ -173,6 +173,10 @@ try {
   var okA = mi.length === 1 && mi[0].ex && mi[0].ex.answer === 'woon';
   NL.coach.record(fx, { ok: true }, { mode: 'mistakes' });
   if (okA && NL.coach.mistakeItems().length === 0) pass('mistakes: recorded once, replayable, cleared by a right answer'); else fail('mistakes replay: ' + JSON.stringify(mi).slice(0, 200));
+  var st11 = NL.state.get(); var xp0 = st11.xp; st11.xp = 2000; delete st11.lastExport;
+  var hasB = NL.coach.suggestions().some(function (x) { return x.id === 'backup'; });
+  st11.lastExport = NL.util.today(); var hasB2 = NL.coach.suggestions().some(function (x) { return x.id === 'backup'; }); st11.xp = xp0;
+  if (hasB && !hasB2) pass('coach: backup suggested without a recent export, silent after one'); else fail('coach backup rule: ' + hasB + ' ' + hasB2);
   if (!NL.coach.aiConfigured()) pass('coach: AI tier dormant without coachProxyUrl'); else fail('coach AI tier active without config');
   var ans = ['now', 'progress', 'review', 'voice', 'challenge', 'wrong', 'plan', 'exam'].map(function (q) { return NL.coach.answer(q).length; });
   if (ans.every(function (n) { return n > 0; })) pass('coach: every intent answers'); else fail('coach intents: ' + ans.join(','));

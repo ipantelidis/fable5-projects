@@ -86,6 +86,10 @@
     const nxt = K.nextLesson();
 
     if (idle != null && idle >= 3) add('welcome-back', 95, '\u{1F44B}', 'Welcome back', 'It has been ' + U.plural(idle, 'day') + '. A short review first brings the words back fastest; then continue where you left off.', due ? '#/review/go' : (nxt ? '#/lesson/' + nxt.lesson.id : '#/home'), due ? 'Review now' : 'Continue');
+    const lastBackup = s.lastExport ? U.daysBetween(s.lastExport, U.today()) : null;
+    const installed = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+    const synced = NL.sync && NL.sync.status && NL.sync.status() === 'signed-in';
+    if (s.xp >= 1500 && !synced && !installed && (lastBackup == null || lastBackup >= 21)) add('backup', 60, '\u{1F4BE}', 'Back up your progress', 'Your progress lives only in this browser' + (lastBackup == null ? '' : ' and the last backup is ' + lastBackup + ' days old') + '. Export a backup, or install the app so the browser keeps it.', '#/settings', 'Settings');
     const replay = K.mistakeItems().length;
     if (replay >= 5) add('mistakes', 64, '\u{1F3AF}', 'Redo ' + U.plural(replay, 'mistake'), 'These are exercises you got wrong recently. Getting them right once clears them from the list.', '#/mode/mistakes', 'Practise');
     if (due >= 20) add('due-many', 90, '\u{1F501}', U.plural(due, 'card') + ' waiting', 'A big queue means the schedule is slipping. Twenty now keeps the rest from coming back sooner.', '#/review/go', 'Review 20');

@@ -108,6 +108,11 @@
     U.on('state', app.updateHeader);
     NL.game.checkBadges();
     if (NL.sync) NL.sync.boot();
+    // Ask the browser to keep this site's storage (progress lives in localStorage; Safari may otherwise clear it after a week away)
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().then((ok) => { app.storagePersisted = ok; }); } catch (e) {}
+    // Remember the install prompt so Settings can offer an "Install app" button
+    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); app.installPrompt = e; U.emit('install', true); });
+    window.addEventListener('appinstalled', () => { app.installPrompt = null; U.emit('install', false); U.toast('Installed. Open Nederlands Nu from your home screen or app list.', 'ok'); });
     if (!location.hash) location.hash = '#/home';
     app.render();
     // offline support on http(s) only: service workers do not run from file://

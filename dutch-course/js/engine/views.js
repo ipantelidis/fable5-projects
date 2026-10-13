@@ -316,12 +316,32 @@
     const file = h('input', { type: 'file', accept: 'application/json,.json', hidden: true });
     file.addEventListener('change', async () => { if (!file.files[0]) return; try { const txt = await U.readFile(file.files[0]); NL.state.importJSON(txt); U.toast('Progress imported', 'ok'); NL.app.render(); } catch (e) { alert('Import failed: ' + e.message); } });
     data.appendChild(h('div.row',
-      h('button.btn.btn-primary', { type: 'button', onclick: () => U.download('nederlands-nu-progress-' + U.today() + '.json', NL.state.exportJSON()) }, '⬇ Export progress'),
+      h('button.btn.btn-primary', { type: 'button', onclick: () => { U.download('nederlands-nu-progress-' + U.today() + '.json', NL.state.exportJSON()); s.lastExport = U.today(); NL.state.save(); } }, '⬇ Export progress'),
       h('button.btn', { type: 'button', onclick: () => file.click() }, '⬆ Import progress'),
       file));
     data.appendChild(h('div.danger-zone', h('div', h('b', 'Reset all progress'), h('span.desc', 'Deletes every lesson, word and badge in this browser. It cannot be undone.')), h('button.btn.btn-sm.btn-danger', { type: 'button', onclick: () => { if (confirm('Reset ALL progress? This cannot be undone. Export first if you want a backup.')) { NL.state.reset(); U.toast('Progress reset'); NL.app.render(); } } }, 'Reset progress')));
     host.appendChild(data);
     if (NL.sync) host.appendChild(NL.sync.card());
+
+    // Install as an app
+    const standalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+    const inst = h('div.card', h('h3', 'Install as an app'));
+    const instBody = h('div');
+    inst.appendChild(instBody);
+    const renderInstall = () => {
+      U.clear(instBody);
+      if (standalone) { instBody.appendChild(h('p.muted.small', 'You are using the installed app. Your progress is kept on this device.')); return; }
+      if (NL.app && NL.app.installPrompt) {
+        instBody.appendChild(h('p.muted.small', 'Opens in its own window, works offline, and keeps your progress safer than a browser tab.'));
+        instBody.appendChild(h('button.btn.btn-primary', { type: 'button', onclick: async () => { const e = NL.app.installPrompt; if (!e) return; e.prompt(); try { await e.userChoice; } catch (x) {} NL.app.installPrompt = null; renderInstall(); } }, 'Install app'));
+      } else if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+        instBody.appendChild(h('p.muted.small', 'On iPhone and iPad: tap the Share button in Safari, then "Add to Home Screen". Safari can delete website data after a week without visits; the home-screen app keeps it.'));
+      } else {
+        instBody.appendChild(h('p.muted.small', 'In Chrome or Edge, use the install icon in the address bar or the menu item "Install Nederlands Nu". On a phone, choose "Add to Home screen" from the browser menu.'));
+      }
+    };
+    renderInstall(); U.on('install', renderInstall);
+    host.appendChild(inst);
 
     // Keyboard + about
     host.appendChild(h('div.card', h('h3', 'Keyboard shortcuts'), h('ul.learn-list', h('li', h('span.kbd', 'Enter'), ' check answer / continue'), h('li', h('span.kbd', 'Space'), ' replay the audio (outside a text box)'), h('li', h('span.kbd', '← → ↑ ↓'), ' or ', h('span.kbd', '1'), '–', h('span.kbd', '4'), ' choose an option'), h('li', h('span.kbd', 'Esc'), ' close a word popup'))));
