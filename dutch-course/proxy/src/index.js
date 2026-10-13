@@ -2,6 +2,7 @@
    origin (and optionally their Supabase sign-in), builds a short system prompt with the learner's progress summary and the
    grammar entries the app selected, asks Claude, and returns plain text. The app falls back to its offline coach on any error. */
 import Anthropic from '@anthropic-ai/sdk';
+import { SCENARIOS } from './scenarios.js';
 
 const SYSTEM = `You are the coach inside "Nederlands Nu", a self-study Dutch course for English speakers that goes from A0 to B2 in six stages
 (Stage 0 survival, 1 A1, 2 A2, 3 B1, 4 B2 and the Staatsexamen NT2 II, 5 fluency hub with weekly challenges, a vocabulary bank and free talk).
@@ -18,6 +19,19 @@ How to answer:
 - When a grammar excerpt from the course is supplied, prefer its terminology and tell the learner they can reread it (#/grammar/<id>).
 - Stay on Dutch and this course. For anything else, say in one line that you only coach Dutch here.
 - Plain text only: paragraphs separated by a blank line, "- " for bullets. No headings, no tables, no markdown emphasis.`;
+
+const ROLEPLAY = (sc, level) => `You run a speaking practice role-play in Dutch for a learner at CEFR level ${level} in the course "Nederlands Nu".
+Scenario: ${sc.role}
+Rules for "reply": stay in character, Dutch only, natural spoken Dutch at level ${level} (A1: very short simple sentences; B2: natural speed and idiom), one to three sentences, usually ending with a question that keeps the conversation going. Never break character in "reply".
+Rules for feedback on the learner's LAST message only: if it has errors, put a corrected Dutch version in "correction" and one short English sentence in "explanation" naming the rule; if it is correct or natural enough for the level, leave both empty. If the learner wrote English or seems stuck, still reply in Dutch and put a simple Dutch sentence they could say next in "hint"; otherwise "hint" is a possible next sentence at their level.
+"replyEn" is an English translation of your reply. Set "done" to true only when the scenario goal is reached; then the reply is a natural closing line.`;
+
+const WRITE = (level) => `You correct a short Dutch text written by a learner at CEFR level ${level} in the course "Nederlands Nu", for the task they were given.
+Be encouraging and precise. "corrected" is the learner's text with only the necessary corrections (keep their words and ideas). "mistakes" lists at most six of the most important errors, each with the original fragment, the corrected fragment and one short English explanation naming the rule; ignore tiny punctuation issues. "comment" is two or three English sentences: what went well, the one thing to work on, and whether the text fulfils the task. "better" is a short model version of the same text at level ${level}. "score" is 1 to 5 for how well the text does the task at this level (3 = acceptable).`;
+
+const ROLEPLAY_SCHEMA = { type: 'object', additionalProperties: false, required: ['reply', 'replyEn', 'correction', 'explanation', 'hint', 'done'], properties: { reply: { type: 'string' }, replyEn: { type: 'string' }, correction: { type: 'string' }, explanation: { type: 'string' }, hint: { type: 'string' }, done: { type: 'boolean' } } };
+const WRITE_SCHEMA = { type: 'object', additionalProperties: false, required: ['corrected', 'mistakes', 'comment', 'better', 'score'], properties: { corrected: { type: 'string' }, mistakes: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['original', 'correction', 'explanation'], properties: { original: { type: 'string' }, correction: { type: 'string' }, explanation: { type: 'string' } } } }, comment: { type: 'string' }, better: { type: 'string' }, score: { type: 'integer' } } };
+const LEVELS = ['A0', 'A1', 'A2', 'B1', 'B2'];
 
 const json = (status, body, cors) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', ...cors } });
 
@@ -61,6 +75,45 @@ function clean(body) {
   return { question, history, grammar, summary };
 }
 
+/** Role-play turns and writing feedback: structured JSON output, so the app can show reply, correction and hints separately */
+async function structured(env, mode, body, level, history, question, cors) {
+  const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
+  let system, messages, schema;
+  if (mode === 'roleplay') {
+    system = ROLEPLAY(SCENARIOS[body.scenario], level); schema = ROLEPLAY_SCHEMA;
+    // history holds plain text turns; the first user turn starts the scene
+    messages = history.length ? history.concat([{ role: 'user', content: question }]) : [{ role: 'user', content: question }];
+    if (messages[0].role !== 'user') messages.unshift({ role: 'user', content: '(start)' });
+  } else {
+    system = WRITE(level); schema = WRITE_SCHEMA;
+    const task = String(body.task || '').slice(0, 600);
+    messages = [{ role: 'user', content: 'Task: ' + task + '\n\nLearner text:\n' + String(body.text).slice(0, 2500) }];
+  }
+  try {
+    const res = await client.beta.messages.create({
+      model: env.MODEL || 'claude-opus-5',
+      max_tokens: 2048,
+      thinking: { type: 'adaptive' },
+      output_config: { effort: 'low', format: { type: 'json_schema', schema } },
+      betas: ['server-side-fallback-2026-07-01'],
+      fallbacks: 'default',
+      system,
+      messages,
+    });
+    if (res.stop_reason === 'refusal') return json(200, { error: 'The coach could not answer that. Try rephrasing.' }, cors.headers);
+    if (res.stop_reason === 'max_tokens') return json(502, { error: 'The answer was cut off; try a shorter text' }, cors.headers);
+    const text = res.content.filter((b) => b.type === 'text').map((b) => b.text).join('');
+    let data; try { data = JSON.parse(text); } catch (e) { return json(502, { error: 'Unreadable answer from the model' }, cors.headers); }
+    return json(200, { mode, data }, cors.headers);
+  } catch (err) {
+    if (err instanceof Anthropic.RateLimitError) return json(429, { error: 'The coach is busy; try again in a minute' }, cors.headers);
+    if (err instanceof Anthropic.AuthenticationError) return json(500, { error: 'The coach service key is invalid' }, cors.headers);
+    if (err instanceof Anthropic.APIStatusError) return json(502, { error: 'Claude API error ' + err.status }, cors.headers);
+    if (err instanceof Anthropic.APIConnectionError) return json(502, { error: 'Could not reach the Claude API' }, cors.headers);
+    return json(500, { error: 'Unexpected proxy error' }, cors.headers);
+  }
+}
+
 export default {
   async fetch(request, env) {
     const cors = corsFor(request, env);
@@ -74,11 +127,16 @@ export default {
 
     let body;
     try { body = await request.json(); } catch (e) { return json(400, { error: 'Bad JSON' }, cors.headers); }
+    const mode = body.mode === 'roleplay' || body.mode === 'write' ? body.mode : 'coach';
     const { question, history, grammar, summary } = clean(body);
-    if (!question) return json(400, { error: 'Empty question' }, cors.headers);
+    const level = LEVELS.includes(body.level) ? body.level : 'A2';
+    if (mode === 'roleplay' && !SCENARIOS[body.scenario]) return json(400, { error: 'Unknown scenario' }, cors.headers);
+    if (mode === 'write' && (typeof body.text !== 'string' || !body.text.trim())) return json(400, { error: 'Empty text' }, cors.headers);
+    if (mode !== 'write' && !question) return json(400, { error: 'Empty question' }, cors.headers);
 
     const who = userId || request.headers.get('CF-Connecting-IP') || 'anon';
     if (await overLimit(env, who)) return json(429, { error: 'Daily limit for the AI coach reached; try again tomorrow' }, cors.headers);
+    if (mode !== 'coach') return structured(env, mode, body, level, history, question, cors);
 
     // Static system prompt first, then the per-request context, then the conversation.
     const context = ['Learner progress summary (JSON): ' + summary]

@@ -538,7 +538,9 @@
     let result = null;
     const grade = selfGrade((q) => { const ticked = U.$$('input:checked', cl).length; result = res(q >= 3, { quality: q, partial: q === 3, self: true, correctText: null, explain: 'Self-graded: ' + ticked + ' of ' + ex.checklist.length + ' checklist items. Rewrite the sentences you were unsure about using the model as a guide.', userText: ta.value }); ctx.autoCheck(result); });
     modelBtn.addEventListener('click', () => { if (ta.value.trim().length < 5) { U.toast('Write a few words first'); ta.focus(); return; } modelBox.hidden = false; after.hidden = false; modelBtn.hidden = true; });
-    el.appendChild(modelBtn); el.appendChild(modelBox); el.appendChild(after); after.appendChild(grade);
+    const aiMount = h('div');
+    const aiBtn = NL.ai && NL.ai.feedbackButton ? NL.ai.feedbackButton(() => ta.value, ex.prompt, ex.level || 'B1', aiMount) : null;
+    el.appendChild(aiBtn ? h('div.row', aiBtn, modelBtn) : modelBtn); el.appendChild(aiMount); el.appendChild(modelBox); el.appendChild(after); after.appendChild(grade);
     return { el, ready: () => !!result, check: () => result, focus: () => ta.focus(), finish() { ta.disabled = true; U.$$('button', el).forEach((b) => (b.disabled = true)); } };
   };
 

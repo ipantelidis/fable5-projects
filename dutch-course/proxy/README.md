@@ -22,6 +22,14 @@ Then:
 2. Put the worker URL in `coachProxyUrl` in `js/config.js`, run `python3 tools/bump-sw.py`, push.
 3. Optional: set `REQUIRE_SIGN_IN = "true"` with the Supabase URL and anon key so only signed-in learners can ask; add a KV namespace binding named `RATE` to enforce `DAILY_LIMIT`.
 
+## Modes
+
+- `coach` (default): free questions on the Coach page.
+- `roleplay`: a conversation turn in one of the scenarios in `src/scenarios.js`. The browser sends only the scenario id; replies come back as JSON with the reply, its translation, a correction of the learner's last message and a hint.
+- `write`: feedback on a learner's text for a writing task, as JSON (corrected text, up to six mistakes with explanations, a comment, a model version and a 1 to 5 score).
+
+`node check-scenarios.mjs` checks that the scenario ids match the course's list in `js/content/roleplay.js`. For browser tests without a key, `tools/shots/mockproxy.mjs` serves canned answers in the same shapes.
+
 ## What is sent
 
 The question, the last eight chat turns, an anonymous progress summary (level, XP, streak, lessons done, due cards, weak skill and rule, recent wrong answers, current challenge) and up to three grammar entries from the course. No name, email or user id goes to the model; the sign-in token is only used to check with Supabase that the caller is a user of this site.

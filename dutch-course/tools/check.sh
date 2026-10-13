@@ -3,6 +3,10 @@
 # installed in tools/shots) the browser test that answers every exercise. Use before every commit: sh tools/check.sh
 cd "$(dirname "$0")/.." || exit 1
 fail=0
+if command -v node >/dev/null 2>&1; then
+  for f in js/*.js js/engine/*.js js/content/*.js sw.js; do node --check "$f" 2>/tmp/nl-syntax.txt || { echo "SYNTAX ERROR in $f"; head -5 /tmp/nl-syntax.txt; fail=1; }; done
+  [ -f proxy/check-scenarios.mjs ] && (node proxy/check-scenarios.mjs >/dev/null || { echo "role-play scenarios out of sync"; fail=1; })
+fi
 V=$(sh tools/validate-jxa.sh 2>&1); echo "$V" | tail -1
 echo "$V" | grep -q "OK: no content errors" || { echo "$V" | grep -i error | head -20; fail=1; }
 S=$(sh tools/smoke-jxa.sh 2>&1); echo "$S" | grep "SUMMARY"

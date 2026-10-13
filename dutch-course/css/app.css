@@ -433,3 +433,20 @@ a.btn-icon { text-decoration: none; color: var(--ink); }
 @media (max-width: 480px) { .story-line.dialogue { grid-template-columns: 1fr auto; } .story-line.dialogue .story-who { grid-column: 1 / -1; padding-top: 0; } }
 .inb-parts { gap: var(--s2); }
 .inb-part { padding: var(--s3) var(--s4); border: 1px solid var(--line); border-radius: var(--r); background: var(--card); display: grid; gap: 4px; }
+
+/* Role-play and writing feedback */
+.rp-log .msg { max-width: 92%; }
+.rp-who { font-size: .75rem; font-weight: 700; color: var(--accent); margin-bottom: 2px; }
+.rp-line { display: flex; gap: var(--s2); align-items: flex-start; justify-content: space-between; }
+.rp-fix { margin-top: var(--s2); padding-top: var(--s2); border-top: 1px dashed var(--line); font-size: .95rem; }
+.rp-ok { text-align: right; color: var(--ok); font-weight: 700; font-size: .8rem; }
+.rp-input { flex-wrap: nowrap; position: sticky; bottom: 0; background: var(--paper); padding: var(--s2) 0; }
+.rp-input .input { flex: 1; min-width: 0; }
+.ai-feedback { margin-top: var(--s4); }
+.ai-mistakes { padding-left: 1.1em; display: grid; gap: var(--s2); }
+.bad-text { text-decoration: line-through; text-decoration-color: var(--bad); color: var(--muted); }
+.ai-feedback details { margin-top: var(--s3); }
+.ai-feedback summary { cursor: pointer; font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+.write-area { width: 100%; font-family: var(--serif); font-size: 1.1rem; line-height: 1.5; min-height: 220px; }
+.write-row { text-decoration: none; color: inherit; }
+details > summary { list-style: none; } details > summary::-webkit-details-marker { display: none; } details > summary::before { content: "▸"; margin-right: 8px; color: var(--muted); } details[open] > summary::before { content: "▾"; }

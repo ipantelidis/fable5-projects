@@ -30,6 +30,8 @@
     [/^\/about$/, (host) => NL.views.about(host), 'settings'],
     [/^\/coach$/, (host) => NL.coach.view(host), 'coach'],
     [/^\/progress$/, (host) => NL.progress.view(host), 'home'],
+    [/^\/roleplay(?:\/([\w-]+))?$/, (host, id) => NL.ai.roleplay(host, id), 'home'],
+    [/^\/write(?:\/([\w-]+))?$/, (host, id) => NL.ai.writing(host, id), 'home'],
     [/^\/inburgering(?:\/(exam))?$/, (host, sub) => NL.stories.inburgering(host, sub), 'home'],
     [/^\/stories(?:\/([\w-]+))?(?:\/(questions))?$/, (host, id, mode) => NL.stories.view(host, id, mode), 'home'],
     [/^\/sounds(?:\/([\w-]+))?(?:\/(listen|speak))?$/, (host, id, mode) => NL.sounds.view(host, id, mode), 'home'],
