@@ -129,4 +129,6 @@ Screens are now checked with `tools/shots/shot.mjs` (headless Chromium). Done: h
 Fixed: table cells with several `*Dutch` segments showed raw asterisks; vocabulary cards were ~490px tall (global `.ex` min-height); check bar floated mid-screen; settings could recurse forever in the voice list; 7 duplicate dictionary words (validator now warns on duplicates).
 New for learners: My mistakes mode (`#/mode/mistakes`, redo the exact exercises you missed; right answer clears them; coach suggests it at 5+); export the current dictionary list as tab-separated text for Anki/Quizlet/spreadsheets.
 
-**todo:** detailed look at stage/unit pages, review modes, coach, bank theme pages; SVG icons instead of emoji (checklist item); empty states on first visit.
+Readiness round (same day): the live site (GitHub Pages) passes `tools/shots/live.mjs` (service worker active, 61 files cached, home and lessons open offline). `tools/shots/allex.mjs` renders and correctly answers all 5,155 exercises in Chromium with 0 failures. Added PNG app icons and share-preview tags, a placement-test pointer and no empty Review button for newcomers, a review empty state, persistent-storage request, an Install-app card, a coach backup reminder (1,500+ XP, no export in 21 days, not installed or synced), and a Report-a-problem link per exercise (pre-filled GitHub issue; `reportUrl` in js/config.js).
+
+**todo:** SVG icons instead of emoji (cosmetic); more accepted alternatives in translate exercises once learner reports arrive; owner: licence, optional Supabase and coach proxy.
