@@ -154,3 +154,7 @@ Goal: a cleaner, more structured interface without changing how the app works.
 - **How**: one screen per change, visual check in a real browser after each, since the current test tooling cannot judge layout.
 
 Order: content phases first (Stage 2 to 5), then 5b (a live site makes 5a and 5c testable), then 5c Tier 1, then 5a, then 5c Tier 2.
+
+### 5e. Learner experience round (2026-10-13)
+Built: home sign-in prompt; Sound pairs (8 contrasts, listen and speak); Progress page with weekly chart and a Monday summary; 12 graded stories and dialogues (A1 to B2); Inburgering track (exam overview, 8 KNM topics, practice exam); AI role-play (8 scenarios) and AI writing feedback through the proxy (dormant until deployed); daily reminder through the learner's own calendar (.ics or Google Calendar).
+Later, needs a server: real push reminders (VAPID keys, push subscriptions stored in Supabase, a scheduled sender such as a Cloudflare cron trigger on the proxy; on iPhone only for the installed app). Interface languages other than English. Recorded or generated native audio.

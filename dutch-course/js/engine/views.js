@@ -306,6 +306,16 @@
     const goal = h('input', { type: 'number', min: '10', max: '1000', step: '10', value: String(s.dailyGoal), 'aria-label': 'Daily XP goal' });
     goal.addEventListener('change', () => { s.dailyGoal = U.clamp(parseInt(goal.value, 10) || 50, 10, 1000); goal.value = String(s.dailyGoal); NL.state.save(); });
     setting('Daily goal (XP)', 'A lesson is roughly 150–250 XP.', goal);
+    // Daily reminder through the learner's own calendar (works on every phone, no server or notification permission needed)
+    const remTime = h('input', { type: 'time', value: s.settings.reminderTime || '19:00', 'aria-label': 'Reminder time', style: { width: '110px' } });
+    remTime.addEventListener('change', () => { s.settings.reminderTime = remTime.value || '19:00'; NL.state.save(); });
+    const site = /^https?:/.test(location.protocol) ? location.href.split('#')[0] : 'https://ipantelidis.github.io/fable5-projects/dutch-course/';
+    const start = () => { const [hh, mm] = (remTime.value || '19:00').split(':'); const d = new Date(); d.setDate(d.getDate() + 1); return U.dateKey(d).replace(/-/g, '') + 'T' + hh + mm + '00'; };
+    const ics = () => ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Nederlands Nu//Reminder//EN', 'BEGIN:VEVENT', 'UID:nl-nu-daily-' + Date.now() + '@nederlands-nu', 'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, ''), 'DTSTART:' + start(), 'DURATION:PT15M', 'RRULE:FREQ=DAILY', 'SUMMARY:Dutch practice (Nederlands Nu)', 'DESCRIPTION:Fifteen minutes: review what is due, then one lesson. ' + site, 'URL:' + site, 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Tijd voor Nederlands!', 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const gcal = () => { const st = start(); const [hh, mm] = [st.slice(9, 11), st.slice(11, 13)]; const endM = (parseInt(hh, 10) * 60 + parseInt(mm, 10) + 15); const en = st.slice(0, 9) + String(Math.floor(endM / 60) % 24).padStart(2, '0') + String(endM % 60).padStart(2, '0') + '00'; return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Dutch practice (Nederlands Nu)') + '&dates=' + st + '/' + en + '&details=' + encodeURIComponent('Fifteen minutes: review what is due, then one lesson. ' + site) + '&recur=' + encodeURIComponent('RRULE:FREQ=DAILY'); };
+    setting('Daily reminder', 'A repeating event in your own calendar, with an alert at this time.', h('div.row', remTime,
+      h('button.btn.btn-sm', { type: 'button', onclick: () => { s.settings.reminderTime = remTime.value || '19:00'; NL.state.save(); U.download('nederlands-nu-reminder.ics', ics(), 'text/calendar;charset=utf-8'); U.toast('Open the downloaded file to add the daily reminder to your calendar.', 'ok'); } }, 'Add to calendar'),
+      h('a.btn.btn-sm.btn-ghost', { href: '#', onclick: (e) => { e.preventDefault(); s.settings.reminderTime = remTime.value || '19:00'; NL.state.save(); window.open(gcal(), '_blank', 'noopener'); } }, 'Google Calendar')));
     setting('Unlock everything', 'Skip the stage exams. You are an adult; go where you like.', sw(s.settings.unlockAll, (v) => { s.settings.unlockAll = v; NL.state.save(); }));
     setting('Placement test', 'Find your level and unlock stages accordingly.', h('a.btn.btn-sm', { href: '#/placement' }, 'Take the test'));
     if (NL.coach) {
