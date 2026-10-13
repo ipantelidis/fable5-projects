@@ -16,6 +16,7 @@
     [/^\/review\/go$/, (host) => NL.review.start(host), 'review'],
     [/^\/mode\/speed$/, (host) => NL.review.speed(host), 'home'],
     [/^\/mode\/sprint$/, (host) => NL.review.sprint(host), 'home'],
+    [/^\/mode\/mistakes$/, (host) => NL.review.mistakes(host), 'home'],
     [/^\/mode\/listening$/, (host) => NL.review.listening(host), 'home'],
     [/^\/mode\/speaking$/, (host) => NL.review.speaking(host), 'home'],
     [/^\/mode\/freetalk(?:\/([\w-]+))?$/, (host, id) => NL.review.freetalk(host, id), 'home'],

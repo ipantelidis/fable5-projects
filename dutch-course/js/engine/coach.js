@@ -18,11 +18,27 @@
     day.byType = day.byType || {};
     const t = (day.byType[ex.type] = day.byType[ex.type] || { n: 0, ok: 0 });
     t.n++; if (result.ok) t.ok++;
+    s.mistakes = s.mistakes || [];
+    const q = (ex.nl || ex.prompt || ex.en || ex.q || ex.wrong || '').slice(0, 80);
+    const key = ex.type + '|' + q;
+    if (result.ok && opts.mode === 'mistakes') { s.mistakes = s.mistakes.filter((m) => m.type + '|' + m.q !== key); return; }
     if (!result.ok && !result.self) {
-      s.mistakes = s.mistakes || [];
-      s.mistakes.push({ d: U.today(), type: ex.type, grammar: (ex.grammar || opts.grammar || []).slice(0, 3), vocab: (ex.vocab || []).slice(0, 3), lesson: opts.title || null, q: (ex.nl || ex.prompt || ex.en || ex.q || ex.wrong || '').slice(0, 80) });
+      const prev = s.mistakes.find((m) => m.type + '|' + m.q === key);
+      s.mistakes = s.mistakes.filter((m) => m !== prev); // keep one entry per exercise, the latest, with a repeat count
+      s.mistakes.push({ n: prev ? (prev.n || 1) + 1 : 1, d: U.today(), type: ex.type, grammar: (ex.grammar || opts.grammar || []).slice(0, 3), vocab: (ex.vocab || []).slice(0, 3), lesson: opts.title || null, q, ex: snapshot(ex) });
       if (s.mistakes.length > 50) s.mistakes.splice(0, s.mistakes.length - 50);
     }
+  };
+  /** A replayable copy of an auto-graded exercise (plain data only, small), or null */
+  const REPLAY = ['mc', 'fill', 'translate', 'build', 'conj', 'article', 'plural', 'dictation', 'listen', 'fix', 'match', 'read'];
+  function snapshot(ex) {
+    if (REPLAY.indexOf(ex.type) === -1) return null;
+    try { const j = JSON.stringify(ex); return j.length <= 2500 ? JSON.parse(j) : null; } catch (e) { return null; }
+  }
+  /** Replayable mistakes, newest first */
+  K.mistakeItems = function (limit) {
+    const ms = (NL.state.get().mistakes || []).filter((m) => m.ex);
+    return ms.slice().reverse().slice(0, limit || 50);
   };
 
   /* ------------------------------------------------------------- analysis */
@@ -36,7 +52,7 @@
   K.weakGrammar = function () {
     const s = NL.state.get();
     const count = {};
-    (s.mistakes || []).slice(-30).forEach((m) => (m.grammar || []).forEach((g) => { count[g] = (count[g] || 0) + 1; }));
+    (s.mistakes || []).slice(-30).forEach((m) => (m.grammar || []).forEach((g) => { count[g] = (count[g] || 0) + (m.n || 1); }));
     const cards = s.srs.cards || {};
     for (const id in cards) { const c = cards[id]; if (c.kind === 'grammar' && c.lapses > 1 && NL.content.grammar[id]) count[id] = (count[id] || 0) + c.lapses; }
     const best = Object.keys(count).filter((g) => NL.content.grammar[g]).sort((a, b) => count[b] - count[a])[0];
@@ -70,6 +86,8 @@
     const nxt = K.nextLesson();
 
     if (idle != null && idle >= 3) add('welcome-back', 95, '\u{1F44B}', 'Welcome back', 'It has been ' + U.plural(idle, 'day') + '. A short review first brings the words back fastest; then continue where you left off.', due ? '#/review/go' : (nxt ? '#/lesson/' + nxt.lesson.id : '#/home'), due ? 'Review now' : 'Continue');
+    const replay = K.mistakeItems().length;
+    if (replay >= 5) add('mistakes', 64, '\u{1F3AF}', 'Redo ' + U.plural(replay, 'mistake'), 'These are exercises you got wrong recently. Getting them right once clears them from the list.', '#/mode/mistakes', 'Practise');
     if (due >= 20) add('due-many', 90, '\u{1F501}', U.plural(due, 'card') + ' waiting', 'A big queue means the schedule is slipping. Twenty now keeps the rest from coming back sooner.', '#/review/go', 'Review 20');
     else if (due > 0) add('due', 70, '\u{1F501}', U.plural(due, 'card') + ' due today', 'Reviewing on the day the card is due is what makes spaced repetition work. Five minutes.', '#/review/go', 'Review');
     if (NL.game.streakAlive() && idle === 1 && hour >= 17 && day.xp === 0) add('streak-risk', 88, '\u{1F525}', 'Your streak ends tonight', 'Anything counts: one review round keeps ' + NL.state.get().streak.current + ' days alive.', due ? '#/review/go' : '#/mode/speed', 'Keep it');
@@ -156,7 +174,7 @@
     { id: 'review', q: 'How does review work?', k: ['review', 'srs', 'spaced', 'repetition', 'cards', 'due'], a: () => [h('p', 'Every word and grammar rule you meet becomes a card. After you answer it, the card is scheduled: right answers push it further into the future (1 day, 3 days, then longer each time), a wrong answer brings it back tomorrow and resets the interval.'), h('p', 'The Review button shows how many cards are due today. Do them on the day: that is the whole trick. Missed cards appear in more exercise types, so you meet the word in a new way.'), h('p', 'Right now ' + U.plural(NL.srs.dueCount(), 'card') + ' are due. ', h('a', { href: '#/review/go' }, 'Review now'), '.')] },
     { id: 'voice', q: 'How do I use voice?', k: ['voice', 'speak', 'microphone', 'mic', 'audio', 'pronunciation', 'listen', 'tts'], a: () => [h('p', 'Tap any Dutch word or sentence to hear it. Press Space to replay the last audio. Change the voice and the speed in Settings.'), h('p', NL.stt.supported() ? 'Speech recognition is available in this browser: in speaking exercises press the microphone, say the sentence, and you get a word-by-word score.' : 'Speech recognition is not available in this browser, so speaking exercises let you listen to the model, say it, and grade yourself. Chrome or Edge on desktop or Android give you the scored version.'), h('p', h('a', { href: '#/mode/freetalk' }, 'Free talk'), ' gives you topics with model answers; ', h('a', { href: '#/mode/speaking' }, 'Speaking only'), ' drills sentences.')] },
     { id: 'challenge', q: 'What is the weekly challenge?', k: ['challenge', 'weekly', 'week', 'monday'], a: () => { const cur = NL.fluency && NL.fluency.current(); if (!cur) return [h('p', 'No challenge is active.')]; return [h('p', 'This week: ' + cur.challenge.title + '. ' + cur.challenge.desc), h('p', cur.progress.map((p) => (p.done ? '✓ ' : '· ') + p.label).join(' · ')), h('p', cur.claimed ? 'Completed, well done.' : (cur.daysLeft === 0 ? 'Today is the last day.' : U.plural(cur.daysLeft, 'day') + ' left.') + ' ', h('a', { href: '#/challenge' }, 'Open the challenge'), '.')]; } },
-    { id: 'mistakes', q: 'What do I keep getting wrong?', k: ['wrong', 'mistake', 'error', 'weak', 'trouble', 'difficult', 'hard'], a: () => { const s = NL.state.get(); const ms = (s.mistakes || []).slice(-30); if (ms.length < 5) return [h('p', 'Not enough data yet. After a few lessons I can point at patterns.')]; const wg = K.weakGrammar(); const byType = {}; ms.forEach((m) => { byType[m.type] = (byType[m.type] || 0) + 1; }); const top = Object.keys(byType).sort((a, b) => byType[b] - byType[a]).slice(0, 2); return [h('p', 'Of your last ' + ms.length + ' mistakes, most were in ' + top.map((t) => '"' + t + '" (' + byType[t] + ')').join(' and ') + '.'), wg ? h('p', 'The rule that comes up most is ', h('a', { href: '#/grammar/' + wg.id }, wg.title), '. Reread it and use "Drill this rule".') : null, h('p', 'Last few: ' + ms.slice(-4).map((m) => m.q).filter(Boolean).join(' · '))]; } },
+    { id: 'mistakes', q: 'What do I keep getting wrong?', k: ['wrong', 'mistake', 'error', 'weak', 'trouble', 'difficult', 'hard'], a: () => { const s = NL.state.get(); const ms = (s.mistakes || []).slice(-30); if (ms.length < 5) return [h('p', 'Not enough data yet. After a few lessons I can point at patterns.')]; const wg = K.weakGrammar(); const byType = {}; ms.forEach((m) => { byType[m.type] = (byType[m.type] || 0) + 1; }); const top = Object.keys(byType).sort((a, b) => byType[b] - byType[a]).slice(0, 2); return [h('p', 'Of your last ' + ms.length + ' mistakes, most were in ' + top.map((t) => '"' + t + '" (' + byType[t] + ')').join(' and ') + '.'), wg ? h('p', 'The rule that comes up most is ', h('a', { href: '#/grammar/' + wg.id }, wg.title), '. Reread it and use "Drill this rule".') : null, h('p', 'Last few: ' + ms.slice(-4).map((m) => m.q).filter(Boolean).join(' · ')), K.mistakeItems().length ? h('p', h('a', { href: '#/mode/mistakes' }, 'Redo them now'), ' (' + U.plural(K.mistakeItems().length, 'exercise') + ').') : null]; } },
     { id: 'plan', q: 'Make me a plan for this week', k: ['plan', 'schedule', 'routine', 'week', 'minutes', 'time'], a: () => { const nxt = K.nextLesson(); const due = NL.srs.dueCount(); return [h('p', 'A plan that fits in 15 minutes a day:'), h('p', '• Every day: review what is due (' + due + ' today). Two to five minutes.'), h('p', '• Four days: one lesson' + (nxt ? ' (next: ' + nxt.lesson.title + ')' : '') + '. Ten to fifteen minutes.'), h('p', '• Two days: speaking. Free talk or Speaking only, out loud, five minutes.'), h('p', '• One day: a vocabulary-bank theme or the weekly challenge.'), h('p', 'Set your daily goal in Settings to about 100 XP; a lesson gives 150 to 250.')]; } },
     { id: 'exam', q: 'How do the stage exams work?', k: ['exam', 'test', 'unlock', 'stage', 'placement', 'staatsexamen'], a: () => [h('p', 'Each stage ends with an exam of 30 mixed exercises. 70% passes and unlocks the next stage. You can retake it any time; the best score counts.'), h('p', 'You do not have to wait: the placement test in Settings unlocks stages by level, and "Unlock everything" simply opens all of them.'), h('p', 'Stage 4 also explains the real Staatsexamen NT2 Programma II and has mock papers for all four parts.')] },
     { id: 'quiet', q: 'Stop nudging me', k: ['quiet', 'stop', 'nudge', 'notification', 'annoying', 'silence'], a: () => { coachState().quiet = true; NL.state.save(); return [h('p', 'Done: quiet mode is on. I will only speak when you open this panel or the home card. Switch it back in Settings.')]; } },

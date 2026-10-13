@@ -160,11 +160,19 @@ try {
   if (sug.length && sug.every(function (x) { return x.title && x.href && x.why; })) pass('coach: ' + sug.length + ' suggestions, top = ' + sug[0].id); else fail('coach suggestions malformed');
   for (var mi = 0; mi < 6; mi++) NL.coach.record({ type: 'fill', grammar: ['g1-v2'], nl: 'test ___' }, { ok: false }, { title: 'x' });
   var wg = NL.coach.weakGrammar();
-  if (st9.mistakes.length === 6 && wg && wg.id === 'g1-v2' && NL.coach.suggestions().some(function (x) { return x.id === 'weak-grammar'; })) pass('coach: mistakes recorded and weak grammar detected'); else fail('coach recording: ' + st9.mistakes.length + ' ' + JSON.stringify(wg));
+  if (st9.mistakes.length === 1 && st9.mistakes[0].n === 6 && wg && wg.id === 'g1-v2' && NL.coach.suggestions().some(function (x) { return x.id === 'weak-grammar'; })) pass('coach: mistakes recorded and weak grammar detected'); else fail('coach recording: ' + st9.mistakes.length + ' ' + JSON.stringify(wg));
   var sm = NL.coach.summary();
   if (sm && typeof sm.level === 'number' && sm.lessonsTotal > 100 && Array.isArray(sm.recentMistakes) && sm.weakGrammar && sm.weakGrammar.id === 'g1-v2' && JSON.stringify(sm).length < 4000) pass('coach: summary compact (' + JSON.stringify(sm).length + ' chars)'); else fail('coach summary: ' + JSON.stringify(sm).slice(0, 200));
   var rg = NL.coach.relevantGrammar('why is it ik ben gegaan and not ik heb gegaan, perfectum with zijn?');
   if (rg.length >= 1 && rg.length <= 3 && rg.every(function (g) { return g.id && g.title && g.text.length > 20 && g.text.length <= 1500; })) pass('coach: relevant grammar = ' + rg.map(function (g) { return g.id; }).join(',')); else fail('coach relevantGrammar: ' + JSON.stringify(rg).slice(0, 200));
+  var st10 = NL.state.get(); st10.mistakes = [];
+  var fx = { type: 'fill', nl: 'Ik ___ in Utrecht.', answer: 'woon', en: 'I live in Utrecht.', explain: 'x' };
+  NL.coach.record(fx, { ok: false }, { title: 't', mode: 'lesson' }); NL.coach.record(fx, { ok: false }, { title: 't', mode: 'lesson' });
+  NL.coach.record({ type: 'speak', nl: 'Hallo' }, { ok: false }, { title: 't' });
+  var mi = NL.coach.mistakeItems();
+  var okA = mi.length === 1 && mi[0].ex && mi[0].ex.answer === 'woon';
+  NL.coach.record(fx, { ok: true }, { mode: 'mistakes' });
+  if (okA && NL.coach.mistakeItems().length === 0) pass('mistakes: recorded once, replayable, cleared by a right answer'); else fail('mistakes replay: ' + JSON.stringify(mi).slice(0, 200));
   if (!NL.coach.aiConfigured()) pass('coach: AI tier dormant without coachProxyUrl'); else fail('coach AI tier active without config');
   var ans = ['now', 'progress', 'review', 'voice', 'challenge', 'wrong', 'plan', 'exam'].map(function (q) { return NL.coach.answer(q).length; });
   if (ans.every(function (n) { return n > 0; })) pass('coach: every intent answers'); else fail('coach intents: ' + ans.join(','));
@@ -173,7 +181,7 @@ try {
   [['fluency hub', function (h0) { F.hub(h0); }], ['bank overview', function (h0) { F.bankView(h0); }], ['bank theme', function (h0) { F.bankView(h0, 'eten'); }],
    ['challenge page', function (h0) { F.challengeView(h0); }], ['home with challenge card and hub stage', function (h0) { NL.views.home(h0); }],
    ['stage s5 redirects to hub', function (h0) { NL.views.stage(h0, 's5'); }], ['stage s4 list', function (h0) { NL.views.stage(h0, 's4'); }],
-   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }], ['about', function (h0) { NL.views.about(h0); }], ['coach panel', function (h0) { NL.coach.view(h0); }], ['settings with sync card', function (h0) { NL.views.settings(h0); }]
+   ['free talk list', function (h0) { NL.review.freetalk(h0); }], ['dictionary', function (h0) { NL.views.dictionary(h0); }], ['badges', function (h0) { NL.views.badges(h0); }], ['about', function (h0) { NL.views.about(h0); }], ['coach panel', function (h0) { NL.coach.view(h0); }], ['mistakes empty', function (h0) { NL.review.mistakes(h0); }], ['settings with sync card', function (h0) { NL.views.settings(h0); }]
   ].forEach(function (pair) { try { pair[1](stubEl('main')); pass('renders: ' + pair[0]); } catch (e) { fail('render ' + pair[0] + ': ' + e.message + ' (line ' + e.line + ')'); } });
 } catch (e) { fail('smoke crashed: ' + e.message + ' line ' + e.line + ' ' + (e.stack || '').split('\n').slice(0,3).join(' | ')); }
 log(''); log('SUMMARY fails=' + __fails);

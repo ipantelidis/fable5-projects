@@ -41,7 +41,7 @@
       r.mistakes.forEach(({ ex, result }) => { const key = result.correctText || ex.q || ex.prompt; if (!key || seen.has(key)) return; seen.add(key); card.appendChild(h('div.ex-item', h('div', result.correctNl ? NL.ui.dutch(result.correctText) : result.correctText || ex.q || ex.prompt), h('div.en', (result.explain || '').split('\n')[0]))); });
       host.appendChild(card);
     }
-    const row = h('div.row', { style: { marginTop: '24px' } });
+    const row = h('div.row', { style: { marginTop: '24px', justifyContent: 'center' } });
     (opts.actions || [['Home', '#/home']]).forEach(([label, href, primary]) => row.appendChild(h('a.btn' + (primary ? '.btn-primary' : ''), { href }, label)));
     host.appendChild(row);
     if (pct >= 70) NL.lesson.confetti();
@@ -138,6 +138,23 @@
   };
 
   /* ---- Practice modes ---- */
+  /** Redo recent mistakes: the exact exercises the learner got wrong; a right answer clears each one */
+  R.mistakes = function (host) {
+    const items = NL.coach ? NL.coach.mistakeItems(15) : [];
+    if (!items.length) {
+      U.clear(host);
+      host.appendChild(h('div.eyebrow', 'Practice'));
+      host.appendChild(h('h1', 'My mistakes'));
+      host.appendChild(h('div.card', h('p', 'Nothing to redo right now.'), h('p.muted.small', 'When you get an exercise wrong in a lesson or review, it lands here. Redo it correctly once and it leaves the list.'), h('a.btn.btn-primary', { href: '#/home' }, 'Home')));
+      return;
+    }
+    const exs = U.shuffle(items.map((m) => JSON.parse(JSON.stringify(m.ex))));
+    NL.session.run({ host, exercises: exs, mode: 'mistakes', title: 'My mistakes · ' + U.plural(exs.length, 'exercise'), lessonVocab: R.seenVocab(20), onQuit: () => { location.hash = '#/home'; }, onDone: (r) => {
+      const left = NL.coach.mistakeItems().length;
+      summary(host, r, { title: 'Mistakes practised', note: left ? U.plural(left, 'exercise') + ' still on the list.' : 'The list is empty. Nicely done.', actions: left ? [['Again', '#/mode/mistakes', true], ['Home', '#/home']] : [['Home', '#/home', true]] });
+    } });
+  };
+
   R.listening = function (host) {
     const pool = R.seenVocab(20);
     const exs = NL.gen.expand({ n: 12, kinds: ['listen', 'dictation'] }, pool, pool);
