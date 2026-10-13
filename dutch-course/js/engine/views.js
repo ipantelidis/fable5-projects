@@ -97,12 +97,17 @@
     }
     host.appendChild(section('Your path', null, grid));
 
-    /* Practice modes */
-    const modes = h('div.mode-grid');
+    /* Practice modes, grouped so the list stays scannable */
     const nMist = NL.coach ? NL.coach.mistakeItems().length : 0;
-    [['stories', '\u{1F4D6}', 'Stories', 'read and listen, A1 to B2'], ['inburgering', '\u{1F1F3}\u{1F1F1}', 'Inburgering', 'society topics and exam practice'], ['roleplay', '\u{1F3AD}', 'Role-play', 'conversations with feedback'], ['write', '✍️', 'Writing', 'tasks with corrections'], ['sounds', '\u{1F444}', 'Sound pairs', 'train your ear and mouth'], ['mode/mistakes', '\u{1F3AF}', 'My mistakes', nMist ? U.plural(nMist, 'exercise') + ' to redo' : 'redo what you missed'], ['mode/speed', '⏱️', 'Speed round', '60 s vocabulary'], ['mode/sprint', '\u{1F3C3}', 'Conjugation sprint', '60 s verb forms'], ['mode/listening', '\u{1F3A7}', 'Listening only', 'dictation + choose'], ['mode/speaking', '\u{1F399}️', 'Speaking only', 'say the sentences'], ['mode/freetalk', '\u{1F5E8}️', 'Free talk', 'topics + model answers'], ['bank', '\u{1F5C2}️', 'Vocabulary bank', 'browse by theme'], ['challenge', '\u{1F3C5}', 'Weekly challenge', 'a new goal every Monday']]
-      .forEach(([id, ico, name, sub]) => modes.appendChild(h('a.mode', { href: '#/' + id }, h('span.ico', { 'aria-hidden': 'true' }, ico), h('b', name), h('span', sub))));
-    host.appendChild(section('Practice', null, modes));
+    const tile = ([id, ico, name, sub]) => h('a.mode', { href: '#/' + id }, h('span.ico', { 'aria-hidden': 'true' }, ico), h('b', name), h('span', sub));
+    const groups = [
+      ['Read, write and talk', [['stories', '\u{1F4D6}', 'Stories', 'read and listen, A1 to B2'], ['roleplay', '\u{1F3AD}', 'Role-play', 'conversations with feedback'], ['write', '✍️', 'Writing', 'tasks with corrections'], ['mode/freetalk', '\u{1F5E8}️', 'Free talk', 'topics + model answers'], ['inburgering', '\u{1F1F3}\u{1F1F1}', 'Inburgering', 'society topics and exam practice']]],
+      ['Pronunciation and listening', [['sounds', '\u{1F444}', 'Sound pairs', 'train your ear and mouth'], ['mode/listening', '\u{1F3A7}', 'Listening only', 'dictation + choose'], ['mode/speaking', '\u{1F399}️', 'Speaking only', 'say the sentences']]],
+      ['Quick practice', [['mode/mistakes', '\u{1F3AF}', 'My mistakes', nMist ? U.plural(nMist, 'exercise') + ' to redo' : 'redo what you missed'], ['mode/speed', '⏱️', 'Speed round', '60 s vocabulary'], ['mode/sprint', '\u{1F3C3}', 'Conjugation sprint', '60 s verb forms'], ['bank', '\u{1F5C2}️', 'Vocabulary bank', 'browse by theme'], ['challenge', '\u{1F3C5}', 'Weekly challenge', 'a new goal every Monday']]],
+    ];
+    const practice = h('div.practice-groups');
+    groups.forEach(([title, items]) => practice.appendChild(h('div.practice-group', h('h3.practice-title', title), h('div.mode-grid', ...items.map(tile)))));
+    host.appendChild(section('Practice', null, practice));
 
     /* Progress: skills, streak calendar, badges */
     const sk = h('div.card', h('h3', 'Skills'));

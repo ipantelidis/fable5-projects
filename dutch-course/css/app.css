@@ -450,3 +450,4 @@ a.btn-icon { text-decoration: none; color: var(--ink); }
 .write-area { width: 100%; font-family: var(--serif); font-size: 1.1rem; line-height: 1.5; min-height: 220px; }
 .write-row { text-decoration: none; color: inherit; }
 details > summary { list-style: none; } details > summary::-webkit-details-marker { display: none; } details > summary::before { content: "▸"; margin-right: 8px; color: var(--muted); } details[open] > summary::before { content: "▾"; }
+.practice-groups { display: grid; gap: var(--s5); } .practice-title { font-family: var(--sans); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: var(--s2); }
