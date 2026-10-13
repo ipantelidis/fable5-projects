@@ -431,3 +431,5 @@ a.btn-icon { text-decoration: none; color: var(--ink); }
 .story-tr { min-width: 40px; min-height: 32px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--muted); font-size: .72rem; font-weight: 700; cursor: pointer; }
 .story-tr.on { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
 @media (max-width: 480px) { .story-line.dialogue { grid-template-columns: 1fr auto; } .story-line.dialogue .story-who { grid-column: 1 / -1; padding-top: 0; } }
+.inb-parts { gap: var(--s2); }
+.inb-part { padding: var(--s3) var(--s4); border: 1px solid var(--line); border-radius: var(--r); background: var(--card); display: grid; gap: 4px; }

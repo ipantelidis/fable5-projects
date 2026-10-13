@@ -8,7 +8,8 @@
   const LEVELS = ['A1', 'A2', 'B1', 'B2'];
   const all = () => NL.content.stories || [];
   const done = () => { const s = NL.state.get(); s.stories = s.stories || {}; return s.stories; };
-  St.find = (id) => all().find((x) => x.id === id);
+  const knm = () => NL.content.knm || [];
+  St.find = (id) => all().find((x) => x.id === id) || knm().find((x) => x.id === id);
   let filter = 'all';
 
   St.view = function (host, id, mode) {
@@ -37,7 +38,7 @@
 
   St.reader = function (host, st) {
     T.stop();
-    host.appendChild(h('div.eyebrow', h('a', { href: '#/stories' }, 'Stories'), ' · ' + st.level + ' · ' + (st.kind === 'dialogue' ? 'dialogue' : 'story')));
+    host.appendChild(st.kind === 'knm' ? h('div.eyebrow', h('a', { href: '#/inburgering' }, 'Inburgering'), ' · Knowledge of Dutch society') : h('div.eyebrow', h('a', { href: '#/stories' }, 'Stories'), ' · ' + st.level + ' · ' + (st.kind === 'dialogue' ? 'dialogue' : 'story')));
     host.appendChild(h('h1', st.title));
     host.appendChild(h('p.lead', st.intro));
     let showAll = false, playing = false;
@@ -75,7 +76,7 @@
     host.appendChild(h('div.row.story-controls', playBtn, slowBtn, trBtn));
     host.appendChild(text);
     const d = done()[st.id];
-    host.appendChild(h('div.row.mt-4', h('a.btn.btn-primary.btn-lg', { href: '#/stories/' + st.id + '/questions', onclick: () => stop() }, (d ? 'Answer the questions again' : 'Answer ' + st.questions.length + ' questions') + ' →'), h('a.btn.btn-ghost', { href: '#/stories', onclick: () => stop() }, 'All stories')));
+    host.appendChild(h('div.row.mt-4', h('a.btn.btn-primary.btn-lg', { href: '#/stories/' + st.id + '/questions', onclick: () => stop() }, (d ? 'Answer the questions again' : 'Answer ' + st.questions.length + ' questions') + ' →'), h('a.btn.btn-ghost', { href: st.kind === 'knm' ? '#/inburgering' : '#/stories', onclick: () => stop() }, st.kind === 'knm' ? 'All topics' : 'All stories')));
     if (d) host.appendChild(h('p.muted.small.mt-2', 'Best score: ' + d.best + '%.'));
   };
 
@@ -88,13 +89,43 @@
       if (!prev) NL.game.addXP(30);
       NL.state.save();
       U.clear(host);
-      const i = all().indexOf(st); const nxt = all().slice(i + 1).find((x) => x.level === st.level) || all().slice(i + 1)[0];
+      const pool = st.kind === 'knm' ? knm() : all(); const i = pool.indexOf(st); const nxt = pool.slice(i + 1).find((x) => x.level === st.level) || pool.slice(i + 1)[0];
       host.appendChild(h('div.card', { style: { textAlign: 'center' } }, h('div.eyebrow', st.title),
         h('div', { style: { fontSize: '3rem', fontFamily: 'var(--serif)', fontWeight: 700, color: 'var(--accent)' } }, pct + '%'),
         h('p', r.correct + ' of ' + r.total + ' right' + (prev ? '.' : ' · +30 XP for finishing a story.')),
         h('p.muted', pct === 100 ? 'You understood everything. Try reading it once more without translations, out loud.' : 'Reread the lines the questions were about; the explanations point at the exact sentence.')));
-      host.appendChild(h('div.row.mt-4', { style: { justifyContent: 'center' } }, nxt ? h('a.btn.btn-primary', { href: '#/stories/' + nxt.id }, 'Next: ' + nxt.title) : null, h('a.btn', { href: '#/stories/' + st.id }, 'Read again'), h('a.btn.btn-ghost', { href: '#/stories' }, 'All stories')));
+      host.appendChild(h('div.row.mt-4', { style: { justifyContent: 'center' } }, nxt ? h('a.btn.btn-primary', { href: '#/stories/' + nxt.id }, 'Next: ' + nxt.title) : null, h('a.btn', { href: '#/stories/' + st.id }, 'Read again'), h('a.btn.btn-ghost', { href: st.kind === 'knm' ? '#/inburgering' : '#/stories' }, st.kind === 'knm' ? 'All topics' : 'All stories')));
       NL.app.updateHeader && NL.app.updateHeader();
+    } });
+  };
+
+  /* ---------------------------------------------------------------- inburgering */
+  St.inburgering = function (host, sub) {
+    if (sub === 'exam') return St.knmExam(host);
+    const info = NL.content.inburgering || {};
+    host.appendChild(h('div.eyebrow', 'Living in the Netherlands'));
+    host.appendChild(h('h1', 'Inburgering'));
+    host.appendChild(h('p.lead', info.intro || ''));
+    const parts = h('div.ref-list.inb-parts');
+    (info.parts || []).forEach(([name, text, href]) => parts.appendChild(h('div.inb-part', h('b', name), h('p.muted.small.m-0', text), href ? h('a.small', { href }, 'Practise this →') : null)));
+    host.appendChild(NL.views.section('The exam in parts', null, parts, h('p.small.mt-2', 'Official information: ', ...(info.links || []).map(([t, u], i) => [i ? ' · ' : '', h('a', { href: u, target: '_blank', rel: 'noopener' }, t)]).flat())));
+    const d = done(); const s = NL.state.get();
+    const grid = h('div.grid');
+    knm().forEach((t) => { const r = d[t.id]; grid.appendChild(h('a.card.stage-card', { href: '#/stories/' + t.id }, h('div.row.row-between', h('span', { style: { fontSize: '1.6rem' }, 'aria-hidden': 'true' }, t.icon), h('span.pill' + (r ? '.pill-ok' : ''), r ? '✓ ' + r.best + '%' : t.questions.length + ' questions')), h('h3', t.title), h('p.muted.small', t.intro))); });
+    host.appendChild(NL.views.section('Knowledge of Dutch society (KNM)', null, h('p.muted.small', 'Each topic is a short text in simple Dutch with audio and translations, followed by questions in the style of the KNM exam.'), grid));
+    const best = s.knmExam;
+    host.appendChild(NL.views.section('Practice exam', null, h('div.card', h('p', 'Twenty mixed questions from all topics, in Dutch, like the real KNM exam.' + (best != null ? ' Your best score: ' + best + '%.' : '')), h('a.btn.btn-primary', { href: '#/inburgering/exam' }, 'Start the practice exam'))));
+  };
+
+  St.knmExam = function (host) {
+    const pool = []; knm().forEach((t) => St.exercises(t).forEach((e) => pool.push(e)));
+    const exs = U.shuffle(pool).slice(0, 20);
+    NL.session.run({ host, exercises: exs, mode: 'exam', title: 'KNM practice exam', lessonVocab: [], onQuit: () => { location.hash = '#/inburgering'; }, onDone: (r) => {
+      const pct = r.total ? Math.round((r.correct / r.total) * 100) : 0; const s = NL.state.get();
+      s.knmExam = Math.max(s.knmExam || 0, pct); NL.state.save();
+      U.clear(host);
+      host.appendChild(h('div.card', { style: { textAlign: 'center' } }, h('div.eyebrow', 'KNM practice exam'), h('div', { style: { fontSize: '3rem', fontFamily: 'var(--serif)', fontWeight: 700, color: 'var(--accent)' } }, pct + '%'), h('p', r.correct + ' of ' + r.total + ' right.'), h('p.muted', pct >= 80 ? 'A comfortable margin. Keep the topics fresh with a round now and then.' : 'Reread the topics behind the questions you missed; every answer explanation names the fact.')));
+      host.appendChild(h('div.row.mt-4', { style: { justifyContent: 'center' } }, h('a.btn.btn-primary', { href: '#/inburgering/exam', onclick: () => setTimeout(() => NL.app.render(), 0) }, 'Another round'), h('a.btn', { href: '#/inburgering' }, 'All topics')));
     } });
   };
 })();

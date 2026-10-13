@@ -44,7 +44,7 @@ const out = await p.evaluate(async () => {
     }
   }
   for (const st of NL.content.stages) for (const e of st.exam || []) { if (e.type === 'auto') continue; run(e, st.id + '/exam'); n++; }
-  for (const story of NL.content.stories || []) NL.stories.exercises(story).forEach((e) => { run(e, 'story ' + story.id); n++; });
+  for (const story of (NL.content.stories || []).concat(NL.content.knm || [])) NL.stories.exercises(story).forEach((e) => { run(e, 'story ' + story.id); n++; });
   return { n, counts, fails };
 });
 console.log('exercises run:', out.n); console.log('by type:', JSON.stringify(out.counts));
