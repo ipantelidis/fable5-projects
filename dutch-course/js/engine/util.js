@@ -109,8 +109,8 @@
 
   U.debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
 
-  U.download = function (filename, text) {
-    const blob = new Blob([text], { type: 'application/json' });
+  U.download = function (filename, text, type) {
+    const blob = new Blob([text], { type: type || 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = filename;

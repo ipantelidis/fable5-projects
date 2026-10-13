@@ -322,7 +322,6 @@
   VB('aanraden', 'to advise / recommend', 'raad aan|raadt aan|raden aan', 'raadde aan|raadden aan', 'aangeraden', 'hebben', 'Ik zou u aanraden om eerst te bellen.', 'I would advise you to phone first.', { theme: 'exam', stage: 4 });
   VB('verwijzen naar', 'to refer to', 'verwijs naar|verwijst naar|verwijzen naar', 'verwees naar|verwezen naar', 'verwezen naar', 'hebben', 'Waar verwijst "dit" naar in regel 12?', 'What does "dit" refer to in line 12?', { theme: 'exam', stage: 4, id: 'verwijzen-naar' });
   PH('en wel om twee redenen', 'for two reasons', 'Ik ben voor, en wel om twee redenen.', 'I am in favour, for two reasons.', { theme: 'exam', stage: 4, id: 'ph-en-wel-om' });
-  PH('Als ik het goed begrijp, …', 'If I understand correctly, …', 'Als ik het goed begrijp, vraagt u om mijn mening.', 'If I understand correctly, you are asking for my opinion.', { theme: 'exam', stage: 4, id: 'ph-als-ik-het-goed-begrijp' });
   PH('Ik zou u aanraden om …', 'I would advise you to …', 'Ik zou u aanraden om contact op te nemen met de gemeente.', 'I would advise you to contact the municipality.', { theme: 'exam', stage: 4, id: 'ph-ik-zou-u-aanraden' });
 
   const u6 = [];
@@ -382,7 +381,7 @@
     list('Email: opening, reason for writing, the request or information, closing line, greeting.', 'Short report or betoog: introduction, two or three marked paragraphs, conclusion.', 'Always: check verb position, dt, de / het, and register before you stop.'),
     ex(['Ik zou u aanraden om eerst contact op te nemen met uw leidinggevende.', 'I would advise you to contact your manager first.'], ['Volgens mij is thuiswerken een goede ontwikkeling, en wel om twee redenen.', 'In my view working from home is a good development, for two reasons.'], ['Met "deze ontwikkeling" verwijst de schrijver naar de toename van flexwerk.', 'By "this development" the writer refers to the increase in flexible work.']),
     tip('Do the speaking tasks below aloud with a timer. Stopping early loses more points than a small mistake.'),
-  ], ['g4-staatsexamen', 'g4-reading', 'g4-argument'], ['leesvaardigheid', 'luistervaardigheid', 'schrijfvaardigheid', 'spreekvaardigheid', 'onderdeel', 'opdracht', 'voorbereidingstijd', 'hoofdgedachte', 'alinea', 'signaalwoord', 'diploma', 'afleggen', 'beoordelen', 'aanraden', 'verwijzen-naar', 'ph-en-wel-om', 'ph-als-ik-het-goed-begrijp', 'ph-ik-zou-u-aanraden'], [
+  ], ['g4-staatsexamen', 'g4-reading', 'g4-argument'], ['leesvaardigheid', 'luistervaardigheid', 'schrijfvaardigheid', 'spreekvaardigheid', 'onderdeel', 'opdracht', 'voorbereidingstijd', 'hoofdgedachte', 'alinea', 'signaalwoord', 'diploma', 'afleggen', 'beoordelen', 'aanraden', 'verwijzen-naar', 'ph-en-wel-om', 'ph-als-ik-het-goed-begrijp-b1', 'ph-ik-zou-u-aanraden'], [
     mc('How many parts does the Staatsexamen NT2 have?', ['two', 'four', 'six'], 1, 'lezen, luisteren, schrijven, spreken.'),
     mc('In the reading part, the questions', ['are in random order', 'follow the order of the text', 'come before the text only'], 1, 'They follow the text.'),
     mc('"De hoofdgedachte" is', ['the first sentence', 'the main idea', 'the writer’s name'], 1, 'Main idea.'),

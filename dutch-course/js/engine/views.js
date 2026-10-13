@@ -221,15 +221,25 @@
     [['all', 'All'], ['noun', 'Nouns'], ['verb', 'Verbs'], ['adj', 'Adjectives'], ['phrase', 'Phrases'], ['learning', 'Learning'], ['known', 'Known']].forEach(([k, label]) => { const b = h('button' + (k === 'all' ? '.active' : ''), { type: 'button' }, label); b.addEventListener('click', () => { filter = k; U.$$('button', tabs).forEach((x) => x.classList.toggle('active', x === b)); render(); }); tabs.appendChild(b); });
     host.appendChild(tabs);
     const list = h('div.ref-list');
-    host.appendChild(list);
     const more = h('button.btn.btn-block', { type: 'button' }, 'Show more');
-    let limit = 60;
+    let limit = 60, current = [];
+    const FILTER_NAMES = { all: 'all', noun: 'nouns', verb: 'verbs', adj: 'adjectives', phrase: 'phrases', learning: 'learning', known: 'known' };
+    const exportBtn = h('button.btn.btn-sm', { type: 'button', title: 'Tab-separated text: imports into Anki, Quizlet, Excel or Google Sheets' }, 'Export these words');
+    exportBtn.addEventListener('click', () => {
+      if (!current.length) { U.toast('Nothing to export with this filter.'); return; }
+      const clean = (x) => String(x == null ? '' : x).replace(/[\t\r\n]+/g, ' ').trim();
+      const lines = current.map((v) => [NL.gen.display(v), v.en, v.plural || '', v.forms && v.forms.part ? (v.forms.aux === 'zijn' ? 'is ' : 'heeft ') + v.forms.part : '', v.ex ? v.ex.nl : (v.exNl || ''), v.ex ? v.ex.en : (v.exEn || ''), ['new', 'seen', 'learning', 'learning', 'known'][NL.srs.strength(v.id)] || ''].map(clean).join('\t'));
+      U.download('nederlands-nu-words-' + FILTER_NAMES[filter] + '-' + U.today() + '.txt', lines.join('\n') + '\n', 'text/tab-separated-values;charset=utf-8');
+      U.toast('Exported ' + U.plural(current.length, 'word') + '. Columns: Dutch, English, plural, perfect, example, translation, status.', 'ok');
+    });
+    host.appendChild(h('div.row.row-between.dict-tools', h('span.muted.small', 'Export the current list for Anki, Quizlet or a spreadsheet.'), exportBtn));
+    host.appendChild(list);
     more.addEventListener('click', () => { limit += 100; render(); });
     host.appendChild(more);
     function render() {
       U.clear(list);
       const q = U.normalize(inp.value);
-      let rows = all.filter((v) => {
+      let rows = current = all.filter((v) => {
         if (filter === 'noun' || filter === 'verb' || filter === 'adj' || filter === 'phrase') { if (v.pos !== filter) return false; }
         else if (filter === 'learning') { const st = NL.srs.strength(v.id); if (st === 0 || st === 4) return false; }
         else if (filter === 'known') { if (NL.srs.strength(v.id) !== 4) return false; }
@@ -264,12 +274,13 @@
   V.settings = function (host) {
     const s = NL.state.get();
     host.appendChild(h('h1', 'Settings'));
-    const card = h('div.card');
+    let card = null;
+    const group = (title) => { card = h('div.card.settings-group', h('h3', title)); host.appendChild(card); };
     const setting = (label, desc, control) => card.appendChild(h('div.setting', h('div', h('label', label), desc ? h('span.desc', desc) : null), control));
     const sw = (val, onChange) => { const b = h('button.switch', { type: 'button', role: 'switch', 'aria-checked': String(!!val) }); b.addEventListener('click', () => { const v = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', String(v)); onChange(v); }); return b; };
     const seg = (options, val, onChange) => { const w = h('div.seg'); options.forEach(([k, label]) => { const b = h('button' + (k === val ? '.active' : ''), { type: 'button' }, label); b.addEventListener('click', () => { U.$$('button', w).forEach((x) => x.classList.toggle('active', x === b)); onChange(k); }); w.appendChild(b); }); return w; };
 
-    // Voice
+    group('Audio and voice');
     const voiceSel = h('select', { 'aria-label': 'Dutch voice' });
     function fillVoices() {
       U.clear(voiceSel);
@@ -283,19 +294,21 @@
     setting('Dutch voice', T.supported() ? 'Best available nl-NL voice is chosen automatically.' : 'Speech synthesis is not supported in this browser.', h('div.row', voiceSel, h('button.btn.btn-sm', { type: 'button', onclick: () => T.speak('Goedemiddag, hoe gaat het met je?') }, '▶ Test')));
     setting('Speech speed', 'Slow is useful for dictation.', seg([['slow', 'Slow'], ['normal', 'Normal'], ['fast', 'Fast']], s.settings.rate, (v) => { s.settings.rate = v; NL.state.save(); T.speak('Dit is de snelheid van de stem.'); }));
     setting('Voice input', NL.stt.supported() ? 'Speech recognition is available. Allow microphone access when asked.' : (NL.stt.bestBrowserHint() || 'Not available.') + ' Speaking exercises fall back to self-grading.', h('span.pill' + (NL.stt.supported() ? '.pill-ok' : '.pill-warn'), NL.stt.supported() ? 'available' : 'unavailable'));
-    setting('Theme', null, seg([['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']], s.settings.theme, (v) => { s.settings.theme = v; NL.state.save(); NL.app.applyTheme(); }));
     setting('Sound effects', null, sw(!s.settings.mute, (v) => { s.settings.mute = !v; NL.state.save(); if (v) NL.sfx.correct(); }));
+    group('Display');
+    setting('Theme', null, seg([['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']], s.settings.theme, (v) => { s.settings.theme = v; NL.state.save(); NL.app.applyTheme(); }));
     setting('Show translations', 'English hints under fill-in and speaking exercises.', sw(s.settings.showTranslations, (v) => { s.settings.showTranslations = v; NL.state.save(); }));
+    group('Learning');
     const goal = h('input', { type: 'number', min: '10', max: '1000', step: '10', value: String(s.dailyGoal), 'aria-label': 'Daily XP goal' });
     goal.addEventListener('change', () => { s.dailyGoal = U.clamp(parseInt(goal.value, 10) || 50, 10, 1000); goal.value = String(s.dailyGoal); NL.state.save(); });
     setting('Daily goal (XP)', 'A lesson is roughly 150–250 XP.', goal);
     setting('Unlock everything', 'Skip the stage exams. You are an adult; go where you like.', sw(s.settings.unlockAll, (v) => { s.settings.unlockAll = v; NL.state.save(); }));
     setting('Placement test', 'Find your level and unlock stages accordingly.', h('a.btn.btn-sm', { href: '#/placement' }, 'Take the test'));
     if (NL.coach) {
-      setting('Coach: quiet mode', 'Keep the coach card, but no toasts or nudges.', sw(NL.coach.state().quiet, (v) => { NL.coach.state().quiet = v; NL.state.save(); }));
+      group('Coach');
+      setting('Quiet mode', 'Keep the coach card, but no toasts or nudges.', sw(NL.coach.state().quiet, (v) => { NL.coach.state().quiet = v; NL.state.save(); }));
       setting('Welcome tour', 'Show the five-step introduction on the home screen again.', h('button.btn.btn-sm', { type: 'button', onclick: () => { NL.coach.resetTour(); location.hash = '#/home'; NL.app.render(); } }, 'Show the tour'));
     }
-    host.appendChild(card);
 
     // Progress
     const data = h('div.card', h('h3', 'Your progress data'), h('p.muted.small', 'Everything is stored in this browser (localStorage). Export a backup before switching devices or browsers, then import it there.'));
@@ -304,14 +317,14 @@
     data.appendChild(h('div.row',
       h('button.btn.btn-primary', { type: 'button', onclick: () => U.download('nederlands-nu-progress-' + U.today() + '.json', NL.state.exportJSON()) }, '⬇ Export progress'),
       h('button.btn', { type: 'button', onclick: () => file.click() }, '⬆ Import progress'),
-      h('button.btn.btn-ghost', { type: 'button', onclick: () => { if (confirm('Reset ALL progress? This cannot be undone. Export first if you want a backup.')) { NL.state.reset(); U.toast('Progress reset'); NL.app.render(); } } }, 'Reset'),
       file));
+    data.appendChild(h('div.danger-zone', h('div', h('b', 'Reset all progress'), h('span.desc', 'Deletes every lesson, word and badge in this browser. It cannot be undone.')), h('button.btn.btn-sm.btn-danger', { type: 'button', onclick: () => { if (confirm('Reset ALL progress? This cannot be undone. Export first if you want a backup.')) { NL.state.reset(); U.toast('Progress reset'); NL.app.render(); } } }, 'Reset progress')));
     host.appendChild(data);
     if (NL.sync) host.appendChild(NL.sync.card());
 
     // Keyboard + about
     host.appendChild(h('div.card', h('h3', 'Keyboard shortcuts'), h('ul.learn-list', h('li', h('span.kbd', 'Enter'), ' check answer / continue'), h('li', h('span.kbd', 'Space'), ' replay the audio (outside a text box)'), h('li', h('span.kbd', '← → ↑ ↓'), ' or ', h('span.kbd', '1'), '–', h('span.kbd', '4'), ' choose an option'), h('li', h('span.kbd', 'Esc'), ' close a word popup'))));
-    const check = h('div.card', h('h3', 'Content check'), h('p.muted.small', 'Runs the content validator on all stages (ids, answers, dictionary links, audio strings).'));
+    const check = h('details.card.dev-tools', h('summary', 'For course authors: content check'), h('p.muted.small', 'Runs the content validator on all stages (ids, answers, dictionary links, audio strings).'));
     const out = h('pre.report', { hidden: true });
     check.appendChild(h('button.btn', { type: 'button', onclick: () => { const r = NL.validate(); out.hidden = false; out.textContent = (r.ok ? 'OK — no errors.' : r.errors.length + ' error(s):\n' + r.errors.join('\n')) + '\n\n' + r.warnings.length + ' warning(s)' + (r.warnings.length ? ':\n' + r.warnings.slice(0, 40).join('\n') : '') + '\n\n' + JSON.stringify(r.counts); } }, 'Check content'));
     check.appendChild(out);

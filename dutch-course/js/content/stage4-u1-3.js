@@ -316,7 +316,6 @@
   VB('zich omscholen', 'to retrain', 'school me om|schoolt zich om|scholen ons om', 'schoolde me om|schoolden ons om', 'omgeschoold', 'hebben', 'Ik heb me laten omscholen.', 'I had myself retrained.', { theme: 'career', stage: 4, id: 'zich-omscholen' });
   W('achteraf', 'in retrospect', 'adv', 'Achteraf had ik eerder moeten overstappen.', 'In retrospect I should have switched earlier.', { theme: 'time', stage: 4 });
   W('tegen die tijd', 'by then', 'adv', 'Tegen die tijd zal ik zijn afgestudeerd.', 'By then I will have graduated.', { theme: 'time', stage: 4, id: 'tegen-die-tijd' });
-  PH('Had ik maar …', 'If only I had …', 'Had ik maar eerder Nederlands geleerd!', 'If only I had learned Dutch earlier!', { theme: 'regret', stage: 4, id: 'ph-had-ik-maar' });
 
   N('sollicitatiegesprek', 'het', 'sollicitatiegesprekken', 'job interview', 'Ik heb morgen een sollicitatiegesprek.', 'I have a job interview tomorrow.', { theme: 'career', stage: 4 });
   N('motivatie', 'de', null, 'motivation', 'Kunt u uw motivatie toelichten?', 'Could you explain your motivation?', { theme: 'career', stage: 4 });
@@ -346,7 +345,7 @@
     p('Where English needs the future perfect, Dutch often uses the perfect or even the present with a time expression: `Vrijdag heb ik het af.` `Over een jaar ben ik klaar.` Use `zal … hebben` when the completion is the point, or for a guess.'),
     ex(['Toen ik bij het bedrijf kwam, had mijn leidinggevende er al twintig jaar gewerkt.', 'When I joined the company, my manager had already worked there for twenty years.'], ['Achteraf had ik tijdens het functioneringsgesprek om opslag moeten vragen.', 'In retrospect I should have asked for a raise during the performance review.'], ['Als ik me niet had laten omscholen, had ik nu geen werk gehad.', 'If I had not retrained, I would not have had work now.'], ['Over vijf jaar zal de helft van het team met pensioen zijn gegaan.', 'In five years half the team will have retired.']),
     tip('`Had ik maar …!` is the shortest way to express regret. No `als`, verb first.'),
-  ], ['g4-past-tenses'], ['loopbaan', 'leidinggevende', 'functioneringsgesprek', 'opslag', 'arbeidsvoorwaarden', 'proeftijd', 'reorganisatie', 'omscholing', 'netwerk', 'pensioen', 'overstappen', 'doorgroeien', 'onderhandelen', 'goedkeuren', 'spijt-hebben-van', 'zich-omscholen', 'achteraf', 'tegen-die-tijd', 'ph-had-ik-maar'], [
+  ], ['g4-past-tenses'], ['loopbaan', 'leidinggevende', 'functioneringsgesprek', 'opslag', 'arbeidsvoorwaarden', 'proeftijd', 'reorganisatie', 'omscholing', 'netwerk', 'pensioen', 'overstappen', 'doorgroeien', 'onderhandelen', 'goedkeuren', 'spijt-hebben-van', 'zich-omscholen', 'achteraf', 'tegen-die-tijd', 'ph-had-ik-maar-b1'], [
     mc('Toen ik aankwam, ___ de vergadering al begonnen.', ['is', 'was', 'had'], 1, 'beginnen takes zijn; pluperfect: was begonnen.'),
     mc('"I should have asked":', ['Ik had moeten vragen.', 'Ik had gemoeten vragen.', 'Ik moest hebben gevraagd.'], 0, 'had + moeten + infinitive.'),
     mc('"If only I had known!":', ['Als ik maar wist!', 'Had ik het maar geweten!', 'Ik had maar weten!'], 1, 'Had ik … maar + participle.'),

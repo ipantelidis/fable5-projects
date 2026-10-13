@@ -307,6 +307,12 @@ textarea.input { min-height: 120px; font-family: var(--serif); resize: vertical;
 .dict-row:hover { background: var(--card-2); }
 .dict-row .hw { font-family: var(--serif); font-size: 1.15rem; }
 .dict-row .en { color: var(--muted); font-size: .95rem; }
+/* dense dictionary list: one bordered list with dividers, Dutch and English on one line */
+.ref-list:has(> .dict-row) { gap: 0; border: 1px solid var(--line); border-radius: var(--r); background: var(--card); overflow: hidden; }
+.ref-list > .dict-row { border: 0; border-radius: 0; border-bottom: 1px solid var(--line); padding: var(--s2) var(--s4); min-height: 48px; cursor: pointer; }
+.ref-list > .dict-row:last-child { border-bottom: 0; }
+.ref-list > .dict-row > div:first-child { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--s3); }
+.dict-tools { margin: var(--s2) 0 var(--s3); }
 .strength { display: inline-flex; gap: 2px; }
 .strength i { width: 6px; height: 12px; border-radius: 2px; background: var(--line); display: inline-block; }
 .strength i.on { background: var(--ok); }
@@ -370,3 +376,15 @@ pre.report { background: var(--card-2); padding: var(--s3); border-radius: var(-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Settings groups, destructive zone, author tools */
+.settings-group h3 { margin-bottom: var(--s1); }
+.btn-danger { background: transparent; color: var(--bad); border-color: var(--bad); }
+.btn-danger:hover { background: var(--bad-soft); }
+.danger-zone { display: flex; justify-content: space-between; align-items: center; gap: var(--s3); flex-wrap: wrap; margin-top: var(--s5); padding-top: var(--s4); border-top: 1px solid var(--line); }
+.danger-zone b { display: block; }
+.danger-zone .desc { font-size: .85rem; color: var(--muted); }
+.dev-tools summary { cursor: pointer; font-weight: 600; color: var(--muted); min-height: 32px; display: flex; align-items: center; }
+.dev-tools[open] summary { margin-bottom: var(--s3); }
+.learn-list:last-child { margin-bottom: 0; }
+.card > p:last-child, .card > ul:last-child { margin-bottom: 0; }

@@ -322,7 +322,6 @@
   W('gratis', 'free of charge', 'adj', 'De toegang is gratis.', 'Entry is free.', { theme: 'basics', stage: 2 });
   VB('meedoen', 'to take part / join in', 'doe mee|doet mee|doen mee', 'deed mee|deden mee', 'meegedaan', 'hebben', 'Doe je mee met het toernooi?', 'Are you joining the tournament?', { theme: 'leisure', stage: 2 });
   VB('reserveren', 'to reserve', 'reserveer|reserveert|reserveren', 'reserveerde|reserveerden', 'gereserveerd', 'hebben', 'Ik heb een tafel gereserveerd.', 'I reserved a table.', { theme: 'leisure', stage: 2 });
-  PH('zin hebben in', 'to feel like', 'Heb je zin in een ijsje?', 'Do you feel like an ice cream?', { theme: 'leisure', stage: 2, id: 'ph-zin-hebben-in' });
   PH('Lijkt me leuk!', 'Sounds fun!', 'Een picknick? Lijkt me leuk!', 'A picnic? Sounds fun!', { theme: 'leisure', stage: 2, id: 'ph-lijkt-me-leuk' });
   PH('Ik kan helaas niet.', 'Unfortunately I can’t.', 'Zaterdag kan ik helaas niet, ik werk.', 'Unfortunately I can’t on Saturday, I am working.', { theme: 'leisure', stage: 2, id: 'ph-kan-helaas-niet' });
 
@@ -430,7 +429,7 @@
     table(['Dutch', 'English'], [['*Heb je zin om zaterdag mee te gaan?', 'Do you feel like coming along on Saturday?'], ['*Zullen we een picknick houden?', 'Shall we have a picnic?'], ['*Lijkt me leuk!', 'Sounds fun!'], ['*Gezellig, ik ben erbij.', 'Lovely, count me in.'], ['*Ik kan helaas niet, ik moet werken.', 'Unfortunately I can’t, I have to work.'], ['*Een andere keer graag.', 'Another time, gladly.'], ['*Hoe laat spreken we af?', 'What time shall we meet?']]),
     ex(['Zaterdag is er een festival in het Westerpark. De toegang is gratis. Ga je mee?', 'On Saturday there is a festival in the Westerpark. Entry is free. Are you coming?'], ['Lijkt me leuk! Zullen we eerst ergens eten voordat we gaan?', 'Sounds fun! Shall we eat somewhere first before we go?'], ['Ik reserveer een tafel op het terras, zodat we buiten kunnen zitten.', 'I will reserve a table on the terrace, so that we can sit outside.'], ['De kaartjes zijn uitverkocht, dus ik kan helaas niet mee.', 'The tickets are sold out, so unfortunately I can’t come along.']),
     tip('`Gezellig!` is the all-purpose enthusiastic yes to any invitation.'),
-  ], ['g2-subordinate', 'g2-om-te'], ['uitje', 'picknick', 'terras', 'borrel', 'festival', 'uitnodiging', 'verjaardagsfeest', 'kaartje', 'uitverkocht', 'gratis', 'meedoen', 'reserveren', 'ph-zin-hebben-in', 'ph-lijkt-me-leuk', 'ph-kan-helaas-niet'], [
+  ], ['g2-subordinate', 'g2-om-te'], ['uitje', 'picknick', 'terras', 'borrel', 'festival', 'uitnodiging', 'verjaardagsfeest', 'kaartje', 'uitverkocht', 'gratis', 'meedoen', 'reserveren', 'zin-hebben-in', 'ph-lijkt-me-leuk', 'ph-kan-helaas-niet'], [
     mc('Ik reserveer nu, ___ we zeker een tafel hebben.', ['omdat', 'zodat', 'hoewel'], 1, 'Purpose → zodat.'),
     mc('___ de film is afgelopen, gaan we iets drinken.', ['Voordat', 'Nadat', 'Zodat'], 1, 'After → nadat.'),
     mc('Ik bel je ___ ik de kaartjes heb.', ['zodra', 'terwijl', 'zodat'], 0, 'As soon as → zodra.'),

@@ -10,11 +10,14 @@
 
   T.supported = () => !!synth && 'SpeechSynthesisUtterance' in window;
 
-  function loadVoices() {
+  /** Reads the Dutch voices. Only the browser's voiceschanged event (and the startup retry) announces a change: emitting
+      from a plain T.voices() call made listeners that call T.voices() recurse forever when no Dutch voice exists. */
+  function loadVoices(announce) {
     if (!T.supported()) return [];
+    const before = voices.length;
     voices = synth.getVoices().filter((v) => /^nl([-_]|$)/i.test(v.lang));
     voices.sort((a, b) => score(b) - score(a));
-    U.emit('voices', voices);
+    if (announce === true && voices.length !== before) U.emit('voices', voices);
     return voices;
   }
   /** Prefer Netherlands Dutch, natural/neural voices, then local voices */
@@ -28,8 +31,8 @@
   }
   if (T.supported()) {
     loadVoices();
-    synth.addEventListener('voiceschanged', loadVoices);
-    setTimeout(loadVoices, 300);
+    synth.addEventListener('voiceschanged', () => loadVoices(true));
+    setTimeout(() => loadVoices(true), 300);
   }
 
   T.voices = () => (voices.length ? voices : loadVoices());

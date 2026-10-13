@@ -63,7 +63,6 @@
   W('meteen', 'immediately', 'adv', 'Ik kom meteen.', 'I am coming right away.', { theme: 'time', stage: 2, altNl: ['direct', 'onmiddellijk'] });
   W('zo meteen', 'in a moment', 'adv', 'Ik bel je zo meteen.', 'I will call you in a moment.', { theme: 'time', stage: 2, id: 'zo-meteen' });
   W('per', 'per', 'prep', 'Twee keer per week sport ik.', 'I exercise twice a week.', { theme: 'time', stage: 2 });
-  PH("'s ochtends", 'in the morning', "'s Ochtends drink ik koffie.", 'In the morning I drink coffee.', { theme: 'time', stage: 2, id: 'ph-s-ochtends', note: "'s ochtends = 's morgens; also 's middags, 's avonds, 's nachts." });
   W('om de', 'every other', 'adv', 'Om de dag ga ik zwemmen.', 'Every other day I go swimming.', { theme: 'time', stage: 2, id: 'om-de' });
 
   N('symptoom', 'het', 'symptomen', 'symptom', 'Wat zijn de symptomen?', 'What are the symptoms?', { theme: 'health', stage: 2 });
@@ -188,7 +187,7 @@
     p('`elke dag`, `elke week`, `één keer per week`, `twee keer per maand`, `om de dag` (every other day), `dagelijks`, `wekelijks`, `maandelijks`, `regelmatig` (regularly), `zelden` (rarely), `’s ochtends / ’s middags / ’s avonds / ’s nachts`.'),
     ex(['Ik woon al drie jaar in Amsterdam, maar ik leer pas sinds januari Nederlands.', 'I have lived in Amsterdam for three years, but I have only been learning Dutch since January.'], ['De cursus begint over twee weken.', 'The course starts in two weeks.'], ['Ik sport twee keer per week, meestal ’s avonds.', 'I exercise twice a week, usually in the evening.'], ['Vanaf maandag werk ik niet meer op vrijdag.', 'From Monday I no longer work on Fridays.']),
     tip('al = "already / for": positive, ongoing. pas = "only": it feels short. `Ik ben hier al een jaar` (quite long) vs `Ik ben hier pas een jaar` (not long).'),
-  ], ['g2-time-expressions'], ['sinds', 'tegenwoordig', 'intussen', 'vanaf', 'tot', 'over-tijd', 'kwartier', 'seconde', 'halfjaar', 'dagelijks', 'wekelijks', 'maandelijks', 'regelmatig', 'zelden', 'meteen', 'zo-meteen', 'per', 'ph-s-ochtends', 'om-de'], [
+  ], ['g2-time-expressions'], ['sinds', 'tegenwoordig', 'intussen', 'vanaf', 'tot', 'over-tijd', 'kwartier', 'seconde', 'halfjaar', 'dagelijks', 'wekelijks', 'maandelijks', 'regelmatig', 'zelden', 'meteen', 'zo-meteen', 'per', 's-ochtends', 'om-de'], [
     mc('"I have lived here for two years" (and still do):', ['Ik heb hier twee jaar gewoond.', 'Ik woon hier al twee jaar.', 'Ik woonde hier twee jaar.'], 1, 'Still going on → present + al.'),
     mc('"The film starts in ten minutes":', ['De film begint in tien minuten.', 'De film begint over tien minuten.', 'De film begint tien minuten geleden.'], 1, 'From now: over.'),
     mc('"Every other day":', ['elke dag', 'om de dag', 'per dag'], 1, 'om de dag = every other day.'),
@@ -304,7 +303,6 @@
   N('verwarming', 'de', null, 'heating', 'De verwarming doet het niet.', 'The heating is not working.', { theme: 'housing', stage: 2 });
   W('ruim', 'spacious', 'adj', 'De woonkamer is ruim.', 'The living room is spacious.', { theme: 'housing', stage: 2 });
   W('tevreden', 'satisfied', 'adj', 'We zijn tevreden met de woning.', 'We are satisfied with the home.', { theme: 'feelings', stage: 2 });
-  W('licht', 'light / bright', 'adj', 'De kamer is licht.', 'The room is bright.', { theme: 'housing', stage: 2, id: 'licht-adj' });
   W('gehorig', 'poorly soundproofed', 'adj', 'Het huis is erg gehorig.', 'The house is very poorly soundproofed.', { theme: 'housing', stage: 2 });
   PH('per maand', 'per month', 'De huur is 1200 euro per maand.', 'The rent is 1200 euros a month.', { theme: 'housing', stage: 2, id: 'ph-per-maand' });
 
@@ -384,7 +382,7 @@
     p('`er` comes right after the verb, or right after a pronoun subject: `Ik woon er graag.` `Er zijn twee slaapkamers.` `Gisteren was er een bezichtiging.`'),
     ex(['Er is een bezichtiging om vier uur. Ga je erheen?', 'There is a viewing at four. Are you going (there)?'], ['De woning heeft drie kamers, maar er is geen balkon.', 'The home has three rooms, but there is no balcony.'], ['Hoeveel ramen heeft de woonkamer? Er zijn er twee.', 'How many windows does the living room have? There are two.'], ['De huur is 1200 euro per maand, inclusief. Wat vind je ervan?', 'The rent is 1200 euros a month, all in. What do you think of it?']),
     tip('Test for job 3: if the English sentence ends in a bare number ("I have two"), Dutch needs `er` before it.'),
-  ], ['g2-er', 'g1-er-is'], ['woning', 'flat', 'huurder', 'verhuurder', 'huurcontract', 'borg', 'makelaar', 'bezichtiging', 'zolder', 'kelder', 'lift', 'raam', 'buren', 'lawaai', 'overlast', 'verwarming', 'ruim', 'tevreden', 'licht-adj', 'gehorig', 'ph-per-maand'], [
+  ], ['g2-er', 'g1-er-is'], ['woning', 'flat', 'huurder', 'verhuurder', 'huurcontract', 'borg', 'makelaar', 'bezichtiging', 'zolder', 'kelder', 'lift', 'raam', 'buren', 'lawaai', 'overlast', 'verwarming', 'ruim', 'tevreden', 'licht', 'gehorig', 'ph-per-maand'], [
     mc('"Heb je kinderen?" — "Ja, ik heb ___ twee."', ['—', 'er', 'daar'], 1, 'A bare number needs er: ik heb er twee.'),
     mc('"Ken je Utrecht?" — "Ja, ik heb ___ gestudeerd."', ['er', 'het', 'hem'], 0, 'er = there (unstressed place).'),
     mc('"Wat vind je ___?" (of it)', ['van het', 'ervan', 'daar'], 1, 'er + van = ervan; never "van het" for things.'),

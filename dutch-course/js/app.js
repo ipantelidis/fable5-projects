@@ -67,7 +67,7 @@
     if (NL.coach && /^\/?$|^\/home$/.test(hash) && NL.coach.state().seenTour) setTimeout(() => NL.coach.nudge(), 600);
     if (!/\/lesson\//.test(hash)) window.scrollTo(0, 0);
   };
-  function setNav(name) { U.$$('.nav a').forEach((a) => a.classList.toggle('active', a.dataset.nav === name)); }
+  function setNav(name) { U.$$('.nav a').forEach((a) => { const on = a.dataset.nav === name; a.classList.toggle('active', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); if (on && a.scrollIntoView) a.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }); }
 
   app.updateHeader = function () {
     const s = NL.state.get();

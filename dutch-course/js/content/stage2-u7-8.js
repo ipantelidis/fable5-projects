@@ -173,7 +173,6 @@
   PH('Spreek ik met …?', 'Am I speaking to …?', 'Spreek ik met mevrouw De Vries?', 'Am I speaking to Ms De Vries?', { theme: 'phone', stage: 2, id: 'ph-spreek-ik-met' });
   PH('Kan ik … spreken?', 'Can I speak to …?', 'Kan ik meneer Bakker spreken?', 'Can I speak to Mr Bakker?', { theme: 'phone', stage: 2, id: 'ph-kan-ik-spreken' });
   PH('Een ogenblik, alstublieft.', 'One moment, please.', 'Een ogenblik, alstublieft, ik verbind u door.', 'One moment please, I am putting you through.', { theme: 'phone', stage: 2, id: 'ph-ogenblik' });
-  PH('Kunt u dat herhalen?', 'Could you repeat that?', 'Sorry, de verbinding is slecht. Kunt u dat herhalen?', 'Sorry, the connection is bad. Could you repeat that?', { theme: 'phone', stage: 2, id: 'ph-herhalen' });
 
   N('e-mailadres', 'het', 'e-mailadressen', 'email address', 'Wat is uw e-mailadres?', 'What is your email address?', { theme: 'email', stage: 2 });
   N('apenstaartje', 'het', 'apenstaartjes', 'at sign (@)', 'sam apenstaartje mail punt com', 'sam at mail dot com', { theme: 'email', stage: 2 });
@@ -206,7 +205,7 @@
     p('`De verbinding is slecht.` `Kunt u dat herhalen?` `Ik versta u niet goed.` `Het nummer is in gesprek.` `Ik kan hem niet bereiken.` `Mijn mobiel is bijna leeg.`'),
     ex(['Met Sam. — Hoi Sam, met Anna. Stoor ik?', 'Sam speaking. — Hi Sam, Anna here. Am I disturbing you?'], ['Ik heb je twee keer gebeld, maar je nam niet op.', 'I called you twice, but you did not answer.'], ['Wilt u een bericht achterlaten? — Ja, kunt u vragen of hij mij terugbelt?', 'Would you like to leave a message? — Yes, could you ask him to call me back?'], ['Sorry, de verbinding is slecht, ik bel je zo terug.', 'Sorry, the connection is bad, I will call you back in a moment.']),
     tip('Never say "Hallo?" with your name missing: Dutch people find it odd. `Met` + name, always, both when answering and calling.'),
-  ], ['g2-separable-tenses', 'g2-imperative'], ['opnemen', 'ophangen', 'terugbellen', 'doorverbinden', 'bereiken', 'achterlaten', 'appen', 'inspreken', 'voicemail', 'gesprek', 'verbinding', 'mobiel', 'toestel', 'verkeerd-verbonden', 'in-gesprek', 'ph-met-naam', 'ph-spreek-ik-met', 'ph-kan-ik-spreken', 'ph-ogenblik', 'ph-herhalen'], [
+  ], ['g2-separable-tenses', 'g2-imperative'], ['opnemen', 'ophangen', 'terugbellen', 'doorverbinden', 'bereiken', 'achterlaten', 'appen', 'inspreken', 'voicemail', 'gesprek', 'verbinding', 'mobiel', 'toestel', 'verkeerd-verbonden', 'in-gesprek', 'ph-met-naam', 'ph-spreek-ik-met', 'ph-kan-ik-spreken', 'ph-ogenblik', 'kunt-u-dat-herhalen'], [
     mc('How do Dutch people answer the phone?', ['Hallo?', 'Met + name', 'Ja?'], 1, 'Met Anna.'),
     mc('"Het nummer is in gesprek" means', ['the number is engaged', 'the number is wrong', 'the number is in the conversation'], 0, 'in gesprek = busy.'),
     mc('"Kan ik iets doorgeven?" means', ['Can I pass something on?', 'Can I put you through?', 'Can I call back?'], 0, 'doorgeven = pass on.'),

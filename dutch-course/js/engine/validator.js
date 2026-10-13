@@ -16,6 +16,9 @@
     let counts = { stages: 0, units: 0, lessons: 0, exercises: 0, vocab: 0, grammar: 0, auto: 0 };
 
     // dictionary
+    /* same Dutch word, same part of speech and same first English gloss = a duplicate review card (homonyms differ in English) */
+    const seenWord = {};
+    for (const id in C.vocab) { const v = C.vocab[id]; const k = String(v.nl).toLowerCase() + '|' + v.pos + '|' + String(v.en).toLowerCase().split(/[\/(,;]/)[0].trim(); if (seenWord[k]) warn('vocab ' + id, 'duplicates ' + seenWord[k] + ' (' + v.nl + '); reference the existing id instead'); else seenWord[k] = id; }
     for (const id in C.vocab) {
       const v = C.vocab[id]; counts.vocab++;
       const w = 'vocab ' + id;
