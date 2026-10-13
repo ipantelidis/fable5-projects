@@ -390,3 +390,6 @@ pre.report { background: var(--card-2); padding: var(--s3); border-radius: var(-
 .card > p:last-child, .card > ul:last-child { margin-bottom: 0; }
 .report-row { margin-top: var(--s3); text-align: right; }
 .report-row a { color: var(--muted); }
+.sync-prompt { display: flex; justify-content: space-between; align-items: center; gap: var(--s3); flex-wrap: wrap; margin-top: var(--s5); }
+.sync-prompt b { display: block; }
+.sync-prompt .desc { font-size: .9rem; color: var(--muted); }

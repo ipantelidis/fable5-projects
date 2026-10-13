@@ -26,7 +26,7 @@
     [/^\/grammar(?:\/([\w-]+))?$/, (host, id) => NL.views.grammar(host, id), 'grammar'],
     [/^\/dictionary$/, (host) => NL.views.dictionary(host), 'dictionary'],
     [/^\/badges$/, (host) => NL.views.badges(host), 'home'],
-    [/^\/settings$/, (host) => NL.views.settings(host), 'settings'],
+    [/^\/settings(?:\/(sync))?$/, (host, focus) => NL.views.settings(host, focus), 'settings'],
     [/^\/about$/, (host) => NL.views.about(host), 'settings'],
     [/^\/coach$/, (host) => NL.coach.view(host), 'coach'],
   ];

@@ -71,6 +71,8 @@
     if (hint && !s.settings.sttSeen) host.appendChild(h('div.notice', hint, ' Voice output still works here.'));
     else if (!T.hasDutchVoice() && T.supported()) host.appendChild(h('div.notice', 'No Dutch voice was found in this browser yet. Chrome and Edge include Dutch voices; on Windows you can add "Nederlands" under Settings → Time & language → Speech.'));
 
+    if (NL.sync) host.appendChild(NL.sync.homePrompt());
+
     /* Today: coach suggestions and the weekly challenge */
     host.appendChild(section(null, null, NL.coach ? NL.coach.homeCard() : null, NL.fluency ? NL.fluency.homeCard() : null));
 
@@ -272,7 +274,7 @@
   };
 
   /* ---------- Settings ---------- */
-  V.settings = function (host) {
+  V.settings = function (host, focus) {
     const s = NL.state.get();
     host.appendChild(h('h1', 'Settings'));
     let card = null;
@@ -321,7 +323,7 @@
       file));
     data.appendChild(h('div.danger-zone', h('div', h('b', 'Reset all progress'), h('span.desc', 'Deletes every lesson, word and badge in this browser. It cannot be undone.')), h('button.btn.btn-sm.btn-danger', { type: 'button', onclick: () => { if (confirm('Reset ALL progress? This cannot be undone. Export first if you want a backup.')) { NL.state.reset(); U.toast('Progress reset'); NL.app.render(); } } }, 'Reset progress')));
     host.appendChild(data);
-    if (NL.sync) host.appendChild(NL.sync.card());
+    if (NL.sync) { const sc = NL.sync.card(); host.appendChild(sc); if (focus === 'sync') setTimeout(() => { sc.scrollIntoView({ block: 'center' }); const i = sc.querySelector('input[type=email]'); if (i) i.focus(); else setTimeout(() => { const j = sc.querySelector('input[type=email]'); if (j) j.focus(); }, 800); }, 60); }
 
     // Install as an app
     const standalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;

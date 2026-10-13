@@ -96,7 +96,7 @@
 
   /* --------------------------------------------------------------- settings card */
   S.card = function () {
-    const card = h('div.card', h('h3', '☁️ Cloud sync (optional)'));
+    const card = h('div.card#sync-card', h('h3', '☁️ Cloud sync (optional)'));
     if (!S.configured()) {
       card.appendChild(h('p.muted.small', 'Not set up on this site. Progress stays in this browser; use Export and Import to move it. To enable accounts, the site owner fills in js/config.js (see README, section Cloud sync).'));
       return card;
@@ -121,6 +121,25 @@
     render();
     U.on('sync', render);
     return card;
+  };
+
+  /** Home-screen prompt for learners with real progress who are not signed in. Renders into a placeholder once the
+      client knows whether a session exists, so signed-in learners never see it flash. */
+  S.homePrompt = function () {
+    const slot = h('div');
+    const s = NL.state.get();
+    s.coach = s.coach || {};
+    if (!S.configured() || !/^https?:/.test(location.protocol) || s.xp < 200) return slot;
+    const until = s.coach.syncPromptUntil;
+    if (until && until > U.today()) return slot;
+    S.init().then(() => {
+      if (user) return;
+      const hide = () => { const d = new Date(); d.setDate(d.getDate() + 14); s.coach.syncPromptUntil = U.dateKey(d); NL.state.save(); slot.remove(); };
+      slot.appendChild(h('div.notice.notice-info.sync-prompt',
+        h('div', h('b', 'Keep your progress on every device'), h('span.desc', 'Right now it lives only in this browser. Sign in with your email, no password needed.')),
+        h('div.row', h('a.btn.btn-sm.btn-primary', { href: '#/settings/sync' }, 'Sign in'), h('button.btn.btn-sm.btn-ghost', { type: 'button', onclick: hide }, 'Not now'))));
+    }).catch(() => {});
+    return slot;
   };
 
   /* boot hook: pull silently when a session exists */
