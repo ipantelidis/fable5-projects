@@ -180,7 +180,7 @@ try {
   if (!NL.coach.aiConfigured()) pass('coach: AI tier dormant without coachProxyUrl'); else fail('coach AI tier active without config');
   var ans = ['now', 'progress', 'review', 'voice', 'challenge', 'wrong', 'plan', 'exam'].map(function (q) { return NL.coach.answer(q).length; });
   if (ans.every(function (n) { return n > 0; })) pass('coach: every intent answers'); else fail('coach intents: ' + ans.join(','));
-  if (NL.sync && NL.sync.status() === 'unconfigured' && !NL.sync.configured()) pass('sync: dormant when unconfigured'); else fail('sync should be dormant: ' + (NL.sync && NL.sync.status()));
+  if (NL.sync && (NL.sync.configured() ? NL.sync.status() === 'idle' : NL.sync.status() === 'unconfigured')) pass('sync: ' + (NL.sync.configured() ? 'configured, idle until served over https' : 'dormant when unconfigured')); else fail('sync state unexpected: ' + (NL.sync && NL.sync.status()));
   /* 9. The new screens render without throwing (stub DOM: catches undefined helpers and bad data access, not layout) */
   [['fluency hub', function (h0) { F.hub(h0); }], ['bank overview', function (h0) { F.bankView(h0); }], ['bank theme', function (h0) { F.bankView(h0, 'eten'); }],
    ['challenge page', function (h0) { F.challengeView(h0); }], ['home with challenge card and hub stage', function (h0) { NL.views.home(h0); }],
